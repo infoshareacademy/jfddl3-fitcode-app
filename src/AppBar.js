@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {Component} from 'react';
+import MuiAppBar from 'material-ui/AppBar'
 
-const AppBar = () => (
-    <div>
-        <h2>AppBar</h2>
-    </div>
-)
+class AppBar extends Component {
+    render() {
+        return (
+            <MuiAppBar
+                title="My First App"
+                onLeftIconButtonClick={this.props.butt}
+            />
+        )
+    }
+}
 
 export default AppBar
