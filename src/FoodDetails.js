@@ -22,7 +22,7 @@ class FoodDetails extends React.Component {
     }
 
     render() {
-        const id = this.props.match.params.uid;
+        const id = this.props.match.params.uid; //linie added
         return (
             <div>
                 {
