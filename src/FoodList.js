@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 
-class FoodList extends React.Component {
+class FoodList extends Component {
     state = {
         data: null
     }
@@ -29,12 +30,12 @@ class FoodList extends React.Component {
                     this.state.data && this.state.data
                         .map(
                             product => (
-                                <ListItem
+                                <Link to={`/food-details/${product.uid}`} style={{textDecoration: 'none'}}><ListItem
                                     primaryText={product.name}
-                                    secondaryText={product.energy}
+                                    secondaryText={`Kcal: ${product.energy} | ${product.category}`}
                                     leftAvatar={<Avatar src={product.photo}/>}
                                     rightIcon={<ActionFavorite/>}
-                                />
+                                /></Link>
                             ))
                 }
             </List></div>
