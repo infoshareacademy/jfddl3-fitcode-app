@@ -30,12 +30,18 @@ class FoodList extends Component {
                     this.state.data && this.state.data
                         .map(
                             product => (
-                                <Link to={`/food-details/${product.uid}`} style={{textDecoration: 'none'}}><ListItem
-                                    primaryText={product.name}
-                                    secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                    leftAvatar={<Avatar src={product.photo}/>}
-                                    rightIcon={<ActionFavorite/>}
-                                /></Link>
+                                <Link
+                                    to={`/food-details/${product.uid}`}
+                                    style={{textDecoration: 'none'}}
+                                    key={product.uid}
+                                >
+                                    <ListItem
+                                        primaryText={product.name}
+                                        secondaryText={`Kcal: ${product.energy} | ${product.category}`}
+                                        leftAvatar={<Avatar src={product.photo}/>}
+                                        rightIcon={<ActionFavorite/>}
+                                    />
+                                </Link>
                             ))
                 }
             </List></div>

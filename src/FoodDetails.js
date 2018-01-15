@@ -29,8 +29,8 @@ class FoodDetails extends React.Component {
                     this.state.data && this.state.data
                         .filter(product => id === product.uid)
                         .map(
-                            product =>
-                                <div>
+                            (product, index) =>     //index added
+                                <div key={index}>
                                     <p>Nazwa : {product.name}</p>
                                     <p>Kategoria: {product.category}</p>
                                     <p>Kalorie: {product.energy}</p>
