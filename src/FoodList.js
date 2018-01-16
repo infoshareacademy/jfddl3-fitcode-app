@@ -17,7 +17,7 @@ class FoodList extends Component {
         data: null,
         foodName: '',
         kcalSlider: 150,
-        catSelect: '',
+        catSelect: 'all',
     }
 
 
@@ -72,8 +72,8 @@ class FoodList extends Component {
                         value={this.state.catSelect}
                         onChange={this.handleCatSelect}
                     >
-                        <MenuItem value={1} primaryText="warzywa" />
-                        <MenuItem value={2} primaryText="owoce" />
+                        <MenuItem value={'warzywa'} primaryText="warzywa" />
+                        <MenuItem value={'owoce'} primaryText="owoce" />
                         <MenuItem value={3} primaryText="mieso" />
                         <MenuItem value={4} primaryText="ryby" />
                         <MenuItem value={5} primaryText="nabial" />
@@ -84,6 +84,9 @@ class FoodList extends Component {
                 <List><Subheader>Test Food List</Subheader>
                 {
                     this.state.data && this.state.data
+                        .filter(product => product.name.indexOf(this.state.foodName) !== -1)
+                        .filter(product => this.state.catSelect === 'all' ? true : product.category === this.state.catSelect)
+                        .filter(product => product.energy < this.state.kcalSlider )
                         .map(
                             product => (
                                 <Link
@@ -100,7 +103,9 @@ class FoodList extends Component {
                                 </Link>
                             ))
                 }
-            </List></div>
+            </List>
+
+            </div>
         )
     }
 }
