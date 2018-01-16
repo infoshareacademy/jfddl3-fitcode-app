@@ -1,7 +1,7 @@
 import React from 'react';
-import foodBase from './database'
+import {Link} from 'react-router-dom';
+import RaisedButton from 'material-ui/RaisedButton';
 
-const id = '7de10565-8826-40b8-9da0-adbf044b49af' //tutaj beda przekazane dane poprzez URL
 
 class FoodDetails extends React.Component {
     state = {
@@ -22,6 +22,7 @@ class FoodDetails extends React.Component {
     }
 
     render() {
+        const id = this.props.match.params.uid  // <- tutaj dane sie przekazuja
         return (
             <div>
                 {
@@ -30,7 +31,7 @@ class FoodDetails extends React.Component {
                         .map(
                             product =>
                                 <div>
-                                    <p>Nazwa : {product.name}</p>
+                                    <h2>Nazwa : {product.name.toUpperCase()}</h2>
                                     <p>Kategoria: {product.category}</p>
                                     <p>Kalorie: {product.energy}</p>
                                     <p>Proteiny: {product.protein}</p>
@@ -38,6 +39,13 @@ class FoodDetails extends React.Component {
                                     <p>Weglowodany: {product.carbohydrate}</p>
                                     <p>Cukry: {product.sugars}</p>
                                     <p>Foto: {product.photo}</p>
+
+                                    <RaisedButton href={`/food-favourites/${product.uid}`}
+                                                  label="+ ulubione" primary={true} style={{margin: 12}}
+                                    />
+                                    <RaisedButton href={`/food-list/${product.uid}`}
+                                                  label="powrot do listy" secondary={true} style={{margin: 12}}
+                                    />
                                 </div>
                         )
                 }
