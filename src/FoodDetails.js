@@ -1,11 +1,16 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+
 import RaisedButton from 'material-ui/RaisedButton';
 
 
+const databaseUrl = 'https://ad-snadbox.firebaseio.com/JFDDL3/restToDo/tomek/list/.json'
+
 class FoodDetails extends React.Component {
+
     state = {
-        data: null
+        data: null,
+        id: null,
+        newTaskName: ''
     }
 
 
@@ -16,18 +21,32 @@ class FoodDetails extends React.Component {
             .then(response => response.json())
             .then(parsedJSONData => {
                 this.setState({
-                    data: parsedJSONData
+                    data: parsedJSONData,
+                    id: this.props.match.params.uid
                 })
             })
     }
 
+    addUidToFavList = () => {
+        console.log(this.state.id)
+        fetch(
+            databaseUrl,
+            {
+                method: 'POST',
+                body: JSON.stringify(this.state.id)
+            }
+        )
+            .then(() => console.log('UDALO SIE'))
+            .catch((err) => alert('Coś poszło nie tak!'))
+    }
+
+
     render() {
-        const id = this.props.match.params.uid  // <- tutaj dane sie przekazuja
         return (
             <div>
                 {
                     this.state.data && this.state.data
-                        .filter(product => id === product.uid)
+                        .filter(product => this.state.id === product.uid)
                         .map(
                             product =>
                                 <div>
@@ -40,8 +59,8 @@ class FoodDetails extends React.Component {
                                     <p>Cukry: {product.sugars}</p>
                                     <p>Foto: {product.photo}</p>
 
-                                    <RaisedButton href={`/food-favourites/${product.uid}`}
-                                                  label="+ ulubione" primary={true} style={{margin: 12}}
+                                    <RaisedButton label="+ ulubione" primary={true} style={{margin: 12}}
+                                                  onClick={this.addUidToFavList}
                                     />
                                     <RaisedButton href={`/food-list/${product.uid}`}
                                                   label="powrot do listy" secondary={true} style={{margin: 12}}
