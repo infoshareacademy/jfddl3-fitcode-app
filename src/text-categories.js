@@ -4,25 +4,25 @@ const textCategories = [
     {
         hintText: 'Jedzenie',
         floatingLabelText: 'Nazwa',
-        name: 'food'
+        name: 'name'
     },
 
     {
         hintText: 'Owoce, warzywa, itp',
         floatingLabelText: 'Kategoria',
-        name: 'grocery'
+        name: 'category'
     },
 
     {
         hintText: 'kcal',
         floatingLabelText: 'Kalorie',
-        name: 'kcal'
+        name: 'energy'
     },
 
     {
         hintText: 'g',
         floatingLabelText: 'Białko',
-        name: 'proteins'
+        name: 'protein'
     },
 
     {
@@ -41,6 +41,11 @@ const textCategories = [
         hintText: 'g',
         floatingLabelText: 'Cukry',
         name: 'sug'
+    },
+    {
+        hintText: 'url',
+        floatingLabelText: 'Zdjęcie',
+        name: 'photo'
     },
 ]
 

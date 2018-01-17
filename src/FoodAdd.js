@@ -9,7 +9,14 @@ class FoodAdd extends Component {
 
     state = {
         data: null,
-        value: ''
+        name: null,
+        category: null,
+        energy: null,
+        protein: null,
+        fats: null,
+        carbo: null,
+        sug: null,
+        photo: null
     }
 
     componentWillMount() {
@@ -27,35 +34,65 @@ class FoodAdd extends Component {
     handleSubmit = (event) => {
         event.preventDefault()
 
-        // const obj = {'name': }
-        //
-        // console.log(obj)
-        // onChange na textField -> state, value w TextField-> state
+        const newFood = {
+            uid: Date.now(),
+            name: this.state.name,
+            category: this.state.category,
+            energy: this.state.energy,
+            protein: this.state.protein,
+            fat: this.state.fats,
+            carbohydrate: this.state.carbo,
+            sugars: this.state.sug,
+            photo: this.state.photo
+        }
 
+        console.log(newFood)
+
+        fetch(
+            `${process.env.PUBLIC_URL}/database.json`,
+            {
+                method: 'PATCH',
+                body: JSON.stringify(newFood)
+            }
+        )
+            .then(() => {
+                    alert('Dodano task!')
+                    this.componentWillMount()
+                }
+            )
+            .catch((error) => alert('Cos poszlo nie tak'))
     }
+
+    handleTextChange = (event, name) => {
+        const newState = {}
+        newState[name] = event.target.value
+        this.setState(newState)
+    }
+
 
     render() {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                {
-                    textCategories.map(cat => (
-                        <TextField
-                            hintText={cat.hintText}
-                            floatingLabelText={cat.floatingLabelText}
-                            style={{display: 'block'}}
-                            key={cat.floatingLabelText}
-                            name={cat.name}
-                            value={}
-                        />
-                    ))
-                }
+                    {
+                        textCategories.map(cat => (
+                            <TextField
+                                hintText={cat.hintText}
+                                floatingLabelText={cat.floatingLabelText}
+                                style={{display: 'block'}}
+                                key={cat.floatingLabelText}
+                                name={cat.name}
+                                onChange={(e) => this.handleTextChange(e,cat.name )}
+                            />
+                        ))
+                    }
 
-                <RaisedButton label="Dodaj" primary={true} type="submit" />
+                    <RaisedButton label="Dodaj" primary={true} type="submit"/>
                 </form>
             </div>
         )
     }
+
 }
 
 export default FoodAdd;
