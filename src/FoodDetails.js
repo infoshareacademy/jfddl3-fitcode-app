@@ -74,3 +74,5 @@ class FoodDetails extends React.Component {
 }
 
 export default FoodDetails
+
+
