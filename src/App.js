@@ -11,6 +11,7 @@ import SideBar from './SideBar'
 
 import './index.css'
 import FoodDetails from "./FoodDetails";
+import ShareButton from './ShareButton'
 
 
 class App extends Component {
@@ -48,6 +49,8 @@ class App extends Component {
                         <Route path="/food-favourites" component={Favourites}/>
                         <Route path="/food-add" component={FoodAdd}/>
                         <Route path="/food-details/:uid/" component={FoodDetails}/>
+
+                        <ShareButton />
                     </div>
                 </BrowserRouter>
             </MuiThemeProvider>
