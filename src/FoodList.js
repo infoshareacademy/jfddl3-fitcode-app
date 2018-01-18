@@ -3,12 +3,15 @@ import {Link} from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import ActionFavorite from 'material-ui/svg-icons/action/favorite';
+//import ActionFavorite from 'material-ui/svg-icons/action/favorite';
+import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 
 import TextField from 'material-ui/TextField';
 import Slider from 'material-ui/Slider';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import Paper from 'material-ui/Paper';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
 
 
 
@@ -28,7 +31,6 @@ class FoodList extends Component {
             .then(response => response.json())
             .then(parsedJSONData => {
                 this.setState({data: Object.entries(parsedJSONData)});
-                //console.log(this.state.data);
             }
             )
     }
@@ -47,35 +49,53 @@ class FoodList extends Component {
     render() {
         return (
                 <div>
-                    <div>
-                        <TextField
-                            // hintText="Hint Text"
-                            floatingLabelText="Search your foodie..."
-                            onChange={this.handleFoodName}
-                        />
-                        <Slider
-                            min={0}
-                            max={300}
-                            step={30}
-                            value={this.state.kcalSlider}
-                            onChange={this.handleKcalSlider}
-                        />
-                        <p><span>{this.state.kcalSlider} Kcal</span></p>
-                        <SelectField
-                            floatingLabelText="Categories"
-                            value={this.state.catSelect}
-                            onChange={this.handleCatSelect}
-                        >
-                            {/*<MenuItem value={'all'} primaryText="Wszystko"/>*/}
-                            <MenuItem value={'Warzywa'} primaryText="Warzywa"/>
-                            <MenuItem value={'Owoce'} primaryText="Owoce"/>
-                            <MenuItem value={'Mięso'} primaryText="Mięso"/>
-                            <MenuItem value={'Ryby'} primaryText="Ryby"/>
-                            <MenuItem value={'Nabiał'} primaryText="Nabiał"/>
-                        </SelectField>
-                    </div>
 
+                    <Paper
+                        style={{margin: 20, padding: 20}}
+                        zDepth= {2}
+                    >
+                        <Card>
+                            <CardHeader
+                                title="Search your foodies"
+                                //subtitle="If you have any haha"
+                                actAsExpander={true}
+                                showExpandableButton={true}
+                            />
+                            <CardText expandable={true}>
+                                <TextField
+                                    // hintText="Hint Text"
+                                    floatingLabelText="Search your foodie..."
+                                    fullWidth={true}
+                                    onChange={this.handleFoodName}
+                                />
+                                <Slider
+                                    min={0}
+                                    max={300}
+                                    step={30}
+                                    value={this.state.kcalSlider}
+                                    onChange={this.handleKcalSlider}
+                                />
+                                <p><span>{this.state.kcalSlider} Kcal</span></p>
+                                <SelectField
+                                    floatingLabelText="Categories"
+                                    value={this.state.catSelect}
+                                    onChange={this.handleCatSelect}
+                                >
+                                    <MenuItem value={'all'} primaryText="Wszystkie" style={{color:"#BDBDBD"}}/>
+                                    <MenuItem value={'Warzywa'} primaryText="Warzywa"/>
+                                    <MenuItem value={'Owoce'} primaryText="Owoce"/>
+                                    <MenuItem value={'Mięso'} primaryText="Mięso"/>
+                                    <MenuItem value={'Ryby'} primaryText="Ryby"/>
+                                    <MenuItem value={'Nabiał'} primaryText="Nabiał"/>
+                                </SelectField>
+                            </CardText>
+                        </Card>
+                    </Paper>
 
+                    <Paper
+                        style={{margin: 20, padding: 20}}
+                        zDepth= {2}
+                    >
                     <List><Subheader>Test Food List</Subheader>
                         {
                             this.state.data && this.state.data
@@ -93,12 +113,14 @@ class FoodList extends Component {
                                                 primaryText={product.name}
                                                 secondaryText={`Kcal: ${product.energy} | ${product.category}`}
                                                 leftAvatar={<Avatar src={product.photo}/>}
-                                                rightIcon={<ActionFavorite/>}
+                                                rightIcon={<ActionFavoriteBorder/>}
                                             />
                                         </Link>
                                     ))
                         }
                     </List>
+                    </Paper>
+
                 </div>
         )
     }
