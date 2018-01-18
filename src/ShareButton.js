@@ -1,6 +1,7 @@
 import React from 'react'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up';
+
 
 const style = {
     margin: 12,
@@ -11,11 +12,12 @@ const style = {
 
 const ShareButton = () => (
     <div>
-        <FloatingActionButton
+        <FloatingActionButton className="material-icons"
             style={style}
             onClick={()=>window.open('http://www.facebook.com/sharer.php?u=http://app.fitcode.jfddl3.is-academy.pl')}
+
         >
-            <ContentAdd/>
+            <ActionThumbUp/>
         </FloatingActionButton>
     </div>
 
