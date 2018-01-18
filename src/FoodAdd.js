@@ -24,7 +24,7 @@ class FoodAdd extends Component {
 
     getData = () => {
         fetch(
-            `${process.env.PUBLIC_URL}/database.json`
+            'https://jfddl3-fitcode.firebaseio.com/products/food/.json',
         )
             .then(response => response.json())
             .then(parsedJSONData => {
@@ -42,7 +42,7 @@ class FoodAdd extends Component {
         event.preventDefault()
 
         const newFood = {
-            uid: Date.now(),
+            // uid: Date.now(),
             name: this.state.name,
             category: this.state.catSelect,
             energy: this.state.energy,
@@ -56,9 +56,9 @@ class FoodAdd extends Component {
         console.log(newFood)
 
         fetch(
-            `${process.env.PUBLIC_URL}/database.json`,
+            'https://jfddl3-fitcode.firebaseio.com/products/food/.json',
             {
-                method: 'PATCH',
+                method: 'POST',
                 body: JSON.stringify(newFood)
             }
         )
