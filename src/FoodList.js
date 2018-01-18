@@ -23,14 +23,14 @@ class FoodList extends Component {
 
     componentWillMount() {
         fetch(
-            `${process.env.PUBLIC_URL}/database.json`
+            `https://jfddl3-fitcode.firebaseio.com/products/food.json`
         )
             .then(response => response.json())
             .then(parsedJSONData => {
-                this.setState({
-                    data: parsedJSONData
-                })
-            })
+                this.setState({data: Object.entries(parsedJSONData)});
+                //console.log(this.state.data);
+            }
+            )
     }
 
 
@@ -46,66 +46,60 @@ class FoodList extends Component {
 
     render() {
         return (
-            <div>
-
                 <div>
-                    <TextField
-                        // hintText="Hint Text"
-                        floatingLabelText="Search your foodie..."
-                        onChange={this.handleFoodName}
-                    />
-                    <p>
-                        <span>{this.state.foodName} , you say</span>
-                    </p>
-                    <Slider
-                        min={0}
-                        max={300}
-                        step={30}
-                        value={this.state.kcalSlider}
-                        onChange={this.handleKcalSlider}
-                    />
-                    <p>
-                        <span>{this.state.kcalSlider} Kcal</span>
-                    </p>
-                    <SelectField
-                        floatingLabelText="Categories"
-                        value={this.state.catSelect}
-                        onChange={this.handleCatSelect}
-                    >
-                        <MenuItem value={'warzywa'} primaryText="warzywa" />
-                        <MenuItem value={'owoce'} primaryText="owoce" />
-                        <MenuItem value={3} primaryText="mieso" />
-                        <MenuItem value={4} primaryText="ryby" />
-                        <MenuItem value={5} primaryText="nabial" />
-                    </SelectField>
+                    <div>
+                        <TextField
+                            // hintText="Hint Text"
+                            floatingLabelText="Search your foodie..."
+                            onChange={this.handleFoodName}
+                        />
+                        <Slider
+                            min={0}
+                            max={300}
+                            step={30}
+                            value={this.state.kcalSlider}
+                            onChange={this.handleKcalSlider}
+                        />
+                        <p><span>{this.state.kcalSlider} Kcal</span></p>
+                        <SelectField
+                            floatingLabelText="Categories"
+                            value={this.state.catSelect}
+                            onChange={this.handleCatSelect}
+                        >
+                            {/*<MenuItem value={'all'} primaryText="Wszystko"/>*/}
+                            <MenuItem value={'Warzywa'} primaryText="Warzywa"/>
+                            <MenuItem value={'Owoce'} primaryText="Owoce"/>
+                            <MenuItem value={'Mięso'} primaryText="Mięso"/>
+                            <MenuItem value={'Ryby'} primaryText="Ryby"/>
+                            <MenuItem value={'Nabiał'} primaryText="Nabiał"/>
+                        </SelectField>
+                    </div>
+
+
+                    <List><Subheader>Test Food List</Subheader>
+                        {
+                            this.state.data && this.state.data
+                                .filter(([key,product]) => product.name.indexOf(this.state.foodName) !== -1)
+                                .filter(([key,product]) => this.state.catSelect === 'all' ? true : product.category === this.state.catSelect)
+                                .filter(([key,product]) => product.energy < this.state.kcalSlider )
+                                .map(
+                                    ([key,product]) => (
+                                        <Link
+                                            to={`/food-details/${key}`}
+                                            style={{textDecoration: 'none'}}
+                                            key={key}
+                                        >
+                                            <ListItem
+                                                primaryText={product.name}
+                                                secondaryText={`Kcal: ${product.energy} | ${product.category}`}
+                                                leftAvatar={<Avatar src={product.photo}/>}
+                                                rightIcon={<ActionFavorite/>}
+                                            />
+                                        </Link>
+                                    ))
+                        }
+                    </List>
                 </div>
-
-
-                <List><Subheader>Test Food List</Subheader>
-                {
-                    this.state.data && this.state.data
-                        .filter(product => product.name.indexOf(this.state.foodName) !== -1)
-                        .filter(product => this.state.catSelect === 'all' ? true : product.category === this.state.catSelect)
-                        .filter(product => product.energy < this.state.kcalSlider )
-                        .map(
-                            product => (
-                                <Link
-                                    to={`/food-details/${product.uid}`}
-                                    style={{textDecoration: 'none'}}
-                                    key={product.uid}
-                                >
-                                    <ListItem
-                                        primaryText={product.name}
-                                        secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                        leftAvatar={<Avatar src={product.photo}/>}
-                                        rightIcon={<ActionFavorite/>}
-                                    />
-                                </Link>
-                            ))
-                }
-            </List>
-
-            </div>
         )
     }
 }
