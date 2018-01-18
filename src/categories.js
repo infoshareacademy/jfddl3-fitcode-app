@@ -1,16 +1,8 @@
-import FoodAdd from './FoodAdd'
-
 const textCategories = [
     {
         hintText: 'Jedzenie',
         floatingLabelText: 'Nazwa',
         name: 'name'
-    },
-
-    {
-        hintText: 'Owoce, warzywa, itp',
-        floatingLabelText: 'Kategoria',
-        name: 'category'
     },
 
     {

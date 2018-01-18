@@ -2,13 +2,16 @@ import React, {Component} from 'react';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
-import textCategories from './text-categories'
+import textCategories from './categories'
 
 class FoodAdd extends Component {
 
     state = {
         data: null,
+        catSelect: null,
         name: null,
         category: null,
         energy: null,
@@ -19,7 +22,7 @@ class FoodAdd extends Component {
         photo: null
     }
 
-    componentWillMount() {
+    getData = () => {
         fetch(
             `${process.env.PUBLIC_URL}/database.json`
         )
@@ -31,13 +34,17 @@ class FoodAdd extends Component {
             })
     }
 
+    componentWillMount() {
+        this.getData()
+    }
+
     handleSubmit = (event) => {
         event.preventDefault()
 
         const newFood = {
             uid: Date.now(),
             name: this.state.name,
-            category: this.state.category,
+            category: this.state.catSelect,
             energy: this.state.energy,
             protein: this.state.protein,
             fat: this.state.fats,
@@ -56,11 +63,11 @@ class FoodAdd extends Component {
             }
         )
             .then(() => {
-                    alert('Dodano task!')
-                    this.componentWillMount()
+                    alert('Jedzonko dodane')
+                    this.getData()
                 }
             )
-            .catch((error) => alert('Cos poszlo nie tak'))
+            .catch((error) => alert('Ups'))
     }
 
     handleTextChange = (event, name) => {
@@ -68,6 +75,8 @@ class FoodAdd extends Component {
         newState[name] = event.target.value
         this.setState(newState)
     }
+
+    handleCatSelect = (event, index, value) => this.setState({catSelect: value})
 
 
     render() {
@@ -82,12 +91,25 @@ class FoodAdd extends Component {
                                 style={{display: 'block'}}
                                 key={cat.floatingLabelText}
                                 name={cat.name}
-                                onChange={(e) => this.handleTextChange(e,cat.name )}
+                                onChange={(e) => this.handleTextChange(e, cat.name)}
+                                fullWidth={true}
                             />
                         ))
                     }
 
-                    <RaisedButton label="Dodaj" primary={true} type="submit"/>
+                    <SelectField
+                        floatingLabelText="Categories"
+                        value={this.state.catSelect}
+                        onChange={this.handleCatSelect}
+                    >
+                        <MenuItem value={'Warzywa'} primaryText="Warzywa"/>
+                        <MenuItem value={'Owoce'} primaryText="Owoce"/>
+                        <MenuItem value={'Mięso'} primaryText="Mięso"/>
+                        <MenuItem value={'Ryby'} primaryText="Ryby"/>
+                        <MenuItem value={'Nabiał'} primaryText="Nabiał"/>
+                    </SelectField>
+
+                    <RaisedButton label="Dodaj" primary={true} type="submit" style={{display: 'block'}}/>
                 </form>
             </div>
         )
