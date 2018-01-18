@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import Paper from 'material-ui/Paper';
 
 import textCategories from './categories'
 
@@ -53,6 +54,27 @@ class FoodAdd extends Component {
             photo: this.state.photo
         }
 
+        // TODO: poprawidz ify -> function
+
+        if(
+            typeof this.state.name !== 'string'
+        // ||
+        // typeof this.state.energy !== 'number'
+        // ||
+        // typeof this.state.protein !== 'number'
+        // ||
+        // typeof this.state.carbohydrate !== 'number'
+        // ||
+        // typeof this.state.sugars !== 'number'
+        // ||
+        // typeof this.state.photo !== 'string'
+
+        // || this.state.photo.contains !== 'http' || this.state.photo.contains !== '.jpg' || this.state.name === ''
+        ){
+            alert('Błędne dane!')
+            return
+        }
+
         console.log(newFood)
 
         fetch(
@@ -81,7 +103,13 @@ class FoodAdd extends Component {
 
     render() {
         return (
-            <div>
+
+            // TODO: style do papera
+
+            <Paper
+                style={{margin: 20, padding: 20}}
+                zDepth= {2}
+            >
                 <form onSubmit={this.handleSubmit}>
                     {
                         textCategories.map(cat => (
@@ -111,7 +139,7 @@ class FoodAdd extends Component {
 
                     <RaisedButton label="Dodaj" primary={true} type="submit" style={{display: 'block'}}/>
                 </form>
-            </div>
+            </Paper>
         )
     }
 
