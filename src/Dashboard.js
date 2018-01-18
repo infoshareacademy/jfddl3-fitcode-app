@@ -2,7 +2,7 @@ import React from 'react';
 import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie} from 'recharts';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Link} from 'react-router-dom'
-
+import Paper from 'material-ui/Paper';
 const data = [
     {
         value: 40,
@@ -30,7 +30,9 @@ const style = {
 
 
 const Dashboard = () => (
-    <div >
+    <div
+        style={{textAlign: "center"}}
+    >
         <h1>
             Witaj w aplikacji FitCode!
         <br/><br/>
@@ -43,8 +45,12 @@ const Dashboard = () => (
         <Link to="/food-add">
         <RaisedButton label="Dodaj produkt!" secondary={true} style={style} />
         </Link>
+<Paper
+    style={{margin: 20, padding: 20}}
+    zDepth={2}
+>
 
-        <h3> Nasi użytkownicy najczęściej spożywają:</h3>
+        <h3 style={{textAlign: "left"}}> Nasi użytkownicy najczęściej spożywają:</h3>
         <PieChart width={500} height={500}>
             <Pie
                 data={data}
@@ -54,7 +60,7 @@ const Dashboard = () => (
             />
             <Tooltip />
         </PieChart>
-        <h3>Ilość naszych  użytkowników ciągle rośnie!</h3>
+        <h3 style={{textAlign: "left"}}>Ilość naszych  użytkowników ciągle rośnie!</h3>
         <LineChart width={600} height={300} data={lineChartData}
                    margin={{top: 5, right: 30, left: 20, bottom: 5}}>
             <XAxis dataKey="name"/>
@@ -65,7 +71,7 @@ const Dashboard = () => (
             <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{r: 8}}/>
             <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
         </LineChart>
-
+</Paper>
 
     </div>
 );
