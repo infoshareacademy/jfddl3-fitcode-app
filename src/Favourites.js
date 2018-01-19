@@ -8,12 +8,10 @@ import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import Paper from 'material-ui/Paper';
 
 
-
-
 class Favourites extends Component {
     state = {
         data: null,
-        favData: null
+        favUid: null
     }
 
 
@@ -23,37 +21,36 @@ class Favourites extends Component {
         )
             .then(response => response.json())
             .then(parsedJSONData => {
-                    this.setState({data: Object.entries(parsedJSONData)});
-                }
-            )
-
-        fetch(
-            `https://jfddl3-fitcode.firebaseio.com/products/favourites.json`
-        )
-            .then(response => response.json())
-            .then(parsedJSONData => {
-                    this.setState({favData: Object.values(parsedJSONData)});
+                    this.setState({data: Object.entries(parsedJSONData || {})});
+                    fetch(
+                        `https://jfddl3-fitcode.firebaseio.com/products/favourites.json`
+                    )
+                        .then(response => response.json())
+                        .then(parsedJSONData => {
+                                this.setState({favUid: Object.values(parsedJSONData || {})});
+                            }
+                        )
                 }
             )
     }
 
     render() {
-        console.log(this.state.favData)
+        console.log(this.state.favUid)
         return (
             <div>
 
                 <Paper
                     style={{margin: 20, padding: 20}}
-                    zDepth= {2}
+                    zDepth={2}
                 >
                     <List><Subheader>Test Food List</Subheader>
                         {
                             this.state.data &&
-                            this.state.favData &&
+                            this.state.favUid &&
                             this.state.data
-                                .filter(([key,product]) => this.state.favData.indexOf(key) !== -1)
+                                .filter(([key, product]) => this.state.favUid.indexOf(key) !== -1)
                                 .map(
-                                    ([key,product]) => (
+                                    ([key, product]) => (
                                         <Link
                                             to={`/food-details/${key}`}
                                             style={{textDecoration: 'none'}}

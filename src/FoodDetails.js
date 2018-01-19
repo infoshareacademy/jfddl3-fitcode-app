@@ -4,13 +4,14 @@ import RaisedButton from 'material-ui/RaisedButton';
 //
 // const id = '7de10565-8826-40b8-9da0-adbf044b49af' //tutaj beda przekazane dane poprzez URL
 
-const databaseUrl = 'https://jfddl3-fitcode.firebaseio.com/products/favourites.json'
+const databaseUrl = 'https://jfddl3-fitcode.firebaseio.com/products/favourites/'
 
 class FoodDetails extends React.Component {
     state = {
         data: null,
         id: null,
-        newTaskName: ''
+        favData: null,
+        favUid: null,
     }
 
 
@@ -20,8 +21,16 @@ class FoodDetails extends React.Component {
         )
             .then(response => response.json())
             .then(parsedJSONData => {
-                    this.setState({data: Object.entries(parsedJSONData), id :this.props.match.params.uid});
-                    //console.log(this.state.data);
+                    this.setState({data: Object.entries(parsedJSONData), id: this.props.match.params.uid});
+                    fetch(
+                        `https://jfddl3-fitcode.firebaseio.com/products/favourites.json`
+                    )
+                        .then(response => response.json())
+                        .then(parsedJSONData => {
+                                this.setState({favData: Object.entries(parsedJSONData || {})});
+                                this.setState({favUid: Object.values(parsedJSONData || {})});
+                            }
+                        )
                 }
             )
     }
@@ -29,27 +38,66 @@ class FoodDetails extends React.Component {
     addUidToFavList = () => {
         console.log(this.state.id)
         fetch(
-            databaseUrl,
+            databaseUrl + '/.json',
             {
                 method: 'POST',
                 body: JSON.stringify(this.state.id)
             }
         )
-            .then(() => console.log('UDALO SIE'))
+            .then(() => {
+                console.log('UDALO SIE DODAC');
+                fetch(
+                    `https://jfddl3-fitcode.firebaseio.com/products/favourites.json`
+                )
+                    .then(response => response.json())
+                    .then(parsedJSONData => {
+                            this.setState({favUid: Object.values(parsedJSONData || {})});
+                        }
+                    )
+            })
             .catch((err) => alert('Coś poszło nie tak!'))
     }
 
+    removeUidToFavList = (keyId) => {
+        let url = databaseUrl;
+        for (let i = 0; i < this.state.favData.length; i++) {
+            if (this.state.favData[i][1] === keyId) {
+                url += this.state.favData[i][0]
+            }
+        }
+        console.log(url)
+        fetch(
+            url + '/.json',
+            {
+                method: 'DELETE'
+            }
+        )
+            .then(() => {
+                console.log('UDALO SIE DELETE');
+                fetch(
+                    `https://jfddl3-fitcode.firebaseio.com/products/favourites.json`
+                )
+                    .then(response => response.json())
+                    .then(parsedJSONData => {
+                            this.setState({favUid: Object.values(parsedJSONData || {})});
+                        }
+                    )
+            })
+            .catch((err) => alert(err))
+    }
+
+
     render() {
-        const id = this.props.match.params.uid; //linie added
+        const id = this.props.match.params.uid;
         return (
             <div>
                 {
                     this.state.data && this.state.data
-                        .filter(([key,product]) => id === key)
+                        .filter(([key, product]) => id === key)
                         .map(
-                            ([key,product]) =>     //index added
+                            ([key, product]) =>
                                 <div key={key}>
-                                    <p>Nazwa : {product.name}</p>
+                                    <h2>Nazwa : {product.name.toUpperCase()}</h2>
                                     <p>Kategoria: {product.category}</p>
                                     <p>Kalorie: {product.energy}</p>
                                     <p>Proteiny: {product.protein}</p>
@@ -58,11 +106,19 @@ class FoodDetails extends React.Component {
                                     <p>Cukry: {product.sugars}</p>
                                     <p>Foto: {product.photo}</p>
 
-                                    <RaisedButton label="+ ulubione" primary={true} style={{margin: 12}}
-                                                  onClick={this.addUidToFavList}
-                                    />
-                                    <RaisedButton href={`/food-list/${product.uid}`}
-                                                  label="powrot do listy" secondary={true} style={{margin: 12}}
+                                    {
+                                        this.state.favUid && this.state.favUid.indexOf(key) === -1 ?
+                                            <RaisedButton label="+ ulubione" primary={true} style={{margin: 12}}
+                                                          onClick={this.addUidToFavList}
+                                            />
+                                            :
+                                            <RaisedButton label="- ulubione" default={true} style={{margin: 12}}
+                                                          onClick={() => this.removeUidToFavList(key)}
+                                            />
+                                    }
+                                    <RaisedButton //href={`/food-list/${key}`}
+                                        onClick={this.props.history.goBack}
+                                        label="powrot do listy" secondary={true} style={{margin: 12}}
                                     />
                                 </div>
                         )
