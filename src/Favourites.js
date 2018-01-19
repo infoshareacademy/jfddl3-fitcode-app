@@ -38,6 +38,7 @@ class Favourites extends Component {
     }
 
     render() {
+        console.log(this.state.favData)
         return (
             <div>
 
@@ -47,8 +48,10 @@ class Favourites extends Component {
                 >
                     <List><Subheader>Test Food List</Subheader>
                         {
-                            this.state.data && this.state.data
-                                //.filter(([key,product]) => this.state.favData.filter(el => el === key))
+                            this.state.data &&
+                            this.state.favData &&
+                            this.state.data
+                                .filter(([key,product]) => this.state.favData.indexOf(key) !== -1)
                                 .map(
                                     ([key,product]) => (
                                         <Link
