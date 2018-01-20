@@ -22,8 +22,7 @@ class App extends Component {
             ['Home','/'],
             ['Foodies List','/food-list'],
             ['Add New Foodie','/food-add'],
-            ['Fav Foodies','/food-favourites'],
-            ['Food Details Butt', '/food-details']
+            ['Fav Foodies','/food-favourites']
         ]
     }
 

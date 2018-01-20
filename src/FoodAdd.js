@@ -12,7 +12,7 @@ class FoodAdd extends Component {
 
     state = {
         data: null,
-        catSelect: null,
+        catSelect: "Warzywa",
         name: null,
         category: null,
         energy: null,
@@ -43,7 +43,6 @@ class FoodAdd extends Component {
         event.preventDefault()
 
         const newFood = {
-            // uid: Date.now(),
             name: this.state.name,
             category: this.state.catSelect,
             energy: this.state.energy,
@@ -54,23 +53,18 @@ class FoodAdd extends Component {
             photo: this.state.photo
         }
 
-        // TODO: poprawidz ify -> function
-
-        if(
-            typeof this.state.name !== 'string'
-        // ||
-        // typeof this.state.energy !== 'number'
-        // ||
-        // typeof this.state.protein !== 'number'
-        // ||
-        // typeof this.state.carbohydrate !== 'number'
-        // ||
-        // typeof this.state.sugars !== 'number'
-        // ||
-        // typeof this.state.photo !== 'string'
-
-        // || this.state.photo.contains !== 'http' || this.state.photo.contains !== '.jpg' || this.state.name === ''
-        ){
+        if (!/([A-Za-z0-9])\w+/.test(newFood.name)
+            ||
+            !/^([0-9])+$/.test(newFood.energy)
+            ||
+            !/[^\s]|([0-9])+$/.test(newFood.protein)
+            ||
+            !/[^\s]|([0-9])+$/.test(newFood.fat)
+            ||
+            !/[^\s]|([0-9])+$/.test(newFood.carbohydrate)
+            ||
+            !/[^\s]|([0-9])+$/.test(newFood.sugars)
+        ) {
             alert('Błędne dane!')
             return
         }
@@ -103,12 +97,9 @@ class FoodAdd extends Component {
 
     render() {
         return (
-
-            // TODO: style do papera
-
             <Paper
                 style={{margin: 20, padding: 20}}
-                zDepth= {2}
+                zDepth={2}
             >
                 <form onSubmit={this.handleSubmit}>
                     {
@@ -129,12 +120,14 @@ class FoodAdd extends Component {
                         floatingLabelText="Categories"
                         value={this.state.catSelect}
                         onChange={this.handleCatSelect}
+                        fullWidth={true}
                     >
                         <MenuItem value={'Warzywa'} primaryText="Warzywa"/>
                         <MenuItem value={'Owoce'} primaryText="Owoce"/>
                         <MenuItem value={'Mięso'} primaryText="Mięso"/>
                         <MenuItem value={'Ryby'} primaryText="Ryby"/>
                         <MenuItem value={'Nabiał'} primaryText="Nabiał"/>
+                        <MenuItem value={'Vege-Food'} primaryText="Vege-Food"/>
                     </SelectField>
 
                     <RaisedButton label="Dodaj" primary={true} type="submit" style={{display: 'block'}}/>

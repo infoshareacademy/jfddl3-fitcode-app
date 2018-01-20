@@ -17,7 +17,7 @@ class FoodList extends Component {
     state = {
         data: null,
         foodName: '',
-        kcalSlider: 150,
+        kcalSlider: 280,
         catSelect: 'all',
         favUid: null,
     }
@@ -78,7 +78,7 @@ class FoodList extends Component {
                             <Slider
                                 min={0}
                                 max={300}
-                                step={30}
+                                step={10}
                                 value={this.state.kcalSlider}
                                 onChange={this.handleKcalSlider}
                             />
@@ -94,6 +94,7 @@ class FoodList extends Component {
                                 <MenuItem value={'Mięso'} primaryText="Mięso"/>
                                 <MenuItem value={'Ryby'} primaryText="Ryby"/>
                                 <MenuItem value={'Nabiał'} primaryText="Nabiał"/>
+                                <MenuItem value={'Vege-Food'} primaryText="Vege Food"/>
                             </SelectField>
                         </CardText>
                     </Card>
@@ -103,7 +104,7 @@ class FoodList extends Component {
                     style={{margin: 20, padding: 20}}
                     zDepth={2}
                 >
-                    <List><Subheader>Test Food List</Subheader>
+                    <List><Subheader>General Foodies</Subheader>
                         {
                             this.state.data && this.state.data
                                 .filter(([key, product]) => product.name.indexOf(this.state.foodName) !== -1)
@@ -119,7 +120,7 @@ class FoodList extends Component {
                                             <ListItem
                                                 primaryText={product.name}
                                                 secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                                leftAvatar={<Avatar src={product.photo}/>}
+                                                leftAvatar={<Avatar src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
                                                 rightIcon={
                                                     this.state.favUid && this.state.favUid.indexOf(key) === -1 ?
                                                         <ActionFavoriteBorder/>

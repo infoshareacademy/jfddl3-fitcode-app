@@ -15,12 +15,14 @@ class SideBar extends Component {
                 {
                     this.props.menuElements
                         .map((element, index) => (
-                            <MenuItem
-                                onClick={this.props.butt}
-                                key={index}
-                            >
-                                <Link to={element[1]}>{element[0]}</Link>
-                            </MenuItem>
+                            <Link to={element[1]} style={{textDecoration: 'none'}}>
+                                <MenuItem
+                                    onClick={this.props.butt}
+                                    key={index}
+                                >
+                                    {element[0]}
+                                </MenuItem>
+                            </Link>
                         ))
                 }
             </Drawer>

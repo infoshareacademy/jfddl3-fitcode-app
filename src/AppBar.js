@@ -5,7 +5,7 @@ class AppBar extends Component {
     render() {
         return (
             <MuiAppBar
-                title="My First App"
+                title="FitCode App"
                 onLeftIconButtonClick={this.props.butt}
             />
         )

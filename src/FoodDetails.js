@@ -1,5 +1,7 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
+import Paper from 'material-ui/Paper';
+
 // import foodBase from './database'
 //
 // const id = '7de10565-8826-40b8-9da0-adbf044b49af' //tutaj beda przekazane dane poprzez URL
@@ -90,7 +92,7 @@ class FoodDetails extends React.Component {
     render() {
         const id = this.props.match.params.uid;
         return (
-            <div>
+            <Paper style={{margin: 20, padding: 20}} zDepth={2}>
                 {
                     this.state.data && this.state.data
                         .filter(([key, product]) => id === key)
@@ -104,7 +106,13 @@ class FoodDetails extends React.Component {
                                     <p>Tluszcz: {product.fat}</p>
                                     <p>Weglowodany: {product.carbohydrate}</p>
                                     <p>Cukry: {product.sugars}</p>
-                                    <p>Foto: {product.photo}</p>
+                                    <p>
+                                        <img
+                                            src={`${process.env.PUBLIC_URL}/img/${product.photo}`}
+                                            alt=""
+                                            style={{width:'50vw', height:'auto'}}
+                                        />
+                                    </p>
 
                                     {
                                         this.state.favUid && this.state.favUid.indexOf(key) === -1 ?
@@ -123,7 +131,7 @@ class FoodDetails extends React.Component {
                                 </div>
                         )
                 }
-            </div>
+            </Paper>
         )
     }
 }

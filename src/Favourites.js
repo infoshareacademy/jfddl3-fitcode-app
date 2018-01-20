@@ -43,7 +43,7 @@ class Favourites extends Component {
                     style={{margin: 20, padding: 20}}
                     zDepth={2}
                 >
-                    <List><Subheader>Test Food List</Subheader>
+                    <List><Subheader>My Favourite Foodies</Subheader>
                         {
                             this.state.data &&
                             this.state.favUid &&
@@ -59,7 +59,7 @@ class Favourites extends Component {
                                             <ListItem
                                                 primaryText={product.name}
                                                 secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                                leftAvatar={<Avatar src={product.photo}/>}
+                                                leftAvatar={<Avatar src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
                                                 rightIcon={<ActionFavorite/>}
                                             />
                                         </Link>
