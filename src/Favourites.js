@@ -22,20 +22,24 @@ class Favourites extends Component {
             .then(response => response.json())
             .then(parsedJSONData => {
                     this.setState({data: Object.entries(parsedJSONData || {})});
-                    fetch(
-                        `https://jfddl3-fitcode.firebaseio.com/products/favourites.json`
-                    )
-                        .then(response => response.json())
-                        .then(parsedJSONData => {
-                                this.setState({favUid: Object.values(parsedJSONData || {})});
-                            }
-                        )
+                    this.getFavFromDb();
+                }
+            )
+    }
+
+    getFavFromDb = () => {
+        fetch(
+            `https://jfddl3-fitcode.firebaseio.com/products/favourites.json`
+        )
+            .then(response => response.json())
+            .then(parsedJSONData => {
+                    this.setState({favUid: Object.values(parsedJSONData || {})});
                 }
             )
     }
 
     render() {
-        console.log(this.state.favUid)
+        //console.log(this.state.favUid)
         return (
             <div>
 

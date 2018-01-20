@@ -22,7 +22,6 @@ class FoodList extends Component {
         favUid: null,
     }
 
-
     componentWillMount() {
         fetch(
             `https://jfddl3-fitcode.firebaseio.com/products/food.json`
@@ -30,18 +29,21 @@ class FoodList extends Component {
             .then(response => response.json())
             .then(parsedJSONData => {
                     this.setState({data: Object.entries(parsedJSONData || {})});
-                    fetch(
-                        `https://jfddl3-fitcode.firebaseio.com/products/favourites.json`
-                    )
-                        .then(response => response.json())
-                        .then(parsedJSONData => {
-                                this.setState({favUid: Object.values(parsedJSONData || {})});
-                            }
-                        )
+                    this.getFavFromDb();
                 }
             )
     }
 
+    getFavFromDb = () => {
+        fetch(
+            `https://jfddl3-fitcode.firebaseio.com/products/favourites.json`
+        )
+            .then(response => response.json())
+            .then(parsedJSONData => {
+                    this.setState({favUid: Object.values(parsedJSONData || {})});
+                }
+            )
+    }
 
     handleFoodName = (event, value) => {
         this.setState({foodName: value});
@@ -64,7 +66,6 @@ class FoodList extends Component {
                     <Card>
                         <CardHeader
                             title="Search your foodies"
-                            //subtitle="If you have any haha"
                             actAsExpander={true}
                             showExpandableButton={true}
                         />
@@ -76,13 +77,14 @@ class FoodList extends Component {
                                 onChange={this.handleFoodName}
                             />
                             <Slider
+                                style={{marginBottom: 0}}
                                 min={0}
                                 max={300}
                                 step={10}
                                 value={this.state.kcalSlider}
                                 onChange={this.handleKcalSlider}
                             />
-                            <p><span>{this.state.kcalSlider} Kcal</span></p>
+                            <div><span>{this.state.kcalSlider} kcal</span></div>
                             <SelectField
                                 floatingLabelText="Categories"
                                 value={this.state.catSelect}
@@ -120,7 +122,8 @@ class FoodList extends Component {
                                             <ListItem
                                                 primaryText={product.name}
                                                 secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                                leftAvatar={<Avatar src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
+                                                leftAvatar={<Avatar
+                                                    src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
                                                 rightIcon={
                                                     this.state.favUid && this.state.favUid.indexOf(key) === -1 ?
                                                         <ActionFavoriteBorder/>

@@ -2,10 +2,6 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 
-// import foodBase from './database'
-//
-// const id = '7de10565-8826-40b8-9da0-adbf044b49af' //tutaj beda przekazane dane poprzez URL
-
 const databaseUrl = 'https://jfddl3-fitcode.firebaseio.com/products/favourites/'
 
 class FoodDetails extends React.Component {
@@ -16,29 +12,28 @@ class FoodDetails extends React.Component {
         favUid: null,
     }
 
-
     componentWillMount() {
-        fetch(
-            `https://jfddl3-fitcode.firebaseio.com/products/food.json`
-        )
+        fetch(`https://jfddl3-fitcode.firebaseio.com/products/food.json`)
             .then(response => response.json())
             .then(parsedJSONData => {
                     this.setState({data: Object.entries(parsedJSONData), id: this.props.match.params.uid});
-                    fetch(
-                        `https://jfddl3-fitcode.firebaseio.com/products/favourites.json`
-                    )
-                        .then(response => response.json())
-                        .then(parsedJSONData => {
-                                this.setState({favData: Object.entries(parsedJSONData || {})});
-                                this.setState({favUid: Object.values(parsedJSONData || {})});
-                            }
-                        )
+                    this.getFavFromDb();
+                }
+            )
+    }
+
+    getFavFromDb = () => {
+        fetch(`https://jfddl3-fitcode.firebaseio.com/products/favourites.json`)
+            .then(response => response.json())
+            .then(parsedJSONData => {
+                    this.setState({favData: Object.entries(parsedJSONData || {})});
+                    this.setState({favUid: Object.values(parsedJSONData || {})});
                 }
             )
     }
 
     addUidToFavList = () => {
-        console.log(this.state.id)
+        //console.log(this.state.id)
         fetch(
             databaseUrl + '/.json',
             {
@@ -48,14 +43,7 @@ class FoodDetails extends React.Component {
         )
             .then(() => {
                 console.log('UDALO SIE DODAC');
-                fetch(
-                    `https://jfddl3-fitcode.firebaseio.com/products/favourites.json`
-                )
-                    .then(response => response.json())
-                    .then(parsedJSONData => {
-                            this.setState({favUid: Object.values(parsedJSONData || {})});
-                        }
-                    )
+                this.getFavFromDb();
             })
             .catch((err) => alert('Coś poszło nie tak!'))
     }
@@ -67,7 +55,7 @@ class FoodDetails extends React.Component {
                 url += this.state.favData[i][0]
             }
         }
-        console.log(url)
+        //console.log(url)
         fetch(
             url + '/.json',
             {
@@ -76,14 +64,7 @@ class FoodDetails extends React.Component {
         )
             .then(() => {
                 console.log('UDALO SIE DELETE');
-                fetch(
-                    `https://jfddl3-fitcode.firebaseio.com/products/favourites.json`
-                )
-                    .then(response => response.json())
-                    .then(parsedJSONData => {
-                            this.setState({favUid: Object.values(parsedJSONData || {})});
-                        }
-                    )
+                this.getFavFromDb();
             })
             .catch((err) => alert(err))
     }
