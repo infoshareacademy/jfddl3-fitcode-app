@@ -8,7 +8,6 @@ import Dashboard from './Dashboard'
 import Favourites from './Favourites'
 import AppBar from './AppBar'
 import SideBar from './SideBar'
-import ShareButton from './ShareButton'
 
 import './index.css'
 import FoodDetails from "./FoodDetails";
@@ -50,7 +49,7 @@ class App extends Component {
                         <Route path="/food-add" component={FoodAdd}/>
                         <Route path="/food-details" component={FoodDetails}/>
 
-                        <ShareButton />
+                        <FoodAdd />
                     </div>
                 </BrowserRouter>
             </MuiThemeProvider>
