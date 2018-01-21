@@ -117,7 +117,8 @@ class FoodList extends Component {
                                                 primaryText={product.name}
                                                 secondaryText={`Kcal: ${product.energy} | ${product.category}`}
                                                 leftAvatar={<Avatar
-                                                    src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
+                                                    src={`${process.env.PUBLIC_URL}/img/${product.photo}`}
+                                                />}
                                                 rightIcon={
                                                     this.state.favUid && this.state.favUid.indexOf(key) === -1 ?
                                                         <ActionFavoriteBorder/>
