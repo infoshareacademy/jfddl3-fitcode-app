@@ -1,9 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-const Favourites = () => (
-    <div>
-        <h2>Favourites</h2>
-    </div>
-)
+class Favourites extends React.Component {
 
+    render() {
+        return (
+            <div>Favs</div>
+        )
+    }
+}
 export default Favourites
