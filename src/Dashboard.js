@@ -7,11 +7,11 @@ import {Grid, Row, Col} from 'react-flexbox-grid'
 
 const data = [
     {
-        value: 40,
+        value: 30,
         name: 'warzywa'
     },
     {
-        value: 40,
+        value: 50,
         name: 'owoce'
     },
     {
