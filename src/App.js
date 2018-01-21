@@ -47,7 +47,9 @@ class App extends Component {
                         <Route path="/food-list" component={FoodList}/>
                         <Route path="/food-favourites" component={Favourites}/>
                         <Route path="/food-add" component={FoodAdd}/>
-                        <Route path="/food-details/:uid/" component={FoodDetails}/>
+                        <Route path="/food-details" component={FoodDetails}/>
+
+                        <FoodAdd />
                     </div>
                 </BrowserRouter>
             </MuiThemeProvider>
