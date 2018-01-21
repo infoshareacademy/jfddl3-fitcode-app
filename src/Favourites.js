@@ -47,7 +47,7 @@ class Favourites extends Component {
                     style={{margin: 20, padding: 20}}
                     zDepth={2}
                 >
-                    <List><Subheader>My Favourite Foodies</Subheader>
+                    <List><Subheader>Moje Ulubione Jedzonka</Subheader>
                         {
                             this.state.data &&
                             this.state.favUid &&

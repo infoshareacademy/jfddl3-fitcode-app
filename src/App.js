@@ -20,9 +20,9 @@ class App extends Component {
         isDrawerOpen: false,
         menuElements: [
             ['Home','/'],
-            ['Foodies List','/food-list'],
-            ['Add New Foodie','/food-add'],
-            ['Fav Foodies','/food-favourites']
+            ['Lista Jedzonek','/food-list'],
+            ['Dodaj Jedzonko','/food-add'],
+            ['Ulubione Jedzonka','/food-favourites']
         ]
     }
 

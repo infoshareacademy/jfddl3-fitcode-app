@@ -59,20 +59,16 @@ class FoodList extends Component {
         return (
             <div>
 
-                <Paper
-                    style={{margin: 20, padding: 20}}
-                    zDepth={2}
-                >
+                <Paper style={{margin: 20, padding: 20}} zDepth={2}>
                     <Card>
                         <CardHeader
-                            title="Search your foodies"
+                            title="Filtry jedzonkowe"
                             actAsExpander={true}
                             showExpandableButton={true}
                         />
                         <CardText expandable={true}>
                             <TextField
-                                // hintText="Hint Text"
-                                floatingLabelText="Search your foodie..."
+                                floatingLabelText="Szukaj jedzonka..."
                                 fullWidth={true}
                                 onChange={this.handleFoodName}
                             />
@@ -86,7 +82,7 @@ class FoodList extends Component {
                             />
                             <div><span>{this.state.kcalSlider} kcal</span></div>
                             <SelectField
-                                floatingLabelText="Categories"
+                                floatingLabelText="Kategorie"
                                 value={this.state.catSelect}
                                 onChange={this.handleCatSelect}
                             >
@@ -102,11 +98,9 @@ class FoodList extends Component {
                     </Card>
                 </Paper>
 
-                <Paper
-                    style={{margin: 20, padding: 20}}
-                    zDepth={2}
-                >
-                    <List><Subheader>General Foodies</Subheader>
+                <Paper style={{margin: 20, padding: 20}} zDepth={2}>
+                    <List>
+                        <Subheader>Nasze Jedzonka</Subheader>
                         {
                             this.state.data && this.state.data
                                 .filter(([key, product]) => product.name.indexOf(this.state.foodName) !== -1)
