@@ -127,7 +127,7 @@ class FoodAdd extends Component {
                         <MenuItem value={'Mięso'} primaryText="Mięso"/>
                         <MenuItem value={'Ryby'} primaryText="Ryby"/>
                         <MenuItem value={'Nabiał'} primaryText="Nabiał"/>
-                        <MenuItem value={'Vege Food'} primaryText="Vege Food"/>
+                        <MenuItem value={'Vege-Food'} primaryText="Vege-Food"/>
                     </SelectField>
 
                     <RaisedButton label="Dodaj" primary={true} type="submit" style={{display: 'block'}}/>

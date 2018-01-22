@@ -11,6 +11,7 @@ import SideBar from './SideBar'
 
 import './index.css'
 import FoodDetails from "./FoodDetails";
+import ShareButton from './ShareButton'
 
 
 class App extends Component {
@@ -19,10 +20,9 @@ class App extends Component {
         isDrawerOpen: false,
         menuElements: [
             ['Home','/'],
-            ['Foodies List','/food-list'],
-            ['Add New Foodie','/food-add'],
-            ['Fav Foodies','/food-favourites'],
-            ['Food Details Butt', '/food-details']
+            ['Lista Jedzonek','/food-list'],
+            ['Dodaj Jedzonko','/food-add'],
+            ['Ulubione Jedzonka','/food-favourites']
         ]
     }
 
@@ -47,9 +47,9 @@ class App extends Component {
                         <Route path="/food-list" component={FoodList}/>
                         <Route path="/food-favourites" component={Favourites}/>
                         <Route path="/food-add" component={FoodAdd}/>
-                        <Route path="/food-details" component={FoodDetails}/>
+                        <Route path="/food-details/:uid/" component={FoodDetails}/>
 
-                        <FoodAdd />
+                        <ShareButton />
                     </div>
                 </BrowserRouter>
             </MuiThemeProvider>

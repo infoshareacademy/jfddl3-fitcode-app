@@ -13,8 +13,8 @@ const style = {
 const ShareButton = () => (
     <div>
         <FloatingActionButton className="material-icons"
-            style={style}
-            onClick={()=>window.open('http://www.facebook.com/sharer.php?u=http://app.fitcode.jfddl3.is-academy.pl')}
+                              style={style}
+                              onClick={()=>window.open('http://www.facebook.com/sharer.php?u=http://app.fitcode.jfddl3.is-academy.pl')}
 
         >
             <ActionThumbUp/>
