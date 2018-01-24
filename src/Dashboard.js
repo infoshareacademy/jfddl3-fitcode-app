@@ -5,25 +5,33 @@ import {Link} from 'react-router-dom'
 import Paper from 'material-ui/Paper';
 import {Grid, Row, Col} from 'react-flexbox-grid'
 
+
+
+
 const data = [
     {
-        value: 40,
-        name: 'warzywa'
+        value:40,
+        name: 'warzywa',
+        fill:'lime'
+
     },
     {
         value: 40,
-        name: 'owoce'
+        name: 'owoce',
+        fill:'red'
     },
     {
         value: 20,
-        name: 'produkty mięsne'
+        name: 'produkty mięsne',
+        fill:'yellow'
     }
 ];
 const lineChartData = [
-    {name: 'Ilość użytkowników', pv: 2400, amt: 2100},
-    {pv: 1398, amt: 2100},
-    {pv: 9800, amt: 2100}
-
+    {name: 'Ilość użytkowników', uv: 0, pv: 0},
+    { uv: 1000, pv: 500},
+    { uv: 2780, pv: 1800},
+    { uv: 1890, pv: 1000},
+    { uv: 1890, pv: 2500},
 ];
 const style = {
     margin: 12,
