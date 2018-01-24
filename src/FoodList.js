@@ -103,31 +103,32 @@ class FoodList extends Component {
                         <Subheader>Nasze Jedzonka</Subheader>
                         {
                             this.state.data && this.state.data
-                                .filter(([key, product]) => product.name.indexOf(this.state.foodName) !== -1)
-                                .filter(([key, product]) => this.state.catSelect === 'all' ? true : product.category === this.state.catSelect)
-                                .filter(([key, product]) => product.energy < this.state.kcalSlider)
-                                .map(
-                                    ([key, product]) => (
-                                        <Link
-                                            to={`/food-details/${key}`}
-                                            style={{textDecoration: 'none'}}
-                                            key={key}
-                                        >
-                                            <ListItem
-                                                primaryText={product.name}
-                                                secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                                leftAvatar={<Avatar
-                                                    src={`${process.env.PUBLIC_URL}/img/${product.photo}`}
-                                                />}
-                                                rightIcon={
-                                                    this.state.favUid && this.state.favUid.indexOf(key) === -1 ?
-                                                        <ActionFavoriteBorder/>
-                                                        :
-                                                        <ActionFavorite/>
-                                                }
-                                            />
-                                        </Link>
-                                    ))
+                                .filter(([key, product]) =>
+                                    product.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(this.state.foodName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "")) !== -1
+                                    ).filter(([key, product]) => this.state.catSelect === 'all' ? true : product.category === this.state.catSelect)
+                                        .filter(([key, product]) => product.energy < this.state.kcalSlider)
+                                        .map(
+                                            ([key, product]) => (
+                                                <Link
+                                                    to={`/food-details/${key}`}
+                                                    style={{textDecoration: 'none'}}
+                                                    key={key}
+                                                >
+                                                    <ListItem
+                                                        primaryText={product.name}
+                                                        secondaryText={`Kcal: ${product.energy} | ${product.category}`}
+                                                        leftAvatar={<Avatar
+                                                            src={`${process.env.PUBLIC_URL}/img/${product.photo}`}
+                                                        />}
+                                                        rightIcon={
+                                                            this.state.favUid && this.state.favUid.indexOf(key) === -1 ?
+                                                                <ActionFavoriteBorder/>
+                                                                :
+                                                                <ActionFavorite/>
+                                                        }
+                                                    />
+                                                </Link>
+                                            ))
                         }
                     </List>
                 </Paper>
