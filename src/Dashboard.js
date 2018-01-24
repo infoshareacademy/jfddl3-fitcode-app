@@ -28,7 +28,7 @@ const data = [
 ];
 const lineChartData = [
     {name: 'Ilość użytkowników', uv: 0, pv: 0},
-    { uv: 1000, pv: 500},
+    { uv: 1020, pv: 500},
     { uv: 2780, pv: 1800},
     { uv: 1890, pv: 1000},
     { uv: 1890, pv: 2500},
