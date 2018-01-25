@@ -1,5 +1,5 @@
 import React from 'react';
-import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie} from 'recharts';
+import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Label, Legend, PieChart, Pie} from 'recharts';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Link} from 'react-router-dom'
 import Paper from 'material-ui/Paper';
@@ -13,7 +13,6 @@ const data = [
         value:40,
         name: 'warzywa',
         fill:'lime'
-
     },
     {
         value: 40,
@@ -22,16 +21,16 @@ const data = [
     },
     {
         value: 20,
-        name: 'produkty mięsne',
+        name: 'mięso',
         fill:'yellow'
     }
 ];
 const lineChartData = [
-    {name: 'Ilość użytkowników', uv: 0, pv: 0},
-    { uv: 1020, pv: 500},
-    { uv: 2780, pv: 1800},
-    { uv: 1890, pv: 1000},
-    { uv: 1890, pv: 2500},
+    {name: 'Tydzień:', użytkownicy: 0},
+    { name:'1', użytkownicy: 500},
+    { name:'2', użytkownicy: 1800},
+    { name:'3', użytkownicy: 1000},
+    {name:'4', użytkownicy: 2500},
 ];
 const style = {
     margin: 12,
@@ -81,14 +80,16 @@ const Dashboard = () => (
                             style={{margin: '0 auto'}}
                             width={window.innerWidth < 500 ? 150 : 400}
                             height={window.innerWidth < 500 ? 150 : 400}
+
                         >
                             <Pie
                                 data={data}
                                 dataKey="value"
                                 nameKey="name"
                                 fill="#8884d8"
+                                label={({payload}) =>`${payload.name} - ${payload.value} % `}
+                                labelLine={true}
                             />
-                            <Tooltip/>
 
                         </PieChart>
 
@@ -101,7 +102,7 @@ const Dashboard = () => (
                         lg={6}
                         xl={6}
                     >
-                        <h3>Ilość naszych użytkowników ciągle rośnie!</h3>
+                        <h3>Ilość użytkowników korzystających codziennie z naszej aplikacji:</h3>
                         <LineChart
                             style={{margin: '0 auto'}}
                             width={window.innerWidth < 500 ? 150 : 400}
@@ -114,8 +115,8 @@ const Dashboard = () => (
                             <CartesianGrid strokeDasharray="3 3"/>
                             <Tooltip/>
                             <Legend/>
-                            <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{r: 8}}/>
-                            <Line type="monotone" dataKey="uv" stroke="#82ca9d"/>
+                            <Line type="monotone" dataKey="użytkownicy" stroke="#8884d8" activeDot={{r: 8}}/>
+
                         </LineChart>
                     </Col>
 
