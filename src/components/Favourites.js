@@ -4,42 +4,18 @@ import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
-
 import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+
+import {connect} from 'react-redux'
+import {fetchProducts} from '../state/products'
+import {fetchFav} from '../state/fav'
 
 
 class Favourites extends Component {
-    state = {
-        data: null,
-        favUid: null
-    }
-
-
-    componentWillMount() {
-        fetch(
-            `https://jfddl3-fitcode.firebaseio.com/products/food.json`
-        )
-            .then(response => response.json())
-            .then(parsedJSONData => {
-                    this.setState({data: Object.entries(parsedJSONData || {})});
-                    this.getFavFromDb();
-                }
-            )
-    }
-
-    getFavFromDb = () => {
-        fetch(
-            `https://jfddl3-fitcode.firebaseio.com/products/favourites.json`
-        )
-            .then(response => response.json())
-            .then(parsedJSONData => {
-                    this.setState({favUid: Object.values(parsedJSONData || {})});
-                }
-            )
-    }
 
     render() {
-        //console.log(this.state.favUid)
+
         return (
             <div>
 
@@ -47,12 +23,16 @@ class Favourites extends Component {
                     style={{margin: 20, padding: 20}}
                     zDepth={2}
                 >
+                    <RaisedButton
+                        label="Fetch Food and Fav?"
+                        onClick={this.props.getFoodData}
+                    />
                     <List><Subheader>Moje Ulubione Jedzonka</Subheader>
                         {
-                            this.state.data &&
-                            this.state.favUid &&
-                            this.state.data
-                                .filter(([key, product]) => this.state.favUid.indexOf(key) !== -1)
+                            this.props.foodData &&
+                            this.props.favData &&
+                            this.props.foodData
+                                .filter(([key, product]) => this.props.favData.indexOf(key) !== -1)
                                 .map(
                                     ([key, product]) => (
                                         <Link
@@ -77,4 +57,19 @@ class Favourites extends Component {
     }
 }
 
-export default Favourites
+const mapStateToProps = state => ({
+    foodData: state.products.productsData,
+    favData: state.fav.favData
+})
+
+const mapDispatchToProps = dispatch => ({
+    getFoodData: () => {
+        dispatch(fetchProducts())
+        dispatch(fetchFav())
+    }
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Favourites)
