@@ -5,6 +5,8 @@ import {Link} from 'react-router-dom'
 import Paper from 'material-ui/Paper';
 import {Grid, Row, Col} from 'react-flexbox-grid'
 
+import LogInLogsList from './LogInLogList'
+
 const data = [
     {
         value: 40,
@@ -38,18 +40,18 @@ const Dashboard = () => (
 
         <Paper style={{margin: 20, padding: 20}}
                zDepth={2}>
-            <h1>
-                Witaj w aplikacji FitCode!
-                <br/><br/>
-                Bądź FIT razem z nami!
-            </h1>
-            <h2>W naszej aplikacji możesz sprawdzać produkty, oraz dodawać nowe! Zacznij już dziś.</h2>
-            <Link to="/food-list">
-                <RaisedButton label="Zobacz produkty!" secondary={true} style={style}/>
-            </Link>
-            <Link to="/food-add">
-                <RaisedButton label="Dodaj produkt!" secondary={true} style={style}/>
-            </Link>
+
+           <LogInLogsList/>
+
+
+
+
+
+
+
+
+
+
         </Paper>
 
 
