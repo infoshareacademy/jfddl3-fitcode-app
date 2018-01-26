@@ -2,7 +2,13 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 
+import {connect} from 'react-redux'
+import {fetchProducts} from '../state/products'
+import {fetchFav} from '../state/fav'
+
 const databaseUrl = 'https://jfddl3-fitcode.firebaseio.com/products/favourites/'
+
+
 
 class FoodDetails extends React.Component {
     state = {
@@ -12,25 +18,25 @@ class FoodDetails extends React.Component {
         favUid: null,
     }
 
-    componentWillMount() {
-        fetch(`https://jfddl3-fitcode.firebaseio.com/products/food.json`)
-            .then(response => response.json())
-            .then(parsedJSONData => {
-                    this.setState({data: Object.entries(parsedJSONData), id: this.props.match.params.uid});
-                    this.getFavFromDb();
-                }
-            )
-    }
-
-    getFavFromDb = () => {
-        fetch(`https://jfddl3-fitcode.firebaseio.com/products/favourites.json`)
-            .then(response => response.json())
-            .then(parsedJSONData => {
-                    this.setState({favData: Object.entries(parsedJSONData || {})});
-                    this.setState({favUid: Object.values(parsedJSONData || {})});
-                }
-            )
-    }
+    // componentWillMount() {
+    //     fetch(`https://jfddl3-fitcode.firebaseio.com/products/food.json`)
+    //         .then(response => response.json())
+    //         .then(parsedJSONData => {
+    //                 this.setState({data: Object.entries(parsedJSONData), id: this.props.match.params.uid});
+    //                 this.getFavFromDb();
+    //             }
+    //         )
+    // }
+    //
+    // getFavFromDb = () => {
+    //     fetch(`https://jfddl3-fitcode.firebaseio.com/products/favourites.json`)
+    //         .then(response => response.json())
+    //         .then(parsedJSONData => {
+    //                 this.setState({favData: Object.entries(parsedJSONData || {})});
+    //                 this.setState({favUid: Object.values(parsedJSONData || {})});
+    //             }
+    //         )
+    // }
 
     addUidToFavList = () => {
         //console.log(this.state.id)
@@ -75,7 +81,7 @@ class FoodDetails extends React.Component {
         return (
             <Paper style={{margin: 20, padding: 20}} zDepth={2}>
                 {
-                    this.state.data && this.state.data
+                    this.props.foodData && this.props.foodData
                         .filter(([key, product]) => id === key)
                         .map(
                             ([key, product]) =>
@@ -96,7 +102,7 @@ class FoodDetails extends React.Component {
                                     </p>
 
                                     {
-                                        this.state.favUid && this.state.favUid.indexOf(key) === -1 ?
+                                        this.props.favData && this.props.favData.indexOf(key) === -1 ?
                                             <RaisedButton label="+ ulubione" primary={true} style={{margin: 12}}
                                                           onClick={this.addUidToFavList}
                                             />
@@ -117,4 +123,17 @@ class FoodDetails extends React.Component {
     }
 }
 
-export default FoodDetails
+const mapStateToProps = state => ({
+    foodData: state.products.productsData,
+    favData: state.fav.favData
+})
+
+const mapDispatchToProps = dispatch => ({
+    // getFoodData: () => dispatch(fetchProducts()),
+    // getFavData: () => dispatch(fetchFav()),
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FoodDetails)
