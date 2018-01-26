@@ -8,6 +8,7 @@ import {Grid, Row, Col} from 'react-flexbox-grid'
 
 
 
+
 const data = [
     {
         value:40,
@@ -65,15 +66,9 @@ const Dashboard = () => (
             style={{margin: 20, padding: 20}}
             zDepth={2}
         >
-            <Grid fluid>
+            <Grid >
                 <Row>
-                    <Col
-                        xs={12}
-                        sm={12}
-                        md={12}
-                        lg={6}
-                        xl={6}
-                    >
+                    <Col xs={12} md={6} lg={4}>
 
                         <h3> Nasi użytkownicy najczęściej spożywają:</h3>
                         <PieChart
@@ -95,14 +90,8 @@ const Dashboard = () => (
 
                     </Col>
 
-                    <Col
-                        xs={12}
-                        sm={12}
-                        md={12}
-                        lg={6}
-                        xl={6}
-                    >
-                        <h3>Ilość użytkowników korzystających codziennie z naszej aplikacji:</h3>
+                    <Col xs={12} md={6} lg={4}>
+                        <h3>Ilość użytkowników korzystających tygodniowo z naszej aplikacji:</h3>
                         <LineChart
                             style={{margin: '0 auto'}}
                             width={window.innerWidth < 500 ? 150 : 400}
