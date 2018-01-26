@@ -136,8 +136,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    getFoodData: () => dispatch(fetchProducts()),
-    getFavData: () => dispatch(fetchFav()),
+    // getFoodData: () => dispatch(fetchProducts()),
+    // getFavData: () => dispatch(fetchFav()),
 })
 
 export default connect(
