@@ -9,7 +9,7 @@ class AppBar extends Component {
     render() {
         return (
             <MuiAppBar
-                title={`FitCode App | ${this.props.userEmail}`}
+                title={`FitCode App`}
                 onLeftIconButtonClick={this.props.butt}
                 iconElementRight={
                     <FlatButton
@@ -23,7 +23,7 @@ class AppBar extends Component {
 }
 
 const mapStateToProps = state => ({
-    userEmail: state.auth.user.email
+    //userEmail: state.auth.user.email
 })
 
 const mapDispatchToProps = dispatch => ({

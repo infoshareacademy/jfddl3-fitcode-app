@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard'
 import Favourites from './components/Favourites'
 import AppBar from './components/AppBar'
 import SideBar from './components/SideBar'
+import UserBar from './components/UserBar'
 
 import './index.css'
 import FoodDetails from "./components/FoodDetails";
@@ -46,6 +47,7 @@ class App extends Component {
                     <div>
                         <LoadingIndicator />
                         <AppBar butt={this.drawerToggle}/>
+                        <UserBar />
                         <SideBar
                             isOpen={this.state.isDrawerOpen}
                             butt={this.drawerToggle}
