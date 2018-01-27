@@ -5,6 +5,7 @@ import Paper from 'material-ui/Paper';
 import {connect} from 'react-redux'
 import {fetchProducts} from '../state/products'
 import {fetchFav} from '../state/fav'
+import {database} from "../firebase";
 
 const databaseUrl = 'https://jfddl3-fitcode.firebaseio.com/products/favourites/'
 
@@ -13,76 +14,42 @@ const databaseUrl = 'https://jfddl3-fitcode.firebaseio.com/products/favourites/'
 class FoodDetails extends React.Component {
     state = {
         data: null,
-        id: null,
+        id : this.props.match.params.uid,
         favData: null,
         favUid: null,
     }
 
-    // componentWillMount() {
-    //     fetch(`https://jfddl3-fitcode.firebaseio.com/products/food.json`)
-    //         .then(response => response.json())
-    //         .then(parsedJSONData => {
-    //                 this.setState({data: Object.entries(parsedJSONData), id: this.props.match.params.uid});
-    //                 this.getFavFromDb();
-    //             }
-    //         )
-    // }
-    //
-    // getFavFromDb = () => {
-    //     fetch(`https://jfddl3-fitcode.firebaseio.com/products/favourites.json`)
-    //         .then(response => response.json())
-    //         .then(parsedJSONData => {
-    //                 this.setState({favData: Object.entries(parsedJSONData || {})});
-    //                 this.setState({favUid: Object.values(parsedJSONData || {})});
-    //             }
-    //         )
-    // }
 
     addUidToFavList = () => {
-        //console.log(this.state.id)
-        fetch(
-            databaseUrl + '/.json',
-            {
-                method: 'POST',
-                body: JSON.stringify(this.state.id)
-            }
-        )
-            .then(() => {
-                console.log('UDALO SIE DODAC');
-                this.getFavFromDb();
-            })
-            .catch((err) => alert('Coś poszło nie tak!'))
+        console.log(this.state.id)
+        database.ref(`/products/favourites`)
+            .push(this.state.id)
     }
 
     removeUidToFavList = (keyId) => {
-        let url = databaseUrl;
-        for (let i = 0; i < this.state.favData.length; i++) {
-            if (this.state.favData[i][1] === keyId) {
-                url += this.state.favData[i][0]
+        let favToRemoveUrl = '/products/favourites/';
+        for (let i = 0; i < this.props.favData.length; i++) {
+            if (this.props.favData[i][1] === keyId) {
+                favToRemoveUrl += this.props.favData[i][0]
             }
         }
-        //console.log(url)
-        fetch(
-            url + '/.json',
-            {
-                method: 'DELETE'
-            }
-        )
-            .then(() => {
-                console.log('UDALO SIE DELETE');
-                this.getFavFromDb();
-            })
-            .catch((err) => alert(err))
+        console.log(this.props.favData)
+        // database.ref(favToRemoveUrl)
+        //     .remove()
+        //     .then(() => {
+        //         console.log('Fav Removed from DB');
+        //     })
+        //     .catch((err) => console.log(err))
+
     }
 
 
     render() {
-        const id = this.props.match.params.uid;
         return (
             <Paper style={{margin: 20, padding: 20}} zDepth={2}>
                 {
                     this.props.foodData && this.props.foodData
-                        .filter(([key, product]) => id === key)
+                        .filter(([key, product]) => this.state.id === key)
                         .map(
                             ([key, product]) =>
                                 <div key={key}>

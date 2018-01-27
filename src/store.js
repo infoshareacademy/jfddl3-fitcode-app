@@ -24,11 +24,10 @@ const store = createStore(
     )
 )
 
+
 store.dispatch(initAuth())
 store.dispatch(fetchProducts())
 store.dispatch(fetchFav())
-
-
 
 
 export default store

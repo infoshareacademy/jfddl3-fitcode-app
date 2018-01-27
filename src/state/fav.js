@@ -2,15 +2,17 @@ import {startLoading, stopLoading} from './loading'
 import {database} from '../firebase'
 
 const FETCH_FAV = 'products/FETCH_FAV'
-const UPDATE_FAV = 'products/UPDATE_FAV'
+const ADD_FAV = 'products/ADD_FAV'
+const REMOVE_FAV = 'products/REMOVE_FAV'
+
 
 const setFav = (fav) => ({
     type: FETCH_FAV,
     fav: fav
 })
 
-const updateFav = (fav) => ({
-    type: UPDATE_FAV,
+const addFav = (fav) => ({
+    type: ADD_FAV,
     fav: fav
 })
 
@@ -21,28 +23,19 @@ export const fetchFav = () => (dispatch, getState) => {
         )
 }
 
+export const pushFav = () => (dispatch, getState) => {
+    database.ref(`/products/favourites`)
+        .push()
+}
 
-// export const fetchFav = () => (dispatch, getState) => {
-//     dispatch(startLoading())
-//
-//     setTimeout( // this is only to slowly show "Ładowanie..."
-//         () => fetch('https://jfddl3-fitcode.firebaseio.com/products/favourites.json')
-//             .then(response => response.json())
-//             .then(fav => {
-//                 dispatch(setFav(Object.values(fav || {})))
-//                 console.log(fav)
-//                 dispatch(stopLoading())
-//             })
-//             .catch(err => {
-//                 console.log('error fetching products')
-//                 dispatch(stopLoading())
-//             })
-//         , 1000)
-// }
+
 
 const initialState = {
     favData: null
 }
+
+
+
 
 export default (state = initialState, action) => {
     switch (action.type) {
@@ -51,7 +44,12 @@ export default (state = initialState, action) => {
                 ...state,
                 favData: action.fav
             }
-        case UPDATE_FAV:
+        case ADD_FAV:
+            return{
+                ...state,
+                favData: action.fav
+            }
+        case REMOVE_FAV:
             return{
                 ...state,
                 favData: action.fav
