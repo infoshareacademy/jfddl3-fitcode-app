@@ -23,10 +23,6 @@ class Favourites extends Component {
                     style={{margin: 20, padding: 20}}
                     zDepth={2}
                 >
-                    <RaisedButton
-                        label="Fetch Food and Fav?"
-                        onClick={this.props.getFoodData}
-                    />
                     <List><Subheader>Moje Ulubione Jedzonka</Subheader>
                         {
                             this.props.foodData &&
@@ -63,10 +59,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    // getFoodData: () => {
-    //     dispatch(fetchProducts())
-    //     dispatch(fetchFav())
-    // }
+
 })
 
 export default connect(

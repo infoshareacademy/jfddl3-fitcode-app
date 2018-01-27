@@ -18,7 +18,7 @@ const addFav = (fav) => ({
 
 export const fetchFav = () => (dispatch, getState) => {
     auth.onAuthStateChanged((user) => {
-        if(user){ //if not null user is logged in, so set his record in DB
+        if(user){ //if not null user is logged in, so get his favourites
             const uid = getState().auth.user.uid
             database.ref(`/users/${uid}/favourites`)
                 .on('value', (snapshot)=>
