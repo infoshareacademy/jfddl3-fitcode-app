@@ -1,6 +1,7 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
+import MealAdd from './MealAdd'
 
 import {connect} from 'react-redux'
 import {database} from "../firebase";
@@ -68,6 +69,7 @@ class FoodDetails extends React.Component {
                                         onClick={this.props.history.goBack}
                                         label="powrot do listy" secondary={true} style={{margin: 12}}
                                     />
+                                    <MealAdd />
                                 </div>
                         )
                 }
