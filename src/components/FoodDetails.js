@@ -3,44 +3,30 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 
 import {connect} from 'react-redux'
-import {fetchProducts} from '../state/products'
-import {fetchFav} from '../state/fav'
 import {database} from "../firebase";
-
-const databaseUrl = 'https://jfddl3-fitcode.firebaseio.com/products/favourites/'
 
 
 
 class FoodDetails extends React.Component {
     state = {
-        data: null,
         id : this.props.match.params.uid,
-        favData: null,
-        favUid: null,
     }
 
 
     addUidToFavList = () => {
-        console.log(this.state.id)
+        const favArr = this.props.favData.concat(this.state.id)
         database.ref(`/products/favourites`)
-            .push(this.state.id)
+            .set(favArr)
     }
 
-    removeUidToFavList = (keyId) => {
-        let favToRemoveUrl = '/products/favourites/';
-        for (let i = 0; i < this.props.favData.length; i++) {
-            if (this.props.favData[i][1] === keyId) {
-                favToRemoveUrl += this.props.favData[i][0]
+    removeUidFromFavList = (keyId) => {
+        const favArr = this.props.favData.filter((el)=> {
+            if (el !== keyId){
+                return el
             }
-        }
-        console.log(this.props.favData)
-        // database.ref(favToRemoveUrl)
-        //     .remove()
-        //     .then(() => {
-        //         console.log('Fav Removed from DB');
-        //     })
-        //     .catch((err) => console.log(err))
-
+        })
+        database.ref(`/products/favourites`)
+            .set(favArr)
     }
 
 
@@ -75,7 +61,7 @@ class FoodDetails extends React.Component {
                                             />
                                             :
                                             <RaisedButton label="- ulubione" default={true} style={{margin: 12}}
-                                                          onClick={() => this.removeUidToFavList(key)}
+                                                          onClick={() => this.removeUidFromFavList(key)}
                                             />
                                     }
                                     <RaisedButton //href={`/food-list/${key}`}
@@ -94,6 +80,7 @@ const mapStateToProps = state => ({
     foodData: state.products.productsData,
     favData: state.fav.favData
 })
+
 
 const mapDispatchToProps = dispatch => ({
     // getFoodData: () => dispatch(fetchProducts()),

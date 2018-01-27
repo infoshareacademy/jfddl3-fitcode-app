@@ -14,8 +14,7 @@ import {Card, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import {connect} from 'react-redux'
-import {fetchProducts} from '../state/products'
-import {fetchFav} from '../state/fav'
+
 
 
 class FoodList extends Component {

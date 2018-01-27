@@ -19,7 +19,7 @@ const addFav = (fav) => ({
 export const fetchFav = () => (dispatch, getState) => {
     database.ref(`/products/favourites`)
         .on('value', (snapshot)=>
-            dispatch(setFav(Object.values(snapshot.val()) || {}))
+            dispatch(setFav(snapshot.val() || []))
         )
 }
 
@@ -27,6 +27,7 @@ export const pushFav = () => (dispatch, getState) => {
     database.ref(`/products/favourites`)
         .push()
 }
+
 
 
 
