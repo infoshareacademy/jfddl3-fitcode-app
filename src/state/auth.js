@@ -65,8 +65,6 @@ export const logInWithGoogle = () => (dispatch, getState) => {
 
 
 
-
-
 const initialState = {
     user: null
 }

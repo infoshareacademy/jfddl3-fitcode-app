@@ -1,9 +1,9 @@
 import {startLoading, stopLoading} from './loading'
 import {database} from '../firebase'
 
-const FETCH_FAV = 'products/FETCH_FAV'
-const ADD_FAV = 'products/ADD_FAV'
-const REMOVE_FAV = 'products/REMOVE_FAV'
+const FETCH_FAV = 'fav/FETCH_FAV'
+const ADD_FAV = 'fav/ADD_FAV'
+const REMOVE_FAV = 'fav/REMOVE_FAV'
 
 
 const setFav = (fav) => ({

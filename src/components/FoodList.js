@@ -83,14 +83,6 @@ class FoodList extends Component {
 
                 <Paper style={{margin: 20, padding: 20}} zDepth={2}>
                     <List>
-                        <RaisedButton
-                            label="Fetch Food"
-                            onClick={this.props.getFoodData}
-                        />
-                        <RaisedButton
-                            label="Fetch Fav"
-                            onClick={this.props.getFavData}
-                        />
                         <Subheader>Nasze Jedzonka</Subheader>
                         {
                             this.props.foodData && this.props.foodData
