@@ -15,7 +15,7 @@ class FoodDetails extends React.Component {
 
     addUidToFavList = () => {
         const favArr = this.props.favData.concat(this.state.id)
-        database.ref(`/products/favourites`)
+        database.ref(`/users/${this.props.uuid}/favourites`)
             .set(favArr)
     }
 
@@ -25,7 +25,7 @@ class FoodDetails extends React.Component {
                 return el
             }
         })
-        database.ref(`/products/favourites`)
+        database.ref(`/users/${this.props.uuid}/favourites`)
             .set(favArr)
     }
 
@@ -78,7 +78,8 @@ class FoodDetails extends React.Component {
 
 const mapStateToProps = state => ({
     foodData: state.products.productsData,
-    favData: state.fav.favData
+    favData: state.fav.favData,
+    uuid: state.auth.user.uid
 })
 
 

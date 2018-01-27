@@ -1,5 +1,5 @@
 import {startLoading, stopLoading} from './loading'
-import {database} from '../firebase'
+import {database, auth} from '../firebase'
 
 const FETCH_FAV = 'fav/FETCH_FAV'
 const ADD_FAV = 'fav/ADD_FAV'
@@ -17,22 +17,26 @@ const addFav = (fav) => ({
 })
 
 export const fetchFav = () => (dispatch, getState) => {
-    database.ref(`/products/favourites`)
-        .on('value', (snapshot)=>
-            dispatch(setFav(snapshot.val() || []))
-        )
+    auth.onAuthStateChanged((user) => {
+        if(user){ //if not null user is logged in, so set his record in DB
+            const uid = getState().auth.user.uid
+            database.ref(`/users/${uid}/favourites`)
+                .on('value', (snapshot)=>
+                    dispatch(setFav(snapshot.val() || []))
+                )
+        }
+    })
 }
 
 export const pushFav = () => (dispatch, getState) => {
-    database.ref(`/products/favourites`)
-        .push()
+
 }
 
 
 
 
 const initialState = {
-    favData: null
+    favData: []
 }
 
 

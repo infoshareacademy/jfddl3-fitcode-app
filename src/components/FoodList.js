@@ -123,7 +123,8 @@ class FoodList extends Component {
 
 const mapStateToProps = state => ({
     foodData: state.products.productsData,
-    favData: state.fav.favData
+    favData: state.fav.favData,
+    uuid: state.auth.user.uid
 })
 
 const mapDispatchToProps = dispatch => ({

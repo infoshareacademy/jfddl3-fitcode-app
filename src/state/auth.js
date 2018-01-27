@@ -1,4 +1,4 @@
-import {database, auth,googleProvider} from '../firebase'
+import {database, auth, googleProvider} from '../firebase'
 
 const SET_USER = 'auth/SET_USER'
 const SET_LOGIN_LOGS = 'auth/SET_LOGIN_LOGS'
