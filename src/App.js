@@ -12,6 +12,7 @@ import SideBar from './SideBar'
 import './index.css'
 import FoodDetails from "./FoodDetails";
 import ShareButton from './ShareButton'
+import FoodAddRedux from "./FoodAddRedux";
 
 
 class App extends Component {
@@ -46,7 +47,7 @@ class App extends Component {
                         <Route path="/" exact={true} component={Dashboard}/>
                         <Route path="/food-list" component={FoodList}/>
                         <Route path="/food-favourites" component={Favourites}/>
-                        <Route path="/food-add" component={FoodAdd}/>
+                        <Route path="/food-add" component={FoodAddRedux}/>
                         <Route path="/food-details/:uid/" component={FoodDetails}/>
 
                         <ShareButton />

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -8,7 +8,7 @@ import Paper from 'material-ui/Paper';
 
 import textCategories from './categories'
 
-class FoodAdd extends Component {
+class FoodAdd extends React.Component {
 
     state = {
         data: null,
@@ -138,4 +138,4 @@ class FoodAdd extends Component {
 
 }
 
-export default FoodAdd;
+export default FoodAdd
