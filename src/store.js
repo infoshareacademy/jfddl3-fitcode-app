@@ -3,14 +3,17 @@ import thunk from 'redux-thunk'
 
 import productsReducer from './state/products'
 import favReducer from './state/fav'
+import mealsReducer from './state/meals'
 import loadingReducer from './state/loading'
 import authReducer, {initAuth} from './state/auth'
 import {fetchProducts} from './state/products'
 import {fetchFav} from './state/fav'
+import {fetchMeals} from './state/meals'
 
 const reducer = combineReducers({
     products: productsReducer,
     fav: favReducer,
+    meals: mealsReducer,
     loading: loadingReducer,
     auth: authReducer
 })
@@ -28,6 +31,7 @@ const store = createStore(
 store.dispatch(initAuth())
 store.dispatch(fetchProducts())
 store.dispatch(fetchFav())
+store.dispatch(fetchMeals())
 
 
 export default store

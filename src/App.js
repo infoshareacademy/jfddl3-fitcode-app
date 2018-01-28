@@ -9,6 +9,7 @@ import Favourites from './components/Favourites'
 import AppBar from './components/AppBar'
 import SideBar from './components/SideBar'
 import UserBar from './components/UserBar'
+import MealPlan from './components/MealPlan'
 
 import './index.css'
 import FoodDetails from "./components/FoodDetails";
@@ -27,8 +28,10 @@ class App extends Component {
         menuElements: [
             ['Home','/'],
             ['Lista Jedzonek','/food-list'],
-            ['Dodaj Jedzonko','/food-add'],
-            ['Ulubione Jedzonka','/food-favourites']
+            ['Ulubione Jedzonka','/food-favourites'],
+            ['Plan Posilkow','/meal-plan'],
+            ['Dodaj Jedzonko','/food-add']
+
         ]
     }
 
@@ -58,6 +61,7 @@ class App extends Component {
                         <Route path="/food-favourites" component={Favourites}/>
                         <Route path="/food-add" component={FoodAdd}/>
                         <Route path="/food-details/:uid/" component={FoodDetails}/>
+                        <Route path="/meal-plan/" component={MealPlan}/>
 
                         <ShareButton />
                     </div>

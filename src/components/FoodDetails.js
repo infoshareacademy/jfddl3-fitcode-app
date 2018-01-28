@@ -32,6 +32,7 @@ class FoodDetails extends React.Component {
 
 
     render() {
+        console.log(this.props.favData)
         return (
             <Paper style={{margin: 20, padding: 20}} zDepth={2}>
                 {
@@ -69,7 +70,7 @@ class FoodDetails extends React.Component {
                                         onClick={this.props.history.goBack}
                                         label="powrot do listy" secondary={true} style={{margin: 12}}
                                     />
-                                    <MealAdd />
+                                    <MealAdd foodId={this.state.id} />
                                 </div>
                         )
                 }

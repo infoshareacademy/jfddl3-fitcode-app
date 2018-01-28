@@ -5,12 +5,17 @@ import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
+import moment from 'moment'
+
+import {connect} from 'react-redux'
+import {database} from "../firebase";
 
 
-export default class MealAdd extends React.Component {
+class MealAdd extends React.Component {
     state = {
         open: false,
-        mealSelect:'sniadanie'
+        mealSelect:'sniadanie',
+        mealDate: null
     };
 
     handleOpen = () => {
@@ -23,7 +28,29 @@ export default class MealAdd extends React.Component {
 
     handleMealSelect = (event, index, value) => this.setState({mealSelect: value})
 
+    handleMealDate = (n, date) => this.setState({mealDate: moment(date).format("YYYYMMDD")})
+
+    handleSubmit = (foodId) => {
+        if (this.state.mealDate) {
+            let mealArr = []
+            if (this.props.meals[this.state.mealDate]
+                &&
+                this.props.meals[this.state.mealDate][this.state.mealSelect]
+            ) {
+                mealArr = this.props.meals[this.state.mealDate][this.state.mealSelect].concat(foodId)
+            } else {
+                mealArr = [foodId]
+            }
+            database.ref(`/users/${this.props.uuid}/meals/${this.state.mealDate}/${this.state.mealSelect}`)
+                .set(mealArr)
+            //TODO prevent same food add to same meal at the same date
+
+            this.setState({open: false, mealDate:null});
+        }
+    }
+
     render() {
+        console.log(this.props.meals[this.state.mealDate])
         const actions = [
             <FlatButton
                 label="Cancel"
@@ -34,7 +61,7 @@ export default class MealAdd extends React.Component {
                 label="Submit"
                 primary={true}
                 keyboardFocused={true}
-                onClick={this.handleClose}
+                onClick={()=>this.handleSubmit(this.props.foodId)}
             />,
         ];
 
@@ -51,6 +78,10 @@ export default class MealAdd extends React.Component {
                     autoScrollBodyContent={true}
                 >
                     <div>
+                        <DatePicker
+                            hintText="Wybierz dzien"
+                            onChange={this.handleMealDate}
+                        />
                         <SelectField
                             floatingLabelText="Twoj posilek"
                             value={this.state.mealSelect}
@@ -62,10 +93,24 @@ export default class MealAdd extends React.Component {
                             <MenuItem value={'podwieczorek'} primaryText="Podwieczorek"/>
                             <MenuItem value={'kolacja'} primaryText="Kolacja"/>
                         </SelectField>
-                        <DatePicker hintText="Wybierz dzien" />
                     </div>
                 </Dialog>
             </div>
         );
     }
 }
+
+const mapStateToProps = state => ({
+    uuid: state.auth.user.uid,
+    meals: state.meals.mealsData
+})
+
+
+const mapDispatchToProps = dispatch => ({
+
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MealAdd)
