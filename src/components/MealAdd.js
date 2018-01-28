@@ -2,6 +2,8 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import Avatar from 'material-ui/Avatar';
+import {List, ListItem} from 'material-ui/List';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
@@ -68,7 +70,13 @@ class MealAdd extends React.Component {
 
         return (
             <div>
-                <RaisedButton label="Dodaj do posilku" primary={true} onClick={this.handleOpen} />
+                <RaisedButton
+                    label="Dodaj do posilku"
+                    primary={true}
+                    onClick={this.handleOpen}
+                    fullWidth={true}
+                    style={{marginBottom:20}}
+                />
                 <Dialog
                     title="Dodaj jedzonko do posilku"
                     actions={actions}
@@ -77,6 +85,20 @@ class MealAdd extends React.Component {
                     onRequestClose={this.handleClose}
                     autoScrollBodyContent={true}
                 >
+                    <List>
+                        {
+                            this.props.food && this.props.food
+                                .filter(([key, product]) => this.props.foodId === key)
+                                .map(([key, product])=>
+                                        <ListItem
+                                            primaryText={product.name}
+                                            secondaryText={`Kcal: ${product.energy} | ${product.category}`}
+                                            leftAvatar={<Avatar src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
+                                            style={{backgroundColor:'#eee'}}
+                                        />
+                                )
+                        }
+                    </List>
                     <div>
                         <DatePicker
                             hintText="Wybierz dzien"
@@ -102,7 +124,8 @@ class MealAdd extends React.Component {
 
 const mapStateToProps = state => ({
     uuid: state.auth.user.uid,
-    meals: state.meals.mealsData
+    meals: state.meals.mealsData,
+    food: state.products.productsData
 })
 
 

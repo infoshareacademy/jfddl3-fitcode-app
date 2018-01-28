@@ -56,20 +56,27 @@ class FoodDetails extends React.Component {
                                         />
                                     </p>
 
+                                    <RaisedButton //href={`/food-list/${key}`}
+                                        label="powrot do listy" primary={true}
+                                        fullWidth={true}
+                                        style={{marginBottom:20}}
+                                        onClick={this.props.history.goBack}
+
+                                    />
                                     {
                                         this.props.favData && this.props.favData.indexOf(key) === -1 ?
-                                            <RaisedButton label="+ ulubione" primary={true} style={{margin: 12}}
+                                            <RaisedButton label="+ ulubione" primary={true}
+                                                          fullWidth={true}
+                                                          style={{marginBottom:20}}
                                                           onClick={this.addUidToFavList}
                                             />
                                             :
-                                            <RaisedButton label="- ulubione" default={true} style={{margin: 12}}
+                                            <RaisedButton label="- ulubione" default={true}
+                                                          fullWidth={true}
+                                                          style={{marginBottom:20}}
                                                           onClick={() => this.removeUidFromFavList(key)}
                                             />
                                     }
-                                    <RaisedButton //href={`/food-list/${key}`}
-                                        onClick={this.props.history.goBack}
-                                        label="powrot do listy" secondary={true} style={{margin: 12}}
-                                    />
                                     <MealAdd foodId={this.state.id} />
                                 </div>
                         )

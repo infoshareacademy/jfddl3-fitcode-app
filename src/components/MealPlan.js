@@ -3,12 +3,49 @@ import {Link} from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import ActionAndroid from 'material-ui/svg-icons/action/android';
 import Paper from 'material-ui/Paper';
 import DatePicker from 'material-ui/DatePicker';
 import moment from 'moment'
+import MealRemove from './MealRemove'
 
 import {connect} from 'react-redux'
+
+class MealPlanList extends Component {
+    render() {
+        return (
+            <Paper style={{margin: 20, padding: 20}} zDepth={2}>
+                <Subheader>{this.props.mealType}</Subheader>
+                {
+                    this.props.mealsData
+                    &&
+                    this.props.mealsData[this.props.mealDate][this.props.mealType]
+                    &&
+                    this.props.mealsData[this.props.mealDate][this.props.mealType]
+                        .map((el) => {
+                            return (
+                                <div key={el}>
+                                    {
+                                        this.props.foodData && this.props.foodData
+                                            .filter(([key, product]) => el === key)
+                                            .map(([key, product]) =>
+                                                <ListItem
+                                                    key={el}
+                                                    primaryText={product.name}
+                                                    secondaryText={`Kcal: ${product.energy} | ${product.category}`}
+                                                    leftAvatar={<Avatar
+                                                        src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
+                                                    rightIcon={<MealRemove foodId={el}/>}
+                                                />
+                                            )
+                                    }
+                                </div>
+                            )
+                        })
+                }
+            </Paper>
+        )
+    }
+}
 
 
 class MealPlan extends Component {
@@ -31,121 +68,51 @@ class MealPlan extends Component {
                 <div>
                     {
                         this.state.mealDate && this.props.mealsData[this.state.mealDate] ?
-                            <List>
-                                <Paper style={{margin: 20, padding: 20}} zDepth={2}>
-                                    <Subheader>Sniadanie</Subheader>
-                                    {
-                                        this.props.mealsData[this.state.mealDate]["sniadanie"]
-                                        &&
-                                        this.props.mealsData[this.state.mealDate]["sniadanie"]
-                                            .map((el) => {
-                                                return (
-                                                    <Link
-                                                        to={`/food-details/${el}`}
-                                                        style={{textDecoration: 'none'}}
-                                                        key={el}
-                                                    >
-                                                        <ListItem
-                                                            primaryText={el}
-                                                            leftAvatar={<Avatar color="#fff" icon={<ActionAndroid/>}/>}
-                                                        />
-                                                    </Link>
-                                                )
-                                            })
-                                    }
-                                </Paper>
-                                <Paper style={{margin: 20, padding: 20}} zDepth={2}>
-                                    <Subheader>Drugie Sniadanie</Subheader>
-                                    {
-                                        this.props.mealsData[this.state.mealDate]["sniadenie2"]
-                                        &&
-                                        this.props.mealsData[this.state.mealDate]["sniadenie2"]
-                                            .map((el) => {
-                                                return (
-                                                    <Link
-                                                        to={`/food-details/${el}`}
-                                                        style={{textDecoration: 'none'}}
-                                                        key={el}
-                                                    >
-                                                        <ListItem
-                                                            primaryText={el}
-                                                            leftAvatar={<Avatar color="#fff" icon={<ActionAndroid/>}/>}
-                                                        />
-                                                    </Link>
-                                                )
-                                            })
-                                    }
-                                </Paper>
-                                <Paper style={{margin: 20, padding: 20}} zDepth={2}>
-                                    <Subheader>Obiad</Subheader>
-                                    {
-                                        this.props.mealsData[this.state.mealDate]["obiad"]
-                                        &&
-                                        this.props.mealsData[this.state.mealDate]["obiad"]
-                                            .map((el) => {
-                                                return (
-                                                    <Link
-                                                        to={`/food-details/${el}`}
-                                                        style={{textDecoration: 'none'}}
-                                                        key={el}
-                                                    >
-                                                        <ListItem
-                                                            primaryText={el}
-                                                            leftAvatar={<Avatar color="#fff" icon={<ActionAndroid/>}/>}
-                                                        />
-                                                    </Link>
-                                                )
-                                            })
-                                    }
-                                </Paper>
-                                <Paper style={{margin: 20, padding: 20}} zDepth={2}>
-                                    <Subheader>Podwieczorek</Subheader>
-                                    {
-                                        this.props.mealsData[this.state.mealDate]["podwieczorek"]
-                                        &&
-                                        this.props.mealsData[this.state.mealDate]["podwieczorek"]
-                                            .map((el) => {
-                                                return (
-                                                    <Link
-                                                        to={`/food-details/${el}`}
-                                                        style={{textDecoration: 'none'}}
-                                                        key={el}
-                                                    >
-                                                        <ListItem
-                                                            primaryText={el}
-                                                            leftAvatar={<Avatar color="#fff" icon={<ActionAndroid/>}/>}
-                                                        />
-                                                    </Link>
-                                                )
-                                            })
-                                    }
-                                </Paper>
-                                <Paper style={{margin: 20, padding: 20}} zDepth={2}>
-                                    <Subheader>Kolacja</Subheader>
-                                    {
-                                        this.props.mealsData[this.state.mealDate]["kolacja"]
-                                        &&
-                                        this.props.mealsData[this.state.mealDate]["kolacja"]
-                                            .map((el) => {
-                                                return (
-                                                    <Link
-                                                        to={`/food-details/${el}`}
-                                                        style={{textDecoration: 'none'}}
-                                                        key={el}
-                                                    >
-                                                        <ListItem
-                                                            primaryText={el}
-                                                            leftAvatar={<Avatar color="#fff" icon={<ActionAndroid/>}/>}
-                                                        />
-                                                    </Link>
-                                                )
-                                            })
-                                    }
-                                </Paper>
-                            </List>
+                            <div>
+                                <List>
+                                    <MealPlanList
+                                        mealType={"sniadanie"}
+                                        mealDate={this.state.mealDate}
+                                        mealsData={this.props.mealsData}
+                                        foodData={this.props.foodData}
+                                    />
+                                </List>
+                                <List>
+                                    <MealPlanList
+                                        mealType={"sniadanie2"}
+                                        mealDate={this.state.mealDate}
+                                        mealsData={this.props.mealsData}
+                                        foodData={this.props.foodData}
+                                    />
+                                </List>
+                                <List>
+                                    <MealPlanList
+                                        mealType={"obiad"}
+                                        mealDate={this.state.mealDate}
+                                        mealsData={this.props.mealsData}
+                                        foodData={this.props.foodData}
+                                    />
+                                </List>
+                                <List>
+                                    <MealPlanList
+                                        mealType={"podwieczorek"}
+                                        mealDate={this.state.mealDate}
+                                        mealsData={this.props.mealsData}
+                                        foodData={this.props.foodData}
+                                    />
+                                </List>
+                                <List>
+                                    <MealPlanList
+                                        mealType={"kolacja"}
+                                        mealDate={this.state.mealDate}
+                                        mealsData={this.props.mealsData}
+                                        foodData={this.props.foodData}
+                                    />
+                                </List>
+                            </div>
                             :
                             <Paper style={{margin: 20, padding: 20}} zDepth={2}>
-                                <h1 style={{textAlign: 'center'}}>Wybierz Dzien</h1>
+                                <h1 style={{textAlign: 'center'}}>Brak posilkow<br/>:(</h1>
                             </Paper>
                     }
                 </div>
