@@ -91,6 +91,7 @@ class MealAdd extends React.Component {
                                 .filter(([key, product]) => this.props.foodId === key)
                                 .map(([key, product])=>
                                         <ListItem
+                                            key={key}
                                             primaryText={product.name}
                                             secondaryText={`Kcal: ${product.energy} | ${product.category}`}
                                             leftAvatar={<Avatar src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
