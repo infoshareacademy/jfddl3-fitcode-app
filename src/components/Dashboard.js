@@ -1,29 +1,37 @@
 import React from 'react';
-import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie} from 'recharts';
+import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Label, Legend, PieChart, Pie} from 'recharts';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Link} from 'react-router-dom'
 import Paper from 'material-ui/Paper';
 import {Grid, Row, Col} from 'react-flexbox-grid'
 
+
+
+
+
 const data = [
     {
-        value: 40,
-        name: 'warzywa'
+        value:40,
+        name: 'warzywa',
+        fill:'lime'
     },
     {
         value: 40,
-        name: 'owoce'
+        name: 'owoce',
+        fill:'red'
     },
     {
         value: 20,
-        name: 'produkty mięsne'
+        name: 'mięso',
+        fill:'yellow'
     }
 ];
 const lineChartData = [
-    {name: 'Ilość użytkowników', pv: 2400, amt: 2100},
-    {pv: 1398, amt: 2100},
-    {pv: 9800, amt: 2100}
-
+    {name: 'Tydzień:', użytkownicy: 0},
+    { name:'1', użytkownicy: 500},
+    { name:'2', użytkownicy: 1800},
+    { name:'3', użytkownicy: 1000},
+    {name:'4', użytkownicy: 2500},
 ];
 const style = {
     margin: 12,
@@ -58,42 +66,32 @@ const Dashboard = () => (
             style={{margin: 20, padding: 20}}
             zDepth={2}
         >
-            <Grid fluid>
+            <Grid >
                 <Row>
-                    <Col
-                        xs={12}
-                        sm={12}
-                        md={12}
-                        lg={6}
-                        xl={6}
-                    >
+                    <Col xs={12} md={6} lg={4}>
 
                         <h3> Nasi użytkownicy najczęściej spożywają:</h3>
                         <PieChart
                             style={{margin: '0 auto'}}
                             width={window.innerWidth < 500 ? 150 : 400}
                             height={window.innerWidth < 500 ? 150 : 400}
+
                         >
                             <Pie
                                 data={data}
                                 dataKey="value"
                                 nameKey="name"
                                 fill="#8884d8"
+                                label={({payload}) =>`${payload.name} - ${payload.value} % `}
+                                labelLine={true}
                             />
-                            <Tooltip/>
 
                         </PieChart>
 
                     </Col>
 
-                    <Col
-                        xs={12}
-                        sm={12}
-                        md={12}
-                        lg={6}
-                        xl={6}
-                    >
-                        <h3>Ilość naszych użytkowników ciągle rośnie!</h3>
+                    <Col xs={12} md={6} lg={4}>
+                        <h3>Ilość użytkowników korzystających tygodniowo z naszej aplikacji:</h3>
                         <LineChart
                             style={{margin: '0 auto'}}
                             width={window.innerWidth < 500 ? 150 : 400}
@@ -106,8 +104,8 @@ const Dashboard = () => (
                             <CartesianGrid strokeDasharray="3 3"/>
                             <Tooltip/>
                             <Legend/>
-                            <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{r: 8}}/>
-                            <Line type="monotone" dataKey="uv" stroke="#82ca9d"/>
+                            <Line type="monotone" dataKey="użytkownicy" stroke="#8884d8" activeDot={{r: 8}}/>
+
                         </LineChart>
                     </Col>
 
