@@ -1,5 +1,8 @@
 import {database, auth, googleProvider} from '../firebase'
 
+import {fetchFav} from './fav'
+import {fetchMeals} from './meals'
+
 const SET_USER = 'auth/SET_USER'
 const SET_LOGIN_LOGS = 'auth/SET_LOGIN_LOGS'
 
@@ -21,6 +24,8 @@ export const initAuth = () => (dispatch, getState) => {
         if(user){ //if not null user is logged in, so set his record in DB
             dispatch(logLoginDate())
             dispatch(syncLoginLogs())
+            dispatch(fetchFav())
+            dispatch(fetchMeals())
         }
     })
 }

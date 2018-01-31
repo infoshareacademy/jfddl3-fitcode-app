@@ -11,12 +11,26 @@ const setMeals = (meals) => ({
 
 
 export const fetchMeals = () => (dispatch, getState) => {
+        if(user){ //if not null user is logged in, so get his favourites
+            const uid = getState().auth.user.uid
+            database.ref(`/users/${uid}/meals`)
+                .on('value', (snapshot) => {
+                        console.log('syncing for user', uid)
+                        dispatch(setMeals(snapshot.val() || {}))
+                    }
+                )
+        }
+}
+
+export const stopSyncingMeals = () => (dispatch, getState) => {
     auth.onAuthStateChanged((user) => {
         if(user){ //if not null user is logged in, so get his favourites
             const uid = getState().auth.user.uid
             database.ref(`/users/${uid}/meals`)
-                .on('value', (snapshot)=>
-                    dispatch(setMeals(snapshot.val() || {}))
+                .on('value', (snapshot) => {
+                        console.log('syncing for user', uid)
+                        dispatch(setMeals(snapshot.val() || {}))
+                    }
                 )
         }
     })

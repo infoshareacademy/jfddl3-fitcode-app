@@ -43,6 +43,8 @@ class MealAdd extends React.Component {
             } else {
                 mealArr = [foodId]
             }
+
+
             database.ref(`/users/${this.props.uuid}/meals/${this.state.mealDate}/${this.state.mealSelect}`)
                 .set(mealArr)
             //TODO prevent same food add to same meal at the same date
