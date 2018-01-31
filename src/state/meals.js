@@ -3,7 +3,6 @@ import {database, auth} from '../firebase'
 const FETCH_MEALS = 'meals/FETCH_MEALS'
 
 
-
 const setMeals = (meals) => ({
     type: FETCH_MEALS,
     meals: meals
@@ -11,24 +10,23 @@ const setMeals = (meals) => ({
 
 
 export const fetchMeals = () => (dispatch, getState) => {
-    auth.onAuthStateChanged((user) => {
-        if(user){ //if not null user is logged in, so get his favourites
-            const uid = getState().auth.user.uid
-            database.ref(`/users/${uid}/meals`)
-                .on('value', (snapshot)=>
-                    dispatch(setMeals(snapshot.val() || {}))
-                )
-        }
-    })
+    const uid = getState().auth.user.uid
+    database.ref(`/users/${uid}/meals`)
+        .on('value', (snapshot) => {
+            console.log('Syncing', uid)
+            dispatch(setMeals(snapshot.val() || {}))
+        })
 }
 
+export const stopSyncingMeals = (uid) => (dispatch, getState) => {
+    database.ref(`/users/${uid}/meals`)
+        .off('value')
+}
 
 
 const initialState = {
     mealsData: {}
 }
-
-
 
 
 export default (state = initialState, action) => {

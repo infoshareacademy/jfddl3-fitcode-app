@@ -1,4 +1,7 @@
 import {database, auth, googleProvider} from '../firebase'
+import {stopSyncingMeals} from './meals'
+import {fetchFav} from './fav'
+import {fetchMeals} from './meals'
 
 const SET_USER = 'auth/SET_USER'
 const SET_LOGIN_LOGS = 'auth/SET_LOGIN_LOGS'
@@ -21,6 +24,8 @@ export const initAuth = () => (dispatch, getState) => {
         if(user){ //if not null user is logged in, so set his record in DB
             dispatch(logLoginDate())
             dispatch(syncLoginLogs())
+            dispatch(fetchFav())
+            dispatch(fetchMeals())
         }
     })
 }
@@ -52,8 +57,12 @@ export const signUp = (email, password) => (dispatch, getState) => {
 }
 
 export const logOut = () => (dispatch, getState) => {
+    const uid = getState().auth.user.uid
     auth.signOut()
-        .then(() => console.log('Logged Out!'))
+        .then(() => {
+            console.log('Logged Out!')
+            dispatch(stopSyncingMeals(uid))
+        })
         .catch(() => alert('Something wrong with LogOut!'))
 }
 
