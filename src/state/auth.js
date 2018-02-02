@@ -1,7 +1,5 @@
 import {database, auth, googleProvider} from '../firebase'
 import {stopSyncingMeals} from './meals'
-import {fetchFav} from './fav'
-import {fetchMeals} from './meals'
 
 import {fetchFav} from './fav'
 import {fetchMeals} from './meals'
