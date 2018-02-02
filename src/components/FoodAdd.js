@@ -1,26 +1,32 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
+import Paper from 'material-ui/Paper'
+import Snackbar from 'material-ui/Snackbar'
 
 import textCategories from './categories'
 
 class FoodAdd extends Component {
 
-    state = {
-        data: null,
-        catSelect: "Warzywa",
-        name: null,
-        category: null,
-        energy: null,
-        protein: null,
-        fats: null,
-        carbo: null,
-        sug: null,
-        photo: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            data: null,
+            catSelect: "Warzywa",
+            name: null,
+            category: null,
+            energy: null,
+            protein: null,
+            fats: null,
+            carbo: null,
+            sug: null,
+            photo: null,
+            errorText: false,
+        }
     }
 
     getData = () => {
@@ -50,7 +56,8 @@ class FoodAdd extends Component {
             fat: this.state.fats,
             carbohydrate: this.state.carbo,
             sugars: this.state.sug,
-            photo: this.state.photo
+            photo: this.state.photo,
+            errorText: this.state.errorText
         }
 
         if (!/([A-Za-z0-9])\w+/.test(newFood.name)
@@ -65,7 +72,11 @@ class FoodAdd extends Component {
             ||
             !/[^\s]|([0-9])+$/.test(newFood.sugars)
         ) {
-            alert('Błędne dane!')
+
+            this.setState({
+                errorText: 'Błędne dane',
+            })
+
             return
         }
 
@@ -79,7 +90,9 @@ class FoodAdd extends Component {
             }
         )
             .then(() => {
-                    alert('Jedzonko dodane')
+                    this.setState({
+                        open: true
+                    })
                     this.getData()
                 }
             )
@@ -93,6 +106,12 @@ class FoodAdd extends Component {
     }
 
     handleCatSelect = (event, index, value) => this.setState({catSelect: value})
+
+    handleRequestClose = () => {
+        this.setState({
+            open: false,
+        })
+    }
 
 
     render() {
@@ -112,6 +131,7 @@ class FoodAdd extends Component {
                                 name={cat.name}
                                 onChange={(e) => this.handleTextChange(e, cat.name)}
                                 fullWidth={true}
+                                errorText={this.state.errorText}
                             />
                         ))
                     }
@@ -131,6 +151,13 @@ class FoodAdd extends Component {
                     </SelectField>
 
                     <RaisedButton label="Dodaj" primary={true} type="submit" style={{display: 'block'}}/>
+
+                    <Snackbar
+                        open={this.state.open}
+                        message="Jedzonko dodane"
+                        autoHideDuration={4000}
+                        onRequestClose={this.handleRequestClose}
+                    />
                 </form>
             </Paper>
         )
