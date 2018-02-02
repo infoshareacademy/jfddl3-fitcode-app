@@ -1,4 +1,7 @@
 import {database, auth, googleProvider} from '../firebase'
+import {stopSyncingMeals} from './meals'
+import {fetchFav} from './fav'
+import {fetchMeals} from './meals'
 
 import {fetchFav} from './fav'
 import {fetchMeals} from './meals'
@@ -57,8 +60,12 @@ export const signUp = (email, password) => (dispatch, getState) => {
 }
 
 export const logOut = () => (dispatch, getState) => {
+    const uid = getState().auth.user.uid
     auth.signOut()
-        .then(() => console.log('Logged Out!'))
+        .then(() => {
+            console.log('Logged Out!')
+            dispatch(stopSyncingMeals(uid))
+        })
         .catch(() => alert('Something wrong with LogOut!'))
 }
 

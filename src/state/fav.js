@@ -17,29 +17,28 @@ const addFav = (fav) => ({
 })
 
 export const fetchFav = () => (dispatch, getState) => {
-    auth.onAuthStateChanged((user) => {
-        if(user){ //if not null user is logged in, so get his favourites
-            const uid = getState().auth.user.uid
-            database.ref(`/users/${uid}/favourites`)
-                .on('value', (snapshot)=>
-                    dispatch(setFav(snapshot.val() || []))
-                )
-        }
-    })
+    const uid = getState().auth.user.uid
+    database.ref(`/users/${uid}/favourites`)
+        .on('value', (snapshot) =>
+            dispatch(setFav(snapshot.val() || []))
+        )
 }
+
+export const stopSyncingFav = (uid) => (dispatch, getState) => {
+    database.ref(`/users/${uid}/favourites`)
+        .off('value')
+}
+
+
 
 export const pushFav = () => (dispatch, getState) => {
 
 }
 
 
-
-
 const initialState = {
     favData: []
 }
-
-
 
 
 export default (state = initialState, action) => {
@@ -50,12 +49,12 @@ export default (state = initialState, action) => {
                 favData: action.fav
             }
         case ADD_FAV:
-            return{
+            return {
                 ...state,
                 favData: action.fav
             }
         case REMOVE_FAV:
-            return{
+            return {
                 ...state,
                 favData: action.fav
             }
