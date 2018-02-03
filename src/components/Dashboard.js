@@ -74,7 +74,7 @@ const Dashboard = () => (
                         <PieChart
                             style={{margin: '0 auto'}}
                             width={window.innerWidth < 500 ? 150 : 400}
-                            height={window.innerWidth < 500 ? 150 : 400}
+                            height={window.innerHeight < 500 ? 150 : 400}
 
                         >
                             <Pie
@@ -95,7 +95,7 @@ const Dashboard = () => (
                         <LineChart
                             style={{margin: '0 auto'}}
                             width={window.innerWidth < 500 ? 150 : 400}
-                            height={window.innerWidth < 500 ? 150 : 400}
+                            height={window.innerHeight < 500 ? 150 : 400}
                             data={lineChartData}
                             margin={{top: 5, right: 30, left: 20, bottom: 5}}>
 
