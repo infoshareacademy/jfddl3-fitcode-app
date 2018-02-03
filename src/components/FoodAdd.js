@@ -6,8 +6,10 @@ import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import Paper from 'material-ui/Paper'
 import Snackbar from 'material-ui/Snackbar'
+import {Link} from 'react-router-dom'
 
 import textCategories from './categories'
+import FoodList from "./FoodList"
 
 class FoodAdd extends Component {
 
@@ -26,6 +28,7 @@ class FoodAdd extends Component {
             sug: null,
             photo: null,
             errorText: false,
+            msg: "",
         }
     }
 
@@ -72,9 +75,9 @@ class FoodAdd extends Component {
             ||
             !/[^\s]|([0-9])+$/.test(newFood.sugars)
         ) {
-
             this.setState({
-                errorText: 'Błędne dane',
+                open: true,
+                msg: "Fedorowicz, co ty odpierdalasz",
             })
 
             return
@@ -91,12 +94,13 @@ class FoodAdd extends Component {
         )
             .then(() => {
                     this.setState({
-                        open: true
+                        open: true,
+                        msg: "Jedzonko dodane",
                     })
                     this.getData()
                 }
             )
-            .catch((error) => alert('Ups'))
+            .catch((error) => alert('Ups, cos sie popsulo'))
     }
 
     handleTextChange = (event, name) => {
@@ -112,7 +116,6 @@ class FoodAdd extends Component {
             open: false,
         })
     }
-
 
     render() {
         return (
@@ -150,11 +153,15 @@ class FoodAdd extends Component {
                         <MenuItem value={'Vege-Food'} primaryText="Vege-Food"/>
                     </SelectField>
 
-                    <RaisedButton label="Dodaj" primary={true} type="submit" style={{display: 'block'}}/>
+                    <RaisedButton label="Dodaj" primary={true} type="submit" fullWidth={true}/>
+                    <br/><br/>
+                    <Link to="/food-list">
+                        <RaisedButton label="Lista jedzonek" primary={true} fullWidth={true} onClick={this.props.butt}/>
+                    </Link>
 
                     <Snackbar
                         open={this.state.open}
-                        message="Jedzonko dodane"
+                        message={this.state.msg}
                         autoHideDuration={4000}
                         onRequestClose={this.handleRequestClose}
                     />
