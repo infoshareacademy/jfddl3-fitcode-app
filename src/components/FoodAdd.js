@@ -1,26 +1,35 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
+import Paper from 'material-ui/Paper'
+import Snackbar from 'material-ui/Snackbar'
+import {Link} from 'react-router-dom'
 
 import textCategories from './categories'
+import FoodList from "./FoodList"
 
 class FoodAdd extends Component {
 
-    state = {
-        data: null,
-        catSelect: "Warzywa",
-        name: null,
-        category: null,
-        energy: null,
-        protein: null,
-        fats: null,
-        carbo: null,
-        sug: null,
-        photo: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            data: null,
+            catSelect: "Warzywa",
+            name: null,
+            category: null,
+            energy: null,
+            protein: null,
+            fats: null,
+            carbo: null,
+            sug: null,
+            photo: null,
+            errorText: false,
+            msg: "",
+        }
     }
 
     getData = () => {
@@ -50,7 +59,8 @@ class FoodAdd extends Component {
             fat: this.state.fats,
             carbohydrate: this.state.carbo,
             sugars: this.state.sug,
-            photo: this.state.photo
+            photo: this.state.photo,
+            errorText: this.state.errorText
         }
 
         if (!/([A-Za-z0-9])\w+/.test(newFood.name)
@@ -65,7 +75,11 @@ class FoodAdd extends Component {
             ||
             !/[^\s]|([0-9])+$/.test(newFood.sugars)
         ) {
-            alert('Błędne dane!')
+            this.setState({
+                open: true,
+                msg: "Fedorowicz, co ty odpierdalasz",
+            })
+
             return
         }
 
@@ -79,11 +93,14 @@ class FoodAdd extends Component {
             }
         )
             .then(() => {
-                    alert('Jedzonko dodane')
+                    this.setState({
+                        open: true,
+                        msg: "Jedzonko dodane",
+                    })
                     this.getData()
                 }
             )
-            .catch((error) => alert('Ups'))
+            .catch((error) => alert('Ups, cos sie popsulo'))
     }
 
     handleTextChange = (event, name) => {
@@ -94,6 +111,11 @@ class FoodAdd extends Component {
 
     handleCatSelect = (event, index, value) => this.setState({catSelect: value})
 
+    handleRequestClose = () => {
+        this.setState({
+            open: false,
+        })
+    }
 
     render() {
         return (
@@ -112,6 +134,7 @@ class FoodAdd extends Component {
                                 name={cat.name}
                                 onChange={(e) => this.handleTextChange(e, cat.name)}
                                 fullWidth={true}
+                                errorText={this.state.errorText}
                             />
                         ))
                     }
@@ -130,7 +153,18 @@ class FoodAdd extends Component {
                         <MenuItem value={'Vege-Food'} primaryText="Vege-Food"/>
                     </SelectField>
 
-                    <RaisedButton label="Dodaj" primary={true} type="submit" style={{display: 'block'}}/>
+                    <RaisedButton label="Dodaj" primary={true} type="submit" fullWidth={true}/>
+                    <br/><br/>
+                    <Link to="/food-list">
+                        <RaisedButton label="Lista jedzonek" primary={true} fullWidth={true} onClick={this.props.butt}/>
+                    </Link>
+
+                    <Snackbar
+                        open={this.state.open}
+                        message={this.state.msg}
+                        autoHideDuration={4000}
+                        onRequestClose={this.handleRequestClose}
+                    />
                 </form>
             </Paper>
         )
