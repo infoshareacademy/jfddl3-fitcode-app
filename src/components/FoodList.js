@@ -11,39 +11,22 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+
+import {connect} from 'react-redux'
+
 
 
 class FoodList extends Component {
     state = {
-        data: null,
         foodName: '',
         kcalSlider: 280,
         catSelect: 'all',
         favUid: null,
     }
 
-    componentWillMount() {
-        fetch(
-            `https://jfddl3-fitcode.firebaseio.com/products/food.json`
-        )
-            .then(response => response.json())
-            .then(parsedJSONData => {
-                    this.setState({data: Object.entries(parsedJSONData || {})});
-                    this.getFavFromDb();
-                }
-            )
-    }
+    componentWillMount() {}
 
-    getFavFromDb = () => {
-        fetch(
-            `https://jfddl3-fitcode.firebaseio.com/products/favourites.json`
-        )
-            .then(response => response.json())
-            .then(parsedJSONData => {
-                    this.setState({favUid: Object.values(parsedJSONData || {})});
-                }
-            )
-    }
 
     handleFoodName = (event, value) => {
         this.setState({foodName: value});
@@ -102,32 +85,33 @@ class FoodList extends Component {
                     <List>
                         <Subheader>Nasze Jedzonka</Subheader>
                         {
-                            this.state.data && this.state.data
-                                .filter(([key, product]) => product.name.indexOf(this.state.foodName) !== -1)
-                                .filter(([key, product]) => this.state.catSelect === 'all' ? true : product.category === this.state.catSelect)
-                                .filter(([key, product]) => product.energy < this.state.kcalSlider)
-                                .map(
-                                    ([key, product]) => (
-                                        <Link
-                                            to={`/food-details/${key}`}
-                                            style={{textDecoration: 'none'}}
-                                            key={key}
-                                        >
-                                            <ListItem
-                                                primaryText={product.name}
-                                                secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                                leftAvatar={<Avatar
-                                                    src={`${process.env.PUBLIC_URL}/img/${product.photo}`}
-                                                />}
-                                                rightIcon={
-                                                    this.state.favUid && this.state.favUid.indexOf(key) === -1 ?
-                                                        <ActionFavoriteBorder/>
-                                                        :
-                                                        <ActionFavorite/>
-                                                }
-                                            />
-                                        </Link>
-                                    ))
+                            this.props.foodData && this.props.foodData
+                                .filter(([key, product]) =>
+                                    product.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(this.state.foodName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "")) !== -1
+                                    ).filter(([key, product]) => this.state.catSelect === 'all' ? true : product.category === this.state.catSelect)
+                                        .filter(([key, product]) => product.energy < this.state.kcalSlider)
+                                        .map(
+                                            ([key, product]) => (
+                                                <Link
+                                                    to={`/food-details/${key}`}
+                                                    style={{textDecoration: 'none'}}
+                                                    key={key}
+                                                >
+                                                    <ListItem
+                                                        primaryText={product.name}
+                                                        secondaryText={`Kcal: ${product.energy} | ${product.category}`}
+                                                        leftAvatar={<Avatar
+                                                            src={`${process.env.PUBLIC_URL}/img/${product.photo}`}
+                                                        />}
+                                                        rightIcon={
+                                                            this.props.favData && this.props.favData.indexOf(key) === -1 ?
+                                                                <ActionFavoriteBorder/>
+                                                                :
+                                                                <ActionFavorite/>
+                                                        }
+                                                    />
+                                                </Link>
+                                            ))
                         }
                     </List>
                 </Paper>
@@ -137,4 +121,18 @@ class FoodList extends Component {
     }
 }
 
-export default FoodList
+const mapStateToProps = state => ({
+    foodData: state.products.productsData,
+    favData: state.fav.favData,
+    uuid: state.auth.user.uid
+})
+
+const mapDispatchToProps = dispatch => ({
+    // getFoodData: () => dispatch(fetchProducts()),
+    // getFavData: () => dispatch(fetchFav()),
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FoodList)
