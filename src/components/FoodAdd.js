@@ -9,7 +9,7 @@ import Snackbar from 'material-ui/Snackbar'
 import {Link} from 'react-router-dom'
 
 import textCategories from './categories'
-import FoodList from "./FoodList"
+import {database} from '../firebase'
 
 class FoodAdd extends Component {
 
@@ -27,7 +27,6 @@ class FoodAdd extends Component {
             carbo: null,
             sug: null,
             photo: null,
-            errorText: false,
             msg: "",
         }
     }
@@ -60,24 +59,25 @@ class FoodAdd extends Component {
             carbohydrate: this.state.carbo,
             sugars: this.state.sug,
             photo: this.state.photo,
-            errorText: this.state.errorText
         }
 
         if (!/([A-Za-z0-9])\w+/.test(newFood.name)
             ||
             !/^([0-9])+$/.test(newFood.energy)
             ||
-            !/[^\s]|([0-9])+$/.test(newFood.protein)
+            !/^([0-9])+$/.test(newFood.protein)
             ||
-            !/[^\s]|([0-9])+$/.test(newFood.fat)
+            !/^([0-9])+$/.test(newFood.fat)
             ||
-            !/[^\s]|([0-9])+$/.test(newFood.carbohydrate)
+            !/^([0-9])+$/.test(newFood.carbohydrate)
             ||
-            !/[^\s]|([0-9])+$/.test(newFood.sugars)
+            !/^([0-9])+$/.test(newFood.sugars)
+            ||
+            !/([A-Za-z0-9])\w+/.test(newFood.photo)
         ) {
             this.setState({
                 open: true,
-                msg: "User, co ty odpierdalasz",
+                msg: "Ups, coś poszło nie tak.",
             })
 
             return
@@ -85,13 +85,7 @@ class FoodAdd extends Component {
 
         console.log(newFood)
 
-        fetch(
-            'https://jfddl3-fitcode.firebaseio.com/products/food/.json',
-            {
-                method: 'POST',
-                body: JSON.stringify(newFood)
-            }
-        )
+        database.ref('products/food').push(newFood)
             .then(() => {
                     this.setState({
                         open: true,
@@ -100,7 +94,7 @@ class FoodAdd extends Component {
                     this.getData()
                 }
             )
-            .catch((error) => alert('Ups, cos sie popsulo'))
+            .catch((error) => alert('Ups, cos sie popsuło'))
     }
 
     handleTextChange = (event, name) => {
@@ -134,7 +128,6 @@ class FoodAdd extends Component {
                                 name={cat.name}
                                 onChange={(e) => this.handleTextChange(e, cat.name)}
                                 fullWidth={true}
-                                errorText={this.state.errorText}
                             />
                         ))
                     }

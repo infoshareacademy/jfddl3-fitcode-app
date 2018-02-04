@@ -5,11 +5,8 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
 
 import {connect} from 'react-redux'
-import {fetchProducts} from '../state/products'
-import {fetchFav} from '../state/fav'
 
 
 class Favourites extends Component {
@@ -18,12 +15,11 @@ class Favourites extends Component {
 
         return (
             <div>
-
                 <Paper
                     style={{margin: 20, padding: 20}}
                     zDepth={2}
                 >
-                    <List><Subheader>Moje Ulubione Jedzonka</Subheader>
+                    <List><Subheader>Moje Ulubione Produkty</Subheader>
                         {
                             this.props.foodData &&
                             this.props.favData &&
@@ -39,7 +35,7 @@ class Favourites extends Component {
                                             <ListItem
                                                 primaryText={product.name}
                                                 secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                                leftAvatar={<Avatar src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
+                                                leftAvatar={<Avatar src={`${product.photo}`}/>}
                                                 rightIcon={<ActionFavorite/>}
                                             />
                                         </Link>
