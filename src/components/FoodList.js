@@ -11,7 +11,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
+import MealAdd from './MealAdd'
 
 import {connect} from 'react-redux'
 
@@ -109,6 +109,8 @@ class FoodList extends Component {
                                                                 :
                                                                 <ActionFavorite/>
                                                         }
+                                                        //TODO ----> add to meal button
+                                                        //rightIcon={<MealAdd foodId={key} btnType={"ico"} />}
                                                     />
                                                 </Link>
                                             ))

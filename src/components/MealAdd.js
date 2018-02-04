@@ -7,16 +7,29 @@ import {List, ListItem} from 'material-ui/List';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
+import IconButton from 'material-ui/IconButton';
+import ActionDateRange from 'material-ui/svg-icons/action/date-range';
 import moment from 'moment'
 
 import {connect} from 'react-redux'
 import {database} from "../firebase";
 
 
+const styles = {
+    addButt: {
+        display: "block",
+        position: "absolute",
+        right: 20,
+        top: 12,
+        height: 24,
+        width: 24
+    }
+}
+
 class MealAdd extends React.Component {
     state = {
         open: false,
-        mealSelect:'sniadanie',
+        mealSelect: 'sniadanie',
         mealDate: null
     };
 
@@ -49,36 +62,46 @@ class MealAdd extends React.Component {
                 .set(mealArr)
             //TODO prevent same food add to same meal at the same date
 
-            this.setState({open: false, mealDate:null});
+            this.setState({open: false, mealDate: null});
         }
     }
 
     render() {
-        console.log(this.props.meals[this.state.mealDate])
+        //console.log(this.props.meals[this.state.mealDate])
         const actions = [
             <FlatButton
-                label="Cancel"
+                label="Anuluj"
                 primary={true}
                 onClick={this.handleClose}
             />,
             <FlatButton
-                label="Submit"
+                label="Dodaj"
                 primary={true}
                 keyboardFocused={true}
-                onClick={()=>this.handleSubmit(this.props.foodId)}
+                onClick={() => this.handleSubmit(this.props.foodId)}
             />,
         ];
 
 
         return (
             <div>
-                <RaisedButton
-                    label="Dodaj do posilku"
-                    primary={true}
-                    onClick={this.handleOpen}
-                    fullWidth={true}
-                    style={{marginBottom:20}}
-                />
+                {
+                    this.props.btnType === 'butt' ?
+                        <RaisedButton
+                            label="Dodaj do posilku"
+                            primary={true}
+                            onClick={this.handleOpen}
+                            fullWidth={true}
+                            style={{marginBottom: 20}}
+                        />
+                        :
+                        <IconButton
+                            tooltip="Dodaj do posilku"
+                            style={styles.addButt}
+                            onClick={this.handleOpen}>
+                            <ActionDateRange color={"#757575"}/>
+                        </IconButton>
+                }
                 <Dialog
                     title="Dodaj jedzonko do posilku"
                     actions={actions}
@@ -91,14 +114,14 @@ class MealAdd extends React.Component {
                         {
                             this.props.food && this.props.food
                                 .filter(([key, product]) => this.props.foodId === key)
-                                .map(([key, product])=>
-                                        <ListItem
-                                            key={key}
-                                            primaryText={product.name}
-                                            secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                            leftAvatar={<Avatar src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
-                                            style={{backgroundColor:'#eee'}}
-                                        />
+                                .map(([key, product]) =>
+                                    <ListItem
+                                        key={key}
+                                        primaryText={product.name}
+                                        secondaryText={`Kcal: ${product.energy} | ${product.category}`}
+                                        leftAvatar={<Avatar src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
+                                        style={{backgroundColor: '#eee'}}
+                                    />
                                 )
                         }
                     </List>
@@ -132,9 +155,7 @@ const mapStateToProps = state => ({
 })
 
 
-const mapDispatchToProps = dispatch => ({
-
-})
+const mapDispatchToProps = dispatch => ({})
 
 export default connect(
     mapStateToProps,

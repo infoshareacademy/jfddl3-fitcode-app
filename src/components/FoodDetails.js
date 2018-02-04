@@ -77,7 +77,7 @@ class FoodDetails extends React.Component {
                                                           onClick={() => this.removeUidFromFavList(key)}
                                             />
                                     }
-                                    <MealAdd foodId={this.state.id} />
+                                    <MealAdd foodId={this.state.id} btnType={"butt"} />
                                 </div>
                         )
                 }

@@ -5,10 +5,12 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Paper from 'material-ui/Paper';
 import DatePicker from 'material-ui/DatePicker';
+import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment'
 import MealRemove from './MealRemove'
 
 import {connect} from 'react-redux'
+import FoodList from "./FoodList";
 
 
 
@@ -77,7 +79,7 @@ class MealPlanList extends Component {
                                                     secondaryText={`Kcal: ${product.energy} | ${product.category}`}
                                                     leftAvatar={<Avatar
                                                         src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
-                                                    rightIcon={<MealRemove foodId={el}/>}
+                                                    rightIcon={<MealRemove foodId={el} mealType={this.props.mealType} mealDate={this.props.mealDate}/>}
                                                 />
                                             )
                                     }
@@ -106,6 +108,13 @@ class MealPlan extends Component {
                         hintText="Wybierz dzien"
                         onChange={this.handleMealDate}
                     />
+                    <Link to={'/food-list'}>
+                    <RaisedButton
+                        label="Dodaj do posilku" primary={true}
+                        fullWidth={true}
+                        style={{marginBottom:20}}
+                    />
+                    </Link>
                 </Paper>
 
                 <div>
