@@ -118,7 +118,7 @@ class Dashboard extends Component {
                             <Col xs={12} md={6} lg={4}>
                                 <h3>Ilość użytkowników korzystających tygodniowo z naszej aplikacji:</h3>
 
-                                <h2> :)  {/* //TODO podpiac licze uzytkownikow do wykresu */}
+                                <h2> :)  {/* //TODO podpiac liczbe uzytkownikow do wykresu */}
                                     {
                                         this.props.usersCount ?
                                             this.props.usersCount.length
