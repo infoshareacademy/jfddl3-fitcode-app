@@ -99,7 +99,7 @@ class MealRemove extends React.Component {
                                         key={key}
                                         primaryText={product.name}
                                         secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                        leftAvatar={<Avatar src={`${product.photo}`}/>}
+                                        leftAvatar={<Avatar src={product.photo === undefined ? `https://jfddl3-fitcode.firebaseapp.com/img/noimage.png` : `${product.photo}`}/>}
                                         style={{backgroundColor: '#eee'}}
                                     />
                                 )

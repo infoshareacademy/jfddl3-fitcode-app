@@ -87,8 +87,7 @@ class MealPlanList extends Component {
                                                     key={el}
                                                     primaryText={product.name}
                                                     secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                                    leftAvatar={<Avatar
-                                                        src={`${product.photo}`}/>}
+                                                    leftAvatar={<Avatar src={product.photo === undefined ? `https://jfddl3-fitcode.firebaseapp.com/img/noimage.png` : `${product.photo}`}/>}
                                                     rightIcon={<MealRemove foodId={el} mealType={this.props.mealType}
                                                                            mealDate={this.props.mealDate}/>}
                                                 />

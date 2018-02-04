@@ -61,7 +61,7 @@ class FoodDetails extends React.Component {
                                     <p>Cukry: {product.sugars}</p>
                                     <p>
                                         <img
-                                            src={`${product.photo}`}
+                                            src={product.photo === undefined ? `https://jfddl3-fitcode.firebaseapp.com/img/noimage.png` : `${product.photo}`}
                                             alt=""
                                             style={{width:'50vw', height:'auto'}}
                                         />
