@@ -89,7 +89,7 @@ class FoodAdd extends Component {
             .then(() => {
                     this.setState({
                         open: true,
-                        msg: "Jedzonko dodane",
+                        msg: "Dodano produkt",
                     })
                     this.getData()
                 }
@@ -149,7 +149,7 @@ class FoodAdd extends Component {
                     <RaisedButton label="Dodaj" primary={true} type="submit" fullWidth={true}/>
                     <br/><br/>
                     <Link to="/food-list">
-                        <RaisedButton label="Lista jedzonek" primary={true} fullWidth={true} onClick={this.props.butt}/>
+                        <RaisedButton label="Lista produktów" primary={true} fullWidth={true} onClick={this.props.butt}/>
                     </Link>
 
                     <Snackbar

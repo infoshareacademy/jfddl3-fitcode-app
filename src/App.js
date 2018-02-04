@@ -27,10 +27,10 @@ class App extends Component {
         isDrawerOpen: false,
         menuElements: [
             ['Home','/'],
-            ['Lista Jedzonek','/food-list'],
-            ['Ulubione Jedzonka','/food-favourites'],
+            ['Lista produktów','/food-list'],
+            ['Ulubione produkty','/food-favourites'],
             ['Plan Posilkow','/meal-plan'],
-            ['Dodaj Jedzonko','/food-add']
+            ['Dodaj produkt','/food-add']
 
         ]
     }

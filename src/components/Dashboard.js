@@ -8,37 +8,19 @@ import {Grid, Row, Col} from 'react-flexbox-grid'
 import {connect} from "react-redux";
 
 
-const data = [
-    {
-        value: 40,
-        name: 'warzywa',
-        fill: 'lime'
-    },
-    {
-        value: 40,
-        name: 'owoce',
-        fill: 'red'
-    },
-    {
-        value: 20,
-        name: 'mięso',
-        fill: 'yellow'
-    }
-];
-const lineChartData = [
-    {name: 'Tydzień:', użytkownicy: 0},
-    {name: '1', użytkownicy: 500},
-    {name: '2', użytkownicy: 1800},
-    {name: '3', użytkownicy: 1000},
-    {name: '4', użytkownicy: 2500},
-];
 const style = {
     margin: 12,
 };
 
 class Dashboard extends Component {
+
+
+        actualNumberOFusers = () => ( this.props.usersCount ?
+        this.props.usersCount.length
+        :
+        null)
     render() {
-        let foodCount=[0,0,0,0,0,0];
+        let foodCount = [0, 0, 0, 0, 0, 0];
 
         return (
             <div
@@ -71,30 +53,46 @@ class Dashboard extends Component {
                         <Row>
                             <Col xs={12} md={6} lg={4}>
 
-                                <h3> Nasi użytkownicy najczęściej spożywają:</h3>
+                                <h3> Posiadamy bogatą bazę produktów: </h3>
 
-                                <h2> {/* //TODO podpiac liczbe jedzonek do wykresu */}
+                                <h3> {/* //TODO podpiac liczbe jedzonek do wykresu */}
                                     {
                                         this.props.foodData && this.props.foodData
-                                            .forEach(([key,product])=>{
+                                            .forEach(([key, product]) => {
                                                 switch (product.category) {
-                                                    case 'Warzywa' : foodCount[0] += 1; break;
-                                                    case 'Owoce' : foodCount[1] += 1;  break;
-                                                    case 'Mięso' : foodCount[2] += 1;  break;
-                                                    case 'Ryby' : foodCount[3] += 1;  break;
-                                                    case 'Nabiał' : foodCount[4] += 1;  break;
-                                                    case 'Vege-Food' : foodCount[5] += 1;  break;
-                                                    default : return;
+                                                    case 'Warzywa' :
+                                                        foodCount[0] += 1;
+                                                        break;
+                                                    case 'Owoce' :
+                                                        foodCount[1] += 1;
+                                                        break;
+                                                    case 'Mięso' :
+                                                        foodCount[2] += 1;
+                                                        break;
+                                                    case 'Ryby' :
+                                                        foodCount[3] += 1;
+                                                        break;
+                                                    case 'Nabiał' :
+                                                        foodCount[4] += 1;
+                                                        break;
+                                                    case 'Vege-Food' :
+                                                        foodCount[5] += 1;
+                                                        break;
+                                                    default :
+                                                        return;
                                                 }
                                             })
                                     }
-                                    Warzywa: {foodCount[0]},
-                                    Owoce: {foodCount[1]},
-                                    Mięso: {foodCount[2]},
-                                    Ryby: {foodCount[3]},
-                                    Nabiał: {foodCount[4]},
-                                    Vege-Food: {foodCount[5]}
-                                </h2>
+
+                                    <span style={{color: "orange"}}>Warzywa: {foodCount[0]} szt., </span>
+                                    <span style={{color: "red"}}>Owoce: {foodCount[1]} szt., </span>
+                                    <span style={{color: "grey"}}>Mięso: {foodCount[2]} szt., </span>
+                                    <span style={{color: "blue"}}>Ryby: {foodCount[3]} szt., </span>
+                                    <span style={{color: "pink"}}>Nabiał: {foodCount[4]} szt., </span>
+                                    <span style={{color: "green"}}>Vege-Food: {foodCount[5]} szt. </span>
+                                    <br/>
+
+                                </h3>
 
                                 <PieChart
                                     style={{margin: '0 auto'}}
@@ -103,54 +101,79 @@ class Dashboard extends Component {
 
                                 >
                                     <Pie
-                                        data={data}
+                                        data={[{
+                                            value: foodCount[0],
+                                            name: 'warzywa',
+                                            fill: 'orange'
+                                        },
+                                            {
+                                                value: foodCount[1],
+                                                name: 'owoce',
+                                                fill: 'red'
+                                            },
+                                            {
+                                                value: foodCount[2],
+                                                name: 'mięso',
+                                                fill: 'grey'
+                                            },
+                                            {
+                                                value: foodCount[3],
+                                                name: 'Ryby',
+                                                fill: 'blue'
+                                            },
+                                            {
+                                                value: foodCount[4],
+                                                name: 'nabiał',
+                                                fill: 'pink'
+                                            },
+                                            {
+                                                value: foodCount[5],
+                                                name: 'Vege',
+                                                fill: 'green'
+                                            }]}
                                         dataKey="value"
                                         nameKey="name"
                                         fill="#8884d8"
-                                        label={({payload}) => `${payload.name} - ${payload.value} % `}
+
                                         labelLine={true}
                                     />
-
                                 </PieChart>
-
+                                <h3>Łącznie: {foodCount.reduce((reducer, element) => {
+                                    return reducer += element
+                                }, 0)} szt.</h3>
                             </Col>
-
                             <Col xs={12} md={6} lg={4}>
+
+                                <h3> Aktualna liczba użytkowników: {
+                                    this.actualNumberOFusers()
+                                }
+                                </h3>
                                 <h3>Ilość użytkowników korzystających tygodniowo z naszej aplikacji:</h3>
-
-                                <h2> :)  {/* //TODO podpiac liczbe uzytkownikow do wykresu */}
-                                    {
-                                        this.props.usersCount ?
-                                            this.props.usersCount.length
-                                            :
-                                            null
-                                    }
-                                </h2>
-
                                 <LineChart
                                     style={{margin: '0 auto'}}
                                     width={window.innerWidth < 500 ? 150 : 400}
-                                    height={window.innerWidth < 500 ? 150 : 400}
-                                    data={lineChartData}
+                                    height={window.innerHeight < 500 ? 150 : 400}
+                                    data={[
+                                        {name: 'Tydzień:', użytkownicy: 0},
+                                        {name: '1', użytkownicy: 1},
+                                        {name: '2', użytkownicy: 2},
+                                        {name: '3', użytkownicy: 4},
+                                        {name: '4', użytkownicy: this.actualNumberOFusers()},
+                                    ]}
                                     margin={{top: 5, right: 30, left: 20, bottom: 5}}>
 
-                                    <XAxis dataKey="name"/>
+                                    <XAxis/>
                                     <YAxis/>
                                     <CartesianGrid strokeDasharray="3 3"/>
-                                    <Tooltip/>
+                                    <Tooltip datakey="uzytkownicy"/>
                                     <Legend/>
-                                    <Line type="monotone" dataKey="użytkownicy" stroke="#8884d8" activeDot={{r: 8}}/>
+                                    <Line type="monotone" dataKey="użytkownicy" stroke="#8884d8" activeDot={{r: 5}}/>
 
                                 </LineChart>
                             </Col>
-
-
                         </Row>
                     </Grid>
-
                 </Paper>
-
-
             </div>
         )
     }
