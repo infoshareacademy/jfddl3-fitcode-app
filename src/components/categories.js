@@ -13,25 +13,25 @@ const textCategories = [
 
     {
         hintText: 'g',
-        floatingLabelText: 'Białko - opcjonalne',
+        floatingLabelText: 'Białko',
         name: 'protein'
     },
 
     {
         hintText: 'g',
-        floatingLabelText: 'Tłuszcze - opcjonalne',
+        floatingLabelText: 'Tłuszcze',
         name: 'fats'
     },
 
     {
         hintText: 'g',
-        floatingLabelText: 'Węglowodany - opcjonalne',
+        floatingLabelText: 'Węglowodany',
         name: 'carbo'
     },
 
     {
         hintText: 'g',
-        floatingLabelText: 'Cukry - opcjonalne',
+        floatingLabelText: 'Cukry',
         name: 'sug'
     },
     {

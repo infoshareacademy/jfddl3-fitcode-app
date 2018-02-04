@@ -67,17 +67,17 @@ class FoodAdd extends Component {
             ||
             !/^([0-9])+$/.test(newFood.energy)
             ||
-            !/[^\s]|([0-9])+$/.test(newFood.protein)
+            !/^([0-9])+$/.test(newFood.protein)
             ||
-            !/[^\s]|([0-9])+$/.test(newFood.fat)
+            !/^([0-9])+$/.test(newFood.fat)
             ||
-            !/[^\s]|([0-9])+$/.test(newFood.carbohydrate)
+            !/^([0-9])+$/.test(newFood.carbohydrate)
             ||
-            !/[^\s]|([0-9])+$/.test(newFood.sugars)
+            !/^([0-9])+$/.test(newFood.sugars)
         ) {
             this.setState({
                 open: true,
-                msg: "Fedorowicz, co ty odpierdalasz",
+                msg: "Ups, coś poszło nie tak.",
             })
 
             return
