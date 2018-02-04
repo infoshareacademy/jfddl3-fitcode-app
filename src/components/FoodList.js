@@ -100,9 +100,7 @@ class FoodList extends Component {
                                                     <ListItem
                                                         primaryText={product.name}
                                                         secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                                        leftAvatar={<Avatar
-                                                            src={`${product.photo}`}
-                                                        />}
+                                                        leftAvatar={<Avatar src={product.photo === undefined ? `https://jfddl3-fitcode.firebaseapp.com/img/noimage.png` : `${product.photo}`}/>}
                                                         rightIcon={
                                                             this.props.favData && this.props.favData.indexOf(key) === -1 ?
                                                                 <ActionFavoriteBorder/>
