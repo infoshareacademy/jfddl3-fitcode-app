@@ -23,7 +23,7 @@ const styles = {
 
 class MealRemove extends React.Component {
     state = {
-        open: false,
+        open: false
     };
 
     handleOpen = () => {
@@ -35,19 +35,37 @@ class MealRemove extends React.Component {
     };
 
     handleSubmit = (foodId) => {
+        if (this.props.mealDate) {
+            let mealArr = []
+            if (this.props.meals[this.props.mealDate]
+                &&
+                this.props.meals[this.props.mealDate][this.props.mealType]
+            ) {
+                mealArr = this.props.meals[this.props.mealDate][this.props.mealType].filter((el) => {
+                    if (el !== foodId) {
+                        return el
+                    }
+                })
+            } else {
+                mealArr = [foodId]
+            }
+            database.ref(`/users/${this.props.uuid}/meals/${this.props.mealDate}/${this.props.mealType}`)
+                .set(mealArr)
 
+            this.setState({open: false});
+        }
     }
 
     render() {
         console.log(this.props.meals[this.state.mealDate])
         const actions = [
             <FlatButton
-                label="Cancel"
+                label="Anuluj"
                 primary={true}
                 onClick={this.handleClose}
             />,
             <FlatButton
-                label="Submit"
+                label="Usuń"
                 primary={true}
                 keyboardFocused={true}
                 onClick={() => this.handleSubmit(this.props.foodId)}
@@ -81,7 +99,7 @@ class MealRemove extends React.Component {
                                         key={key}
                                         primaryText={product.name}
                                         secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                        leftAvatar={<Avatar src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
+                                        leftAvatar={<Avatar src={product.photo === undefined ? `https://jfddl3-fitcode.firebaseapp.com/img/noimage.png` : `${product.photo}`}/>}
                                         style={{backgroundColor: '#eee'}}
                                     />
                                 )

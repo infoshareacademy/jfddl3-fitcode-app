@@ -13,7 +13,7 @@ class UserBar extends Component {
             <div>
             <Chip
 
-                style={{margin:'20px 20px 0 0', float:'right'}}
+                style={{margin:'80px 20px 0 0', float:'right'}}
             >
                 <Avatar color="#444" icon={<SvgIconFace />} />
                 Welcome: {this.props.userEmail}

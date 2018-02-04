@@ -1,7 +1,10 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import MealAdd from './MealAdd'
+import  {RadialBarChart, RadialBar, Legend} from 'recharts'
+import {Grid, Row, Col} from 'react-flexbox-grid'
 
 import {connect} from 'react-redux'
 import {database} from "../firebase";
@@ -32,9 +35,17 @@ class FoodDetails extends React.Component {
 
 
     render() {
-        console.log(this.props.favData)
+        const style = {
+            top: 0,
+            left: 350,
+            lineHeight: '24px'
+        };
+
         return (
             <Paper style={{margin: 20, padding: 20}} zDepth={2}>
+                <Grid >
+                    <Row>
+                        <Col xs={12} md={12} lg={12}>
                 {
                     this.props.foodData && this.props.foodData
                         .filter(([key, product]) => this.state.id === key)
@@ -50,13 +61,25 @@ class FoodDetails extends React.Component {
                                     <p>Cukry: {product.sugars}</p>
                                     <p>
                                         <img
-                                            src={`${process.env.PUBLIC_URL}/img/${product.photo}`}
+                                            src={product.photo === undefined ? `https://jfddl3-fitcode.firebaseapp.com/img/noimage.png` : `${product.photo}`}
                                             alt=""
                                             style={{width:'50vw', height:'auto'}}
                                         />
                                     </p>
+                                    <div>
+                                        <RadialBarChart width={500} height={300} cx={150} cy={150} innerRadius={20} outerRadius={140} barSize={20} data={[
+                                            {name: 'Sugars', uv: +product.sugars, fill: '#83a6ed'},
+                                            {name: 'Proteins', uv: +product.protein, fill: '#8dd1e1'},
+                                            {name: 'Fat', uv: +product.fat, fill: '#82ca9d'},
+                                            {name: 'Carbo', uv: +product.carbohydrate,  fill: '#a4de6c'},
+                                            {name: 'Energy', uv: +product.energy,  fill: '#d0ed57'},
+                                        ]} startAngle={180} endAngle={0}>
+                                            <RadialBar minAngle={15} label={{ fill: '#666', position: 'insideStart' }} background clockWise={true} dataKey='uv'/>
+                                            <Legend iconSize={10} width={120} height={140} layout='vertical' verticalAlign='middle' wrapperStyle={style}/>
+                                        </RadialBarChart>
+                                    </div>
 
-                                    <RaisedButton //href={`/food-list/${key}`}
+                                    <RaisedButton
                                         label="powrot do listy" primary={true}
                                         fullWidth={true}
                                         style={{marginBottom:20}}
@@ -77,10 +100,20 @@ class FoodDetails extends React.Component {
                                                           onClick={() => this.removeUidFromFavList(key)}
                                             />
                                     }
-                                    <MealAdd foodId={this.state.id} />
+                                    <MealAdd foodId={this.state.id} btnType={"butt"} />
+                                    <Link to={'/meal-plan'}>
+                                    <RaisedButton
+                                        label="Zobacz plan posilkow" primary={true}
+                                        fullWidth={true}
+                                        style={{marginBottom:20}}
+                                    />
+                                    </Link>
                                 </div>
                         )
                 }
+                        </Col>
+                    </Row>
+                </Grid>
             </Paper>
         )
     }

@@ -11,7 +11,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
+import MealAdd from './MealAdd'
 
 import {connect} from 'react-redux'
 
@@ -100,15 +100,15 @@ class FoodList extends Component {
                                                     <ListItem
                                                         primaryText={product.name}
                                                         secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                                        leftAvatar={<Avatar
-                                                            src={`${process.env.PUBLIC_URL}/img/${product.photo}`}
-                                                        />}
+                                                        leftAvatar={<Avatar src={product.photo === undefined ? `https://jfddl3-fitcode.firebaseapp.com/img/noimage.png` : `${product.photo}`}/>}
                                                         rightIcon={
                                                             this.props.favData && this.props.favData.indexOf(key) === -1 ?
                                                                 <ActionFavoriteBorder/>
                                                                 :
                                                                 <ActionFavorite/>
                                                         }
+                                                        //TODO ----> add to meal button
+                                                        //rightIcon={<MealAdd foodId={key} btnType={"ico"} />}
                                                     />
                                                 </Link>
                                             ))

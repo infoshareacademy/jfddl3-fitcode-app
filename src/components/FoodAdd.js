@@ -1,26 +1,34 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
+import Paper from 'material-ui/Paper'
+import Snackbar from 'material-ui/Snackbar'
+import {Link} from 'react-router-dom'
 
 import textCategories from './categories'
+import {database} from '../firebase'
 
 class FoodAdd extends Component {
 
-    state = {
-        data: null,
-        catSelect: "Warzywa",
-        name: null,
-        category: null,
-        energy: null,
-        protein: null,
-        fats: null,
-        carbo: null,
-        sug: null,
-        photo: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            data: null,
+            catSelect: "Warzywa",
+            name: null,
+            category: null,
+            energy: null,
+            protein: null,
+            fats: null,
+            carbo: null,
+            sug: null,
+            photo: null,
+            msg: "",
+        }
     }
 
     getData = () => {
@@ -50,40 +58,43 @@ class FoodAdd extends Component {
             fat: this.state.fats,
             carbohydrate: this.state.carbo,
             sugars: this.state.sug,
-            photo: this.state.photo
+            photo: this.state.photo,
         }
 
         if (!/([A-Za-z0-9])\w+/.test(newFood.name)
             ||
             !/^([0-9])+$/.test(newFood.energy)
             ||
-            !/[^\s]|([0-9])+$/.test(newFood.protein)
+            !/^([0-9])+$/.test(newFood.protein)
             ||
-            !/[^\s]|([0-9])+$/.test(newFood.fat)
+            !/^([0-9])+$/.test(newFood.fat)
             ||
-            !/[^\s]|([0-9])+$/.test(newFood.carbohydrate)
+            !/^([0-9])+$/.test(newFood.carbohydrate)
             ||
-            !/[^\s]|([0-9])+$/.test(newFood.sugars)
+            !/^([0-9])+$/.test(newFood.sugars)
+            ||
+            !/([A-Za-z0-9])\w+/.test(newFood.photo)
         ) {
-            alert('Błędne dane!')
+            this.setState({
+                open: true,
+                msg: "Ups, coś poszło nie tak.",
+            })
+
             return
         }
 
         console.log(newFood)
 
-        fetch(
-            'https://jfddl3-fitcode.firebaseio.com/products/food/.json',
-            {
-                method: 'POST',
-                body: JSON.stringify(newFood)
-            }
-        )
+        database.ref('products/food').push(newFood)
             .then(() => {
-                    alert('Jedzonko dodane')
+                    this.setState({
+                        open: true,
+                        msg: "Jedzonko dodane",
+                    })
                     this.getData()
                 }
             )
-            .catch((error) => alert('Ups'))
+            .catch((error) => alert('Ups, cos sie popsuło'))
     }
 
     handleTextChange = (event, name) => {
@@ -94,6 +105,11 @@ class FoodAdd extends Component {
 
     handleCatSelect = (event, index, value) => this.setState({catSelect: value})
 
+    handleRequestClose = () => {
+        this.setState({
+            open: false,
+        })
+    }
 
     render() {
         return (
@@ -130,7 +146,18 @@ class FoodAdd extends Component {
                         <MenuItem value={'Vege-Food'} primaryText="Vege-Food"/>
                     </SelectField>
 
-                    <RaisedButton label="Dodaj" primary={true} type="submit" style={{display: 'block'}}/>
+                    <RaisedButton label="Dodaj" primary={true} type="submit" fullWidth={true}/>
+                    <br/><br/>
+                    <Link to="/food-list">
+                        <RaisedButton label="Lista jedzonek" primary={true} fullWidth={true} onClick={this.props.butt}/>
+                    </Link>
+
+                    <Snackbar
+                        open={this.state.open}
+                        message={this.state.msg}
+                        autoHideDuration={4000}
+                        onRequestClose={this.handleRequestClose}
+                    />
                 </form>
             </Paper>
         )
