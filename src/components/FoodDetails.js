@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import MealAdd from './MealAdd'
@@ -100,6 +101,13 @@ class FoodDetails extends React.Component {
                                             />
                                     }
                                     <MealAdd foodId={this.state.id} btnType={"butt"} />
+                                    <Link to={'/meal-plan'}>
+                                    <RaisedButton
+                                        label="Zobacz plan posilkow" primary={true}
+                                        fullWidth={true}
+                                        style={{marginBottom:20}}
+                                    />
+                                    </Link>
                                 </div>
                         )
                 }
