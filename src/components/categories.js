@@ -36,7 +36,7 @@ const textCategories = [
     },
     {
         hintText: 'url',
-        floatingLabelText: 'Zdjęcie - opcjonalne',
+        floatingLabelText: 'Zdjęcie',
         name: 'photo'
     },
 ]
