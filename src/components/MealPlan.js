@@ -111,7 +111,7 @@ class MealPlanList extends Component {
                             Fat: {sumEner.fat} |
                             Carbo: {sumEner.carbohydrate} |
                             Sugars: {sumEner.sugars} |
-                            Energy: {sumEner.energy}
+                            <span style={{fontWeight:'bold'}}> kcal: {sumEner.energy}</span>
                         </div>
                     </Paper>
                 </div>
@@ -136,7 +136,7 @@ class MealPlan extends Component {
                         hintText="Wybierz dzien"
                         onChange={this.handleMealDate}
                     />
-                    <h4>lub</h4>
+                    <h4 style={{color:'#777'}}>lub</h4>
                     <Link to={'/food-list'}>
                         <RaisedButton
                             label="Dodaj produkt do posilku" primary={true}
@@ -192,7 +192,7 @@ class MealPlan extends Component {
                                 </List>
 
                                 <Paper style={{margin: 20, padding: 20, overflow:'hidden'}} zDepth={2}>
-                                    <h3>Bilans dzienny</h3>
+                                    <h3 style={{color:'#777'}}>Bilans dzienny</h3>
                                     <div>
                                         <RadialBarChart width={500} height={300} cx={150} cy={150} innerRadius={20}
                                                         outerRadius={140} barSize={20} data={[
@@ -212,7 +212,7 @@ class MealPlan extends Component {
                             </div>
                             :
                             <Paper style={{margin: 20, padding: 20}} zDepth={2}>
-                                <h1 style={{textAlign: 'center'}}>Brak posilkow<br/>:(</h1>
+                                <h1 style={{textAlign: 'center', color:'#777'}}>Brak posilkow<br/>:(</h1>
                             </Paper>
                     }
                 </div>
