@@ -88,7 +88,7 @@ class MealPlanList extends Component {
                                                     primaryText={product.name}
                                                     secondaryText={`Kcal: ${product.energy} | ${product.category}`}
                                                     leftAvatar={<Avatar
-                                                        src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
+                                                        src={`${product.photo}`}/>}
                                                     rightIcon={<MealRemove foodId={el} mealType={this.props.mealType}
                                                                            mealDate={this.props.mealDate}/>}
                                                 />

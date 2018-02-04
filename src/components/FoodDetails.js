@@ -61,7 +61,7 @@ class FoodDetails extends React.Component {
                                     <p>Cukry: {product.sugars}</p>
                                     <p>
                                         <img
-                                            src={`${process.env.PUBLIC_URL}/img/${product.photo}`}
+                                            src={`${product.photo}`}
                                             alt=""
                                             style={{width:'50vw', height:'auto'}}
                                         />

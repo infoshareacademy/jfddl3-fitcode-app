@@ -101,7 +101,7 @@ class FoodList extends Component {
                                                         primaryText={product.name}
                                                         secondaryText={`Kcal: ${product.energy} | ${product.category}`}
                                                         leftAvatar={<Avatar
-                                                            src={`${process.env.PUBLIC_URL}/img/${product.photo}`}
+                                                            src={`${product.photo}`}
                                                         />}
                                                         rightIcon={
                                                             this.props.favData && this.props.favData.indexOf(key) === -1 ?

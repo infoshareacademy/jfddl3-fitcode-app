@@ -119,7 +119,7 @@ class MealAdd extends React.Component {
                                         key={key}
                                         primaryText={product.name}
                                         secondaryText={`Kcal: ${product.energy} | ${product.category}`}
-                                        leftAvatar={<Avatar src={`${process.env.PUBLIC_URL}/img/${product.photo}`}/>}
+                                        leftAvatar={<Avatar src={`${product.photo}`}/>}
                                         style={{backgroundColor: '#eee'}}
                                     />
                                 )
