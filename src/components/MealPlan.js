@@ -211,9 +211,7 @@ class MealPlan extends Component {
                                 </Paper>
                             </div>
                             :
-                            <Paper style={{margin: 20, padding: 20}} zDepth={2}>
-                                <h1 style={{textAlign: 'center', color:'#777'}}>Brak posilkow<br/>:(</h1>
-                            </Paper>
+                          null
                     }
                 </div>
 

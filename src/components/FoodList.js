@@ -45,13 +45,13 @@ class FoodList extends Component {
                 <Paper style={{margin: 20, padding: 20}} zDepth={2}>
                     <Card>
                         <CardHeader
-                            title="Filtry jedzonkowe"
+                            title="Szukaj..."
                             actAsExpander={true}
                             showExpandableButton={true}
                         />
                         <CardText expandable={true}>
                             <TextField
-                                floatingLabelText="Szukaj jedzonka..."
+                                floatingLabelText="Nazwa produktu"
                                 fullWidth={true}
                                 onChange={this.handleFoodName}
                             />
@@ -83,7 +83,7 @@ class FoodList extends Component {
 
                 <Paper style={{margin: 20, padding: 20}} zDepth={2}>
                     <List>
-                        <Subheader>Nasze Jedzonka</Subheader>
+                        <Subheader>Lista produktów</Subheader>
                         {
                             this.props.foodData && this.props.foodData
                                 .filter(([key, product]) =>
