@@ -8,9 +8,10 @@ import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment'
 import MealRemove from './MealRemove'
+import  {RadialBarChart, RadialBar, Legend} from 'recharts'
 
 import {connect} from 'react-redux'
-import FoodList from "./FoodList";
+
 
 
 
@@ -50,6 +51,18 @@ class MealPlanList extends Component {
     render() {
 
         const sumEner = this.calcMealSummary(this.props.mealsData, this.props.foodData, this.props.mealDate, this.props.mealType)
+        const data = [
+            {name: 'Sugars', uv: sumEner.sugars, fill: '#83a6ed'},
+            {name: 'Proteins', uv: sumEner.protein, fill: '#8dd1e1'},
+            {name: 'Fat', uv: sumEner.fat, fill: '#82ca9d'},
+            {name: 'Carbo', uv: sumEner.carbohydrate,  fill: '#a4de6c'},
+            {name: 'Energy', uv: sumEner.energy,  fill: '#d0ed57'},
+        ];
+        const style = {
+            top: 0,
+            left: 350,
+            lineHeight: '24px'
+        };
 
         return (
             <Paper style={{margin: 20, padding: 20}} zDepth={2}>
@@ -87,6 +100,12 @@ class MealPlanList extends Component {
                             )
                         })
                 }
+                <div>
+                    <RadialBarChart width={500} height={300} cx={150} cy={150} innerRadius={20} outerRadius={140} barSize={20} data={data} startAngle={180} endAngle={0}>
+                        <RadialBar minAngle={15} label={{ fill: '#666', position: 'insideStart' }} background clockWise={true} dataKey='uv'/>
+                        <Legend iconSize={10} width={120} height={140} layout='vertical' verticalAlign='middle' wrapperStyle={style}/>
+                    </RadialBarChart>
+                </div>
             </Paper>
         )
     }
@@ -111,7 +130,7 @@ class MealPlan extends Component {
                     <Link to={'/food-list'}>
                     <RaisedButton
                         label="Dodaj do posilku" primary={true}
-                        fullWidth={true}
+                        fullWidth={false}
                         style={{marginBottom:20}}
                     />
                     </Link>
