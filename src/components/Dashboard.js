@@ -14,13 +14,22 @@ const style = {
 
 class Dashboard extends Component {
 
-
         actualNumberOFusers = () => ( this.props.usersCount ?
         this.props.usersCount.length
         :
         null)
+
+
     render() {
         let foodCount = [0, 0, 0, 0, 0, 0];
+
+        const lineChartData = [
+            {name: 'Tydzień:', użytkownicy: 0},
+            {name: '1', użytkownicy: 1},
+            {name: '2', użytkownicy: 2},
+            {name: '3', użytkownicy: 4},
+            {name: '4', użytkownicy: this.actualNumberOFusers()}
+    ];
 
         return (
             <div
@@ -34,8 +43,8 @@ class Dashboard extends Component {
                         <br/><br/>
                         Bądź FIT razem z nami!
                     </h1>
-                    <h2>W naszej aplikacji możesz sprawdzać produkty żywieniowe, dodawać nowe oraz tworzyc swoje wlasne
-                        posilki!<br/> Zacznij już dziś.</h2>
+                    <h2>W naszej aplikacji możesz sprawdzać produkty żywieniowe, dodawać nowe oraz tworzyć swoje własne
+                        posiłki!<br/> Zacznij już dziś.</h2>
                     <Link to="/food-list">
                         <RaisedButton label="Zobacz produkty!" primary={true} style={style}/>
                     </Link>
@@ -148,20 +157,13 @@ class Dashboard extends Component {
                                     this.actualNumberOFusers()
                                 }
                                 </h3>
-                                <h3>Ilość użytkowników korzystających tygodniowo z naszej aplikacji:</h3>
+                                <h3>Ilość użytkowników korzystających z naszej aplikacji w ujeciu tygodniowym:</h3>
                                 <LineChart
                                     style={{margin: '0 auto'}}
                                     width={window.innerWidth < 500 ? 150 : 400}
                                     height={window.innerHeight < 500 ? 150 : 400}
-                                    data={[
-                                        {name: 'Tydzień:', użytkownicy: 0},
-                                        {name: '1', użytkownicy: 1},
-                                        {name: '2', użytkownicy: 2},
-                                        {name: '3', użytkownicy: 4},
-                                        {name: '4', użytkownicy: this.actualNumberOFusers()},
-                                    ]}
-                                    margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-
+                                    data={lineChartData}
+                                    margin={{top: 5, right: 30, left: 10, bottom: 5}}>
                                     <XAxis/>
                                     <YAxis/>
                                     <CartesianGrid strokeDasharray="3 3"/>
