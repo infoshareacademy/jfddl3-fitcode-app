@@ -1,4 +1,4 @@
-# Fitcode React+Redux+Firebase App
+#Fitcode React+Redux+Firebase App
 
 ## Installation
 Node.js needed.
