@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
+import IconButton from 'material-ui/IconButton';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import TextField from 'material-ui/TextField';
@@ -14,8 +15,27 @@ import {Card, CardHeader, CardText} from 'material-ui/Card';
 import MealAdd from './MealAdd'
 
 import {connect} from 'react-redux'
+import {database} from "../firebase";
 
-
+const styles = {
+    favButt: {
+        display: "block",
+        position: "absolute",
+        right: 20,
+        top: 0,
+        height: 24,
+        width: 24,
+        fill:'#777'
+    },
+    containerButt: {
+        display: "block",
+        position: "absolute",
+        right: 0,
+        top: 24,
+        height: 24,
+        width: 24,
+    }
+}
 
 class FoodList extends Component {
     state = {
@@ -37,6 +57,22 @@ class FoodList extends Component {
     };
 
     handleCatSelect = (event, index, value) => this.setState({catSelect: value})
+
+    addUidToFavList = (keyId) => {
+        const favArr = this.props.favData.concat(keyId)
+        database.ref(`/users/${this.props.uuid}/favourites`)
+            .set(favArr)
+    }
+
+    removeUidFromFavList = (keyId) => {
+        const favArr = this.props.favData.filter((el)=> {
+            if (el !== keyId){
+                return el
+            }
+        })
+        database.ref(`/users/${this.props.uuid}/favourites`)
+            .set(favArr)
+    }
 
     render() {
         return (
@@ -92,25 +128,23 @@ class FoodList extends Component {
                                         .filter(([key, product]) => product.energy < this.state.kcalSlider)
                                         .map(
                                             ([key, product]) => (
-                                                <Link
-                                                    to={`/food-details/${key}`}
-                                                    style={{textDecoration: 'none'}}
-                                                    key={key}
-                                                >
+
                                                     <ListItem
+                                                        key={key}
+                                                        onClick={() => {this.props.history.push(`/food-details/${key}`)}}
+                                                        style={{position:'relative', zIndex:100}}
                                                         primaryText={product.name}
                                                         secondaryText={`Kcal: ${product.energy} | ${product.category}`}
                                                         leftAvatar={<Avatar src={product.photo === undefined ? `https://jfddl3-fitcode.firebaseapp.com/img/noimage.png` : `${product.photo}`}/>}
-                                                        rightIcon={
-                                                            this.props.favData && this.props.favData.indexOf(key) === -1 ?
-                                                                <ActionFavoriteBorder/>
+                                                        rightIconButton={
+                                                                this.props.favData && this.props.favData.indexOf(key) === -1 ?
+                                                                    <div style={styles.containerButt}><MealAdd foodId={key} btnType={"ico"}/><ActionFavoriteBorder onClick={() => this.addUidToFavList(key)} style={styles.favButt}/></div>
                                                                 :
-                                                                <ActionFavorite/>
+                                                                    <div style={styles.containerButt}><MealAdd foodId={key} btnType={"ico"}/><ActionFavorite onClick={() => this.removeUidFromFavList(key)} style={styles.favButt}/></div>
                                                         }
-                                                        //TODO ----> add to meal button
-                                                        //rightIcon={<MealAdd foodId={key} btnType={"ico"} />}
+
                                                     />
-                                                </Link>
+
                                             ))
                         }
                     </List>

@@ -5,7 +5,6 @@ import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import {List, ListItem} from 'material-ui/List';
-import moment from 'moment'
 
 import {connect} from 'react-redux'
 import {database} from "../firebase";

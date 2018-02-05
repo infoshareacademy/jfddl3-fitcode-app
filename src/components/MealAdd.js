@@ -19,8 +19,8 @@ const styles = {
     addButt: {
         display: "block",
         position: "absolute",
-        right: 20,
-        top: 12,
+        right: 80,
+        top: -12,
         height: 24,
         width: 24
     }
