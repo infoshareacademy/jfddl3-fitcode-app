@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import MealAdd from './MealAdd'
 import  {RadialBarChart, RadialBar, Legend} from 'recharts'
-import {Grid, Row, Col} from 'react-flexbox-grid'
+import Divider from 'material-ui/Divider';
 
 import {connect} from 'react-redux'
 import {database} from "../firebase";
@@ -43,9 +43,6 @@ class FoodDetails extends React.Component {
 
         return (
             <Paper style={{margin: 20, padding: 20}} zDepth={2}>
-                <Grid >
-                    <Row>
-                        <Col xs={12} md={12} lg={12}>
                 {
                     this.props.foodData && this.props.foodData
                         .filter(([key, product]) => this.state.id === key)
@@ -59,26 +56,33 @@ class FoodDetails extends React.Component {
                                     <p>Tluszcz: {product.fat}</p>
                                     <p>Weglowodany: {product.carbohydrate}</p>
                                     <p>Cukry: {product.sugars}</p>
-                                    <p>
+                                    <p style={{textAlign:'center'}}>
                                         <img
                                             src={product.photo === undefined ? `https://jfddl3-fitcode.firebaseapp.com/img/noimage.png` : `${product.photo}`}
                                             alt=""
-                                            style={{width:'50vw', height:'auto'}}
+                                            style={{width:'60vw', height:'auto', display:'inline-block'}}
                                         />
                                     </p>
-                                    <div>
-                                        <RadialBarChart width={500} height={300} cx={150} cy={150} innerRadius={20} outerRadius={140} barSize={20} data={[
+                                    <div style={{overflow:'hidden', textAlign:'center'}}>
+                                        <RadialBarChart width={300} height={160} cx={150} cy={150} innerRadius={20} outerRadius={140} barSize={20} data={[
                                             {name: 'Sugars', uv: +product.sugars, fill: '#83a6ed'},
                                             {name: 'Proteins', uv: +product.protein, fill: '#8dd1e1'},
                                             {name: 'Fat', uv: +product.fat, fill: '#82ca9d'},
                                             {name: 'Carbo', uv: +product.carbohydrate,  fill: '#a4de6c'},
                                             {name: 'Energy', uv: +product.energy,  fill: '#d0ed57'},
-                                        ]} startAngle={180} endAngle={0}>
+                                        ]} startAngle={180} endAngle={0} style={{display:'inline-block'}}>
                                             <RadialBar minAngle={15} label={{ fill: '#666', position: 'insideStart' }} background clockWise={true} dataKey='uv'/>
-                                            <Legend iconSize={10} width={120} height={140} layout='vertical' verticalAlign='middle' wrapperStyle={style}/>
                                         </RadialBarChart>
+                                        <div style={{margin:'20px 0 20px 0', fontSize:'14px', color:'#777'}}>
+                                            <span style={{fontWeight:'bold'}}> kcal: {product.energy}</span> |
+                                            carbo: {product.carbohydrate} |
+                                            fat: {product.fat} |
+                                            proteins: {product.protein} |
+                                            sugars: {product.sugars}
+                                        </div>
                                     </div>
 
+                                    <Divider style={{margin:'0 0 20px 0'}} />
                                     <RaisedButton
                                         label="powrot do listy" primary={true}
                                         fullWidth={true}
@@ -111,9 +115,6 @@ class FoodDetails extends React.Component {
                                 </div>
                         )
                 }
-                        </Col>
-                    </Row>
-                </Grid>
             </Paper>
         )
     }

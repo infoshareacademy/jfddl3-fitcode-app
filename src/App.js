@@ -29,7 +29,7 @@ class App extends Component {
             ['Home','/'],
             ['Lista produktów','/food-list'],
             ['Ulubione produkty','/food-favourites'],
-            ['Plan Posilkow','/meal-plan'],
+            ['Plan posiłków','/meal-plan'],
             ['Dodaj produkt','/food-add']
 
         ]

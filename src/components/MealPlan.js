@@ -55,14 +55,13 @@ class MealPlanList extends Component {
     }
 
     render() {
-
         const sumEner = this.calcMealSummary(this.props.mealsData, this.props.foodData, this.props.mealDate, this.props.mealType)
         const data = [
-            {name: 'Sugars', uv: sumEner.sugars, fill: '#83a6ed'},
-            {name: 'Proteins', uv: sumEner.protein, fill: '#8dd1e1'},
-            {name: 'Fat', uv: sumEner.fat, fill: '#82ca9d'},
-            {name: 'Carbo', uv: sumEner.carbohydrate, fill: '#a4de6c'},
             {name: 'Energy', uv: sumEner.energy, fill: '#d0ed57'},
+            {name: 'Carbo', uv: sumEner.carbohydrate, fill: '#a4de6c'},
+            {name: 'Fat', uv: sumEner.fat, fill: '#82ca9d'},
+            {name: 'Proteins', uv: sumEner.protein, fill: '#8dd1e1'},
+            {name: 'Sugars', uv: sumEner.sugars, fill: '#83a6ed'},
         ];
 
         return (
@@ -98,20 +97,16 @@ class MealPlanList extends Component {
                         })
                 }
                 <div>
-                    {/*<RadialBarChart width={500} height={300} cx={150} cy={150} innerRadius={20} outerRadius={140} barSize={20} data={data} startAngle={180} endAngle={0}>*/}
-                    {/*<RadialBar minAngle={15} label={{ fill: '#666', position: 'insideStart' }} background clockWise={true} dataKey='uv'/>*/}
-                    {/*<Legend iconSize={10} width={120} height={140} layout='vertical' verticalAlign='middle' wrapperStyle={style}/>*/}
-                    {/*</RadialBarChart>*/}
                     <Paper style={{margin: 20, padding: 20, textAlign:'center'}} zDepth={2}>
                         <BarChart width={150} height={40} data={data} style={{display:'inline-block'}}>
                             <Bar dataKey='uv' fill='#888888' background={{ fill: '#eee' }}/>
                         </BarChart>
                         <div style={{margin:'20px 0 0 0', fontSize:'14px', color:'#777'}}>
-                            Proteins: {sumEner.protein} |
-                            Fat: {sumEner.fat} |
-                            Carbo: {sumEner.carbohydrate} |
-                            Sugars: {sumEner.sugars} |
-                            <span style={{fontWeight:'bold'}}> kcal: {sumEner.energy}</span>
+                            <span style={{fontWeight:'bold'}}> kcal: {sumEner.energy}</span> |
+                            carbo: {sumEner.carbohydrate} |
+                            fat: {sumEner.fat} |
+                            proteins: {sumEner.protein} |
+                            sugars: {sumEner.sugars}
                         </div>
                     </Paper>
                 </div>
@@ -126,9 +121,48 @@ class MealPlan extends Component {
         mealDate: null
     };
 
+    calcDaySummary = (dataMeal, dataFood, date) => {
+        const daySum = {
+            energy: 0,
+            protein: 0,
+            fat: 0,
+            carbohydrate: 0,
+            sugars: 0
+        }
+
+        if(dataMeal && dataMeal[date])
+        Object.values(dataMeal[date])
+            .map((arr)=>{
+                arr.map((el)=>{
+                    return (
+                        dataFood && dataFood
+                            .filter(([key, product]) => el === key)
+                            .map(([key, product]) => {
+                                daySum.energy += +product.energy
+                                daySum.protein += +product.protein
+                                daySum.fat += +product.fat
+                                daySum.carbohydrate += +product.carbohydrate
+                                daySum.sugars += +product.sugars
+                                }
+                            )
+                    )
+                })
+            })
+        return daySum
+    }
+
     handleMealDate = (n, date) => this.setState({mealDate: moment(date).format("YYYYMMDD")})
 
     render() {
+        const sumDay = this.calcDaySummary(this.props.mealsData, this.props.foodData, this.state.mealDate)
+        const dayData = [
+            {name: 'Sugars', uv: sumDay.sugars, fill: '#83a6ed'},
+            {name: 'Proteins', uv: sumDay.protein, fill: '#8dd1e1'},
+            {name: 'Fat', uv: sumDay.fat, fill: '#82ca9d'},
+            {name: 'Carbo', uv: sumDay.carbohydrate, fill: '#a4de6c'},
+            {name: 'Energy', uv: sumDay.energy, fill: '#d0ed57'},
+        ];
+
         return (
             <div>
                 <Paper style={{margin: 20, padding: 20, textAlign:'center'}} zDepth={2}>
@@ -193,20 +227,18 @@ class MealPlan extends Component {
 
                                 <Paper style={{margin: 20, padding: 20, overflow:'hidden'}} zDepth={2}>
                                     <h3 style={{color:'#777'}}>Bilans dzienny</h3>
-                                    <div>
-                                        <RadialBarChart width={500} height={300} cx={150} cy={150} innerRadius={20}
-                                                        outerRadius={140} barSize={20} data={[
-                                            {name: 'Sugars', uv: 1000, fill: '#83a6ed'},
-                                            {name: 'Proteins', uv: 1000, fill: '#8dd1e1'},
-                                            {name: 'Fat', uv: 500, fill: '#82ca9d'},
-                                            {name: 'Carbo', uv: 100, fill: '#a4de6c'},
-                                            {name: 'Energy', uv: 900, fill: '#d0ed57'},
-                                        ]} startAngle={180} endAngle={0}>
-                                            <RadialBar minAngle={15} label={{fill: '#666', position: 'insideStart'}}
-                                                       background clockWise={true} dataKey='uv'/>
-                                            <Legend iconSize={10} width={120} height={140} layout='vertical'
-                                                    verticalAlign='middle' wrapperStyle={style}/>
+                                    <div style={{textAlign:'center'}}>
+                                        <RadialBarChart width={300} height={160} cx={150} cy={150} innerRadius={20} outerRadius={140}
+                                                        barSize={20} data={dayData} startAngle={180} endAngle={0} style={{display:'inline-block'}}>
+                                            <RadialBar minAngle={15} label={{fill: '#666', position: 'insideStart'}} background clockWise={true} dataKey='uv'/>
                                         </RadialBarChart>
+                                    </div>
+                                    <div style={{margin:'20px 0 0 0', fontSize:'16px', color:'#777', textAlign:'center'}}>
+                                        <span style={{fontWeight:'bold'}}> kcal: {sumDay.energy}</span> |
+                                        carbo: {sumDay.carbohydrate} |
+                                        fat: {sumDay.fat} |
+                                        proteins: {sumDay.protein} |
+                                        sugars: {sumDay.sugars}
                                     </div>
                                 </Paper>
                             </div>

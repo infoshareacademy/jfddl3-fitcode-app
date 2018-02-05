@@ -9,7 +9,7 @@ class AppBar extends Component {
     render() {
         return (
             <MuiAppBar
-                style={{position:'fixed', opacity:0.8}}
+                style={{position:'fixed', opacity:1}}
                 title={`FitCode App`}
                 onLeftIconButtonClick={this.props.butt}
                 iconElementRight={
