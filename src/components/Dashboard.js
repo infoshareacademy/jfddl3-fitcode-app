@@ -64,7 +64,7 @@ class Dashboard extends Component {
 
                                 <h3> Posiadamy bogatą bazę produktów: </h3>
 
-                                <h3> {/* //TODO podpiac liczbe jedzonek do wykresu */}
+                                <h3>
                                     {
                                         this.props.foodData && this.props.foodData
                                             .forEach(([key, product]) => {

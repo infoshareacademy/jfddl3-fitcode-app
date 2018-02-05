@@ -64,8 +64,8 @@ class FoodList extends Component {
         return (
             <div>
 
-                <Paper style={{margin: 20, padding: 20}} zDepth={2}>
-                    <Card>
+                <div>
+                    <Card style={{margin: 20, padding: 20}} zDepth={2}>
                         <CardHeader
                             title="Szukaj..."
                             actAsExpander={true}
@@ -101,7 +101,7 @@ class FoodList extends Component {
                             </SelectField>
                         </CardText>
                     </Card>
-                </Paper>
+                </div>
 
                 <Paper style={{margin: 20, padding: 20}} zDepth={2}>
                     <List>

@@ -133,7 +133,7 @@ class FoodAdd extends Component {
                     }
 
                     <SelectField
-                        floatingLabelText="Categories"
+                        floatingLabelText="Kategorie"
                         value={this.state.catSelect}
                         onChange={this.handleCatSelect}
                         fullWidth={true}
