@@ -34,7 +34,7 @@ class MealPlanList extends Component {
                 return (
                     dataFood && dataFood
                         .filter(([key, product]) => el === key)
-                        .map(([key, product]) => {
+                        .forEach(([key, product]) => {
                                 mealSum.energy += +product.energy
                                 mealSum.protein += +product.protein
                                 mealSum.fat += +product.fat
@@ -125,12 +125,12 @@ class MealPlan extends Component {
 
         if(dataMeal && dataMeal[date])
         Object.values(dataMeal[date])
-            .map((arr)=>{
+            .forEach((arr)=>{
                 arr.map((el)=>{
                     return (
                         dataFood && dataFood
                             .filter(([key, product]) => el === key)
-                            .map(([key, product]) => {
+                            .forEach(([key, product]) => {
                                 daySum.energy += +product.energy
                                 daySum.protein += +product.protein
                                 daySum.fat += +product.fat

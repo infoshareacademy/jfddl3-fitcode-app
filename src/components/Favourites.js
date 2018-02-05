@@ -31,11 +31,7 @@ class Favourites extends Component {
     }
 
     removeUidFromFavList = (keyId) => {
-        const favArr = this.props.favData.filter((el) => {
-            if (el !== keyId){
-                return el
-            }
-        })
+        const favArr = this.props.favData.filter(el => el !== keyId)
         database.ref(`/users/${this.props.uuid}/favourites`)
             .set(favArr)
     }

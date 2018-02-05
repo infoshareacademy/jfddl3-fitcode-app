@@ -40,11 +40,7 @@ class MealRemove extends React.Component {
                 &&
                 this.props.meals[this.props.mealDate][this.props.mealType]
             ) {
-                mealArr = this.props.meals[this.props.mealDate][this.props.mealType].filter((el) => {
-                    if (el !== foodId) {
-                        return el
-                    }
-                })
+                mealArr = this.props.meals[this.props.mealDate][this.props.mealType].filter(el => el !== foodId)
             } else {
                 mealArr = [foodId]
             }
@@ -56,7 +52,6 @@ class MealRemove extends React.Component {
     }
 
     render() {
-        console.log(this.props.meals[this.state.mealDate])
         const actions = [
             <FlatButton
                 label="Anuluj"

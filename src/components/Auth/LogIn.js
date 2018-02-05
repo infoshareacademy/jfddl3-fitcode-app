@@ -2,7 +2,7 @@ import React from 'react'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import {logInWithGoogle} from "../../state/auth";
+//import {logInWithGoogle} from "../../state/auth";
 
 const styles = {
     container: {
@@ -29,7 +29,7 @@ const LogIn = (props) => (
             <h1>
                 Zaloguj się!
             </h1>
-            <span>n@n.pl/natalia</span>
+            <span>n@n.pl / natalia</span>
             <TextField
                 name="email"
                 placeholder={'E-mail'}
