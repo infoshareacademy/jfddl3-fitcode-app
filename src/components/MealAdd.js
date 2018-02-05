@@ -47,20 +47,22 @@ class MealAdd extends React.Component {
 
     handleSubmit = (foodId) => {
         if (this.state.mealDate) {
+            let mealExists = false
             let mealArr = []
-            if (this.props.meals[this.state.mealDate]
-                &&
-                this.props.meals[this.state.mealDate][this.state.mealSelect]
-            ) {
-                mealArr = this.props.meals[this.state.mealDate][this.state.mealSelect].concat(foodId)
+            if (this.props.meals[this.state.mealDate] && this.props.meals[this.state.mealDate][this.state.mealSelect]) {
+                mealExists = !!this.props.meals[this.state.mealDate][this.state.mealSelect].find(el => el === foodId)
+                if (mealExists){
+                    return
+                    //TODO prevent same food add to same meal at the same date - DONE to FIX
+                }else{
+                    mealArr = this.props.meals[this.state.mealDate][this.state.mealSelect].concat(foodId)
+                }
             } else {
                 mealArr = [foodId]
             }
 
-
             database.ref(`/users/${this.props.uuid}/meals/${this.state.mealDate}/${this.state.mealSelect}`)
                 .set(mealArr)
-            //TODO prevent same food add to same meal at the same date
 
             this.setState({open: false, mealDate: null});
         }
