@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
@@ -21,19 +20,10 @@ const styles = {
     favButt: {
         display: "block",
         position: "absolute",
-        right: 20,
+        right: 24,
         top: 0,
         height: 24,
-        width: 24,
-        fill:'#777'
-    },
-    containerButt: {
-        display: "block",
-        position: "absolute",
-        right: 0,
-        top: 24,
-        height: 24,
-        width: 24,
+        width: 24
     }
 }
 
@@ -132,15 +122,32 @@ class FoodList extends Component {
                                                     <ListItem
                                                         key={key}
                                                         onClick={() => {this.props.history.push(`/food-details/${key}`)}}
-                                                        style={{position:'relative', zIndex:100}}
                                                         primaryText={product.name}
                                                         secondaryText={`Kcal: ${product.energy} | ${product.category}`}
                                                         leftAvatar={<Avatar src={product.photo === undefined ? `https://jfddl3-fitcode.firebaseapp.com/img/noimage.png` : `${product.photo}`}/>}
                                                         rightIconButton={
                                                                 this.props.favData && this.props.favData.indexOf(key) === -1 ?
-                                                                    <div style={styles.containerButt}><MealAdd foodId={key} btnType={"ico"}/><ActionFavoriteBorder onClick={() => this.addUidToFavList(key)} style={styles.favButt}/></div>
+                                                                    <IconButton>
+                                                                        <MealAdd foodId={key} btnType={"ico"}/>
+                                                                        <div //div instead of proper IconButton
+                                                                            //tooltip="Dodaj do ulubionych"
+                                                                            style={styles.favButt}
+                                                                            onClick={() => this.addUidToFavList(key)}
+                                                                        >
+                                                                            <ActionFavoriteBorder color={"#777"} />
+                                                                        </div>
+                                                                    </IconButton>
                                                                 :
-                                                                    <div style={styles.containerButt}><MealAdd foodId={key} btnType={"ico"}/><ActionFavorite onClick={() => this.removeUidFromFavList(key)} style={styles.favButt}/></div>
+                                                                    <IconButton>
+                                                                        <MealAdd foodId={key} btnType={"ico"}/>
+                                                                        <div //div instead of proper IconButton
+                                                                            //tooltip="Usun z ulubionych"
+                                                                            style={styles.favButt}
+                                                                            onClick={() => this.removeUidFromFavList(key)}
+                                                                        >
+                                                                            <ActionFavorite color={"#777"} />
+                                                                        </div>
+                                                                    </IconButton>
                                                         }
 
                                                     />

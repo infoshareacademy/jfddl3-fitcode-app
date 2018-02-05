@@ -14,7 +14,7 @@ class AppBar extends Component {
                 onLeftIconButtonClick={this.props.butt}
                 iconElementRight={
                     <FlatButton
-                        label="LogOut"
+                        label="Wyloguj"
                         onClick={() => this.props.onLogOutClick()}
                     />
                 }

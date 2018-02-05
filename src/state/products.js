@@ -1,8 +1,8 @@
-import {startLoading, stopLoading} from './loading'
+//import {startLoading, stopLoading} from './loading'
 import {database} from '../firebase'
 
 const FETCH_PRODUCTS = 'products/FETCH_PRODUCTS'
-const PUSH_PRODUCT = 'products/PUSH_PRODUCT'
+//const PUSH_PRODUCT = 'products/PUSH_PRODUCT'
 
 const setProducts = (products) => ({
     type: FETCH_PRODUCTS,

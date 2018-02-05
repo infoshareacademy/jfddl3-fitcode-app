@@ -1,5 +1,5 @@
-import {startLoading, stopLoading} from './loading'
-import {database, auth} from '../firebase'
+//import {startLoading, stopLoading} from './loading'
+import {database} from '../firebase'
 
 const FETCH_FAV = 'fav/FETCH_FAV'
 const ADD_FAV = 'fav/ADD_FAV'
@@ -11,10 +11,10 @@ const setFav = (fav) => ({
     fav: fav
 })
 
-const addFav = (fav) => ({
-    type: ADD_FAV,
-    fav: fav
-})
+// const addFav = (fav) => ({
+//     type: ADD_FAV,
+//     fav: fav
+// })
 
 export const fetchFav = () => (dispatch, getState) => {
     const uid = getState().auth.user.uid

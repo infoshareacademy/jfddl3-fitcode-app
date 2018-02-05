@@ -8,17 +8,10 @@ import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment'
 import MealRemove from './MealRemove'
-import {RadialBarChart, RadialBar, Legend} from 'recharts'
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts'
+import {RadialBarChart, RadialBar} from 'recharts'
+import {BarChart, Bar} from 'recharts'
 
 import {connect} from 'react-redux'
-
-
-const style = {
-    top: 0,
-    left: 350,
-    lineHeight: '24px'
-};
 
 
 class MealPlanList extends Component {

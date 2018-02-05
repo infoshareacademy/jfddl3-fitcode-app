@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Link, Redirect} from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
+import IconButton from 'material-ui/IconButton';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import Paper from 'material-ui/Paper';
@@ -15,11 +15,10 @@ const styles = {
     favButt: {
         display: "block",
         position: "absolute",
-        right: 20,
-        top: 24,
+        right: 24,
+        top: 12,
         height: 24,
-        width: 24,
-        fill:'#777'
+        width: 24
     }
 }
 
@@ -32,7 +31,7 @@ class Favourites extends Component {
     }
 
     removeUidFromFavList = (keyId) => {
-        const favArr = this.props.favData.filter((el)=> {
+        const favArr = this.props.favData.filter((el) => {
             if (el !== keyId){
                 return el
             }
@@ -66,9 +65,21 @@ class Favourites extends Component {
                                                 leftAvatar={<Avatar src={product.photo === undefined ? `https://jfddl3-fitcode.firebaseapp.com/img/noimage.png` : `${product.photo}`}/>}
                                                 rightIconButton={
                                                     this.props.favData && this.props.favData.indexOf(key) === -1 ?
-                                                        <ActionFavoriteBorder onClick={() => this.addUidToFavList(key)} style={styles.favButt}/>
+                                                        <IconButton
+                                                            tooltip="Dodaj do ulubionych"
+                                                            style={styles.favButt}
+                                                            onClick={() => this.addUidToFavList(key)}
+                                                        >
+                                                        <ActionFavoriteBorder color={"#777"} />
+                                                        </IconButton>
                                                         :
-                                                        <ActionFavorite onClick={() => this.removeUidFromFavList(key)} style={styles.favButt}/>
+                                                        <IconButton
+                                                            tooltip="Usun z ulubionych"
+                                                            style={styles.favButt}
+                                                            onClick={() => this.removeUidFromFavList(key)}
+                                                        >
+                                                            <ActionFavorite color={"#777"}  />
+                                                        </IconButton>
                                                 }
                                             />
 

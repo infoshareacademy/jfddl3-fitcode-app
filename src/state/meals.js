@@ -1,4 +1,4 @@
-import {database, auth} from '../firebase'
+import {database} from '../firebase'
 
 const FETCH_MEALS = 'meals/FETCH_MEALS'
 

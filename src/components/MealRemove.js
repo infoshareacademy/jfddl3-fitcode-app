@@ -13,7 +13,7 @@ const styles = {
     removeButt: {
         display: "block",
         position: "absolute",
-        right: 20,
+        right: 24,
         top: 12,
         height: 24,
         width: 24
@@ -75,10 +75,10 @@ class MealRemove extends React.Component {
         return (
             <div>
                 <IconButton
-                    tooltip="Remove from meal"
+                    tooltip="Usun z posilku"
                     style={styles.removeButt}
                     onClick={this.handleOpen}>
-                    <ActionDelete color={"#757575"}/>
+                    <ActionDelete color={"#777"}/>
                 </IconButton>
 
                 <Dialog
