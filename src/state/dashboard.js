@@ -1,4 +1,4 @@
-import {startLoading, stopLoading} from './loading'
+//import {startLoading, stopLoading} from './loading'
 import {database} from '../firebase'
 
 const FETCH_USERS = 'products/FETCH_USERS'

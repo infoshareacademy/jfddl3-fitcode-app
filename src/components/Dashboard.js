@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Label, Legend, PieChart, Pie} from 'recharts';
+import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie} from 'recharts';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Link} from 'react-router-dom'
 import Paper from 'material-ui/Paper';
@@ -64,7 +64,7 @@ class Dashboard extends Component {
 
                                 <h3> Posiadamy bogatą bazę produktów: </h3>
 
-                                <h3> {/* //TODO podpiac liczbe jedzonek do wykresu */}
+                                <h3>
                                     {
                                         this.props.foodData && this.props.foodData
                                             .forEach(([key, product]) => {

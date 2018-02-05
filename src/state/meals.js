@@ -1,4 +1,4 @@
-import {database, auth} from '../firebase'
+import {database} from '../firebase'
 
 const FETCH_MEALS = 'meals/FETCH_MEALS'
 
@@ -13,7 +13,7 @@ export const fetchMeals = () => (dispatch, getState) => {
     const uid = getState().auth.user.uid
     database.ref(`/users/${uid}/meals`)
         .on('value', (snapshot) => {
-            console.log('Syncing', uid)
+            //console.log('Syncing', uid)
             dispatch(setMeals(snapshot.val() || {}))
         })
 }

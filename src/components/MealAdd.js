@@ -7,7 +7,7 @@ import {List, ListItem} from 'material-ui/List';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
-import IconButton from 'material-ui/IconButton';
+//import IconButton from 'material-ui/IconButton';
 import ActionDateRange from 'material-ui/svg-icons/action/date-range';
 import moment from 'moment'
 
@@ -19,7 +19,7 @@ const styles = {
     addButt: {
         display: "block",
         position: "absolute",
-        right: 20,
+        right: 60,
         top: 12,
         height: 24,
         width: 24
@@ -47,20 +47,22 @@ class MealAdd extends React.Component {
 
     handleSubmit = (foodId) => {
         if (this.state.mealDate) {
+            let mealExists = false
             let mealArr = []
-            if (this.props.meals[this.state.mealDate]
-                &&
-                this.props.meals[this.state.mealDate][this.state.mealSelect]
-            ) {
-                mealArr = this.props.meals[this.state.mealDate][this.state.mealSelect].concat(foodId)
+            if (this.props.meals[this.state.mealDate] && this.props.meals[this.state.mealDate][this.state.mealSelect]) {
+                mealExists = !!this.props.meals[this.state.mealDate][this.state.mealSelect].find(el => el === foodId)
+                if (mealExists){
+                    return
+                    //TODO prevent same food add to same meal at the same date - DONE to FIX
+                }else{
+                    mealArr = this.props.meals[this.state.mealDate][this.state.mealSelect].concat(foodId)
+                }
             } else {
                 mealArr = [foodId]
             }
 
-
             database.ref(`/users/${this.props.uuid}/meals/${this.state.mealDate}/${this.state.mealSelect}`)
                 .set(mealArr)
-            //TODO prevent same food add to same meal at the same date
 
             this.setState({open: false, mealDate: null});
         }
@@ -95,12 +97,12 @@ class MealAdd extends React.Component {
                             style={{marginBottom: 20}}
                         />
                         :
-                        <IconButton
-                            tooltip="Dodaj do posilku"
+                        <div //div instead of proper IconButton
+                            //tooltip="Dodaj do posilku"
                             style={styles.addButt}
                             onClick={this.handleOpen}>
-                            <ActionDateRange color={"#757575"}/>
-                        </IconButton>
+                            <ActionDateRange color={"#777"}/>
+                        </div>
                 }
                 <Dialog
                     title="Dodaj jedzonko do posilku"

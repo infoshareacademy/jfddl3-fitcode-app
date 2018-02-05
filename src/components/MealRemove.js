@@ -5,7 +5,6 @@ import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import {List, ListItem} from 'material-ui/List';
-import moment from 'moment'
 
 import {connect} from 'react-redux'
 import {database} from "../firebase";
@@ -14,7 +13,7 @@ const styles = {
     removeButt: {
         display: "block",
         position: "absolute",
-        right: 20,
+        right: 24,
         top: 12,
         height: 24,
         width: 24
@@ -41,11 +40,7 @@ class MealRemove extends React.Component {
                 &&
                 this.props.meals[this.props.mealDate][this.props.mealType]
             ) {
-                mealArr = this.props.meals[this.props.mealDate][this.props.mealType].filter((el) => {
-                    if (el !== foodId) {
-                        return el
-                    }
-                })
+                mealArr = this.props.meals[this.props.mealDate][this.props.mealType].filter(el => el !== foodId)
             } else {
                 mealArr = [foodId]
             }
@@ -57,7 +52,6 @@ class MealRemove extends React.Component {
     }
 
     render() {
-        console.log(this.props.meals[this.state.mealDate])
         const actions = [
             <FlatButton
                 label="Anuluj"
@@ -76,10 +70,10 @@ class MealRemove extends React.Component {
         return (
             <div>
                 <IconButton
-                    tooltip="Remove from meal"
+                    tooltip="Usun z posilku"
                     style={styles.removeButt}
                     onClick={this.handleOpen}>
-                    <ActionDelete color={"#757575"}/>
+                    <ActionDelete color={"#777"}/>
                 </IconButton>
 
                 <Dialog

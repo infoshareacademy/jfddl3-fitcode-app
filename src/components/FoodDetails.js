@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import MealAdd from './MealAdd'
-import  {RadialBarChart, RadialBar, Legend} from 'recharts'
+import  {RadialBarChart, RadialBar} from 'recharts'
 import Divider from 'material-ui/Divider';
 
 import {connect} from 'react-redux'
@@ -24,23 +24,13 @@ class FoodDetails extends React.Component {
     }
 
     removeUidFromFavList = (keyId) => {
-        const favArr = this.props.favData.filter((el)=> {
-            if (el !== keyId){
-                return el
-            }
-        })
+        const favArr = this.props.favData.filter(el => el !== keyId)
         database.ref(`/users/${this.props.uuid}/favourites`)
             .set(favArr)
     }
 
 
     render() {
-        const style = {
-            top: 0,
-            left: 350,
-            lineHeight: '24px'
-        };
-
         return (
             <Paper style={{margin: 20, padding: 20}} zDepth={2}>
                 {
@@ -74,11 +64,11 @@ class FoodDetails extends React.Component {
                                             <RadialBar minAngle={15} label={{ fill: '#666', position: 'insideStart' }} background clockWise={true} dataKey='uv'/>
                                         </RadialBarChart>
                                         <div style={{margin:'20px 0 20px 0', fontSize:'14px', color:'#777'}}>
-                                            <span style={{fontWeight:'bold'}}> kcal: {product.energy}</span> |
-                                            carbo: {product.carbohydrate} |
-                                            fat: {product.fat} |
-                                            proteins: {product.protein} |
-                                            sugars: {product.sugars}
+                                            <span style={{borderBottom: '5px solid #d0ed57', display:'inline-block', marginTop: 5, fontWeight:'bold'}}>kcal: {product.energy}</span>&nbsp;&nbsp;
+                                            <span style={{borderBottom: '5px solid #a4de6c'}}>carbo: {product.carbohydrate}</span>&nbsp;&nbsp;
+                                            <span style={{borderBottom: '5px solid #82ca9d'}}>fat: {product.fat}</span>&nbsp;&nbsp;
+                                            <span style={{borderBottom: '5px solid #8dd1e1'}}>proteins: {product.protein}</span>&nbsp;&nbsp;
+                                            <span style={{borderBottom: '5px solid #83a6ed'}}>sugars: {product.sugars}</span>
                                         </div>
                                     </div>
 
@@ -127,10 +117,7 @@ const mapStateToProps = state => ({
 })
 
 
-const mapDispatchToProps = dispatch => ({
-    // getFoodData: () => dispatch(fetchProducts()),
-    // getFavData: () => dispatch(fetchFav()),
-})
+const mapDispatchToProps = dispatch => ({})
 
 export default connect(
     mapStateToProps,
